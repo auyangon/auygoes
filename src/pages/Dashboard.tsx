@@ -62,12 +62,20 @@ function GPARing({ gpa }: { gpa: number }) {
 }
 
 export default function Dashboard() {
-  const { student, courses, gpa, totalCredits, averageAttendance, loading } = useData();
+  const { student, courses, gpa, totalCredits, averageAttendance, loading, error } = useData();
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Spinner size="lg" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-white/70 text-center py-12">
+        {error}
       </div>
     );
   }
@@ -179,32 +187,33 @@ export default function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {displayCourses.map((course) => (
-            <motion.div
-              key={course.courseId}
-              variants={fadeUp}
-            >
-              <GlassCard className="p-5" hover>
-                <div className="flex items-start justify-between mb-3">
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-white/90 truncate">{course.courseName}</p>
-                    <p className="text-xs text-white/40 mt-0.5">{course.courseId}</p>
+          {displayCourses.length > 0 ? (
+            displayCourses.map((course) => (
+              <motion.div key={course.courseId} variants={fadeUp}>
+                <GlassCard className="p-5" hover>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-white/90 truncate">{course.courseName}</p>
+                      <p className="text-xs text-white/40 mt-0.5">{course.courseId}</p>
+                    </div>
+                    <GradeColor grade={course.grade} />
                   </div>
-                  <GradeColor grade={course.grade} />
-                </div>
-                <div className="flex items-center gap-4 text-xs text-white/40">
-                  <span className="flex items-center gap-1">
-                    <BookOpen className="w-3.5 h-3.5" />
-                    {course.credits} credits
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    {course.attendancePercentage}%
-                  </span>
-                </div>
-              </GlassCard>
-            </motion.div>
-          ))}
+                  <div className="flex items-center gap-4 text-xs text-white/40">
+                    <span className="flex items-center gap-1">
+                      <BookOpen className="w-3.5 h-3.5" />
+                      {course.credits} credits
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      {course.attendancePercentage}%
+                    </span>
+                  </div>
+                </GlassCard>
+              </motion.div>
+            ))
+          ) : (
+            <p className="text-white/50 col-span-2 text-center py-8">No courses found.</p>
+          )}
         </div>
       </motion.div>
     </motion.div>

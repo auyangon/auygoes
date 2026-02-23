@@ -42,7 +42,7 @@ const GRADE_POINTS: Record<string, number> = {
   'F': 0.0
 };
 
-// This must match the encoding used in the upload script
+// Must match the encoding used in restructure.cjs
 function encodeEmail(email: string): string {
   return email.replace(/\./g, ',,,').replace(/@/g, ',,@,,');
 }
@@ -66,6 +66,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       try {
         const encodedEmail = encodeEmail(user.email);
+        console.log('Fetching student with key:', encodedEmail);
+
         const studentRef = ref(db, `students/${encodedEmail}`);
         const snapshot = await get(studentRef);
 
@@ -76,6 +78,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         }
 
         const studentData = snapshot.val();
+        console.log('Student data:', studentData);
 
         setStudent({
           studentId: studentData.studentId,

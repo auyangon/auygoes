@@ -1,1 +1,0 @@
-        setAverageAttendance(attendanceCount  ? totalAttendance / attendanceCount : 0);

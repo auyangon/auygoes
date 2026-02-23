@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
+import { ref, get } from 'firebase/database';
 import { db } from '../lib/firebase';
 import { useAuth } from './AuthContext';
 
@@ -42,6 +42,11 @@ const GRADE_POINTS: Record<string, number> = {
   'F': 0.0
 };
 
+// This must match the encoding used in the upload script
+function encodeEmail(email: string): string {
+  return email.replace(/\./g, ',,,').replace(/@/g, ',,@,,');
+}
+
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
@@ -60,43 +65,24 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        console.log('Fetching data for email:', user.email);
-        
-        const enrollmentsRef = ref(db, 'enrollments');
-        const enrollmentsQuery = query(
-          enrollmentsRef,
-          orderByChild('email'),
-          equalTo(user.email)
-        );
-        
-        const snapshot = await get(enrollmentsQuery);
-        
+        const encodedEmail = encodeEmail(user.email);
+        const studentRef = ref(db, `students/${encodedEmail}`);
+        const snapshot = await get(studentRef);
+
         if (!snapshot.exists()) {
-          setError('No enrollment data found');
+          setError('Student record not found');
           setLoading(false);
           return;
         }
 
-        const enrollments = snapshot.val();
-        const userEnrollments: any[] = Object.values(enrollments);
-        let studentInfo: any = null;
-
-        // Capture student info from first enrollment
-        if (userEnrollments.length > 0) {
-          studentInfo = {
-            studentId: userEnrollments[0].studentId,
-            studentName: userEnrollments[0].studentName,
-            studyMode: userEnrollments[0].studyMode,
-            major: userEnrollments[0].major,
-          };
-        }
+        const studentData = snapshot.val();
 
         setStudent({
-          studentId: studentInfo.studentId,
-          studentName: studentInfo.studentName,
-          email: user.email,
-          studyMode: studentInfo.studyMode,
-          major: studentInfo.major,
+          studentId: studentData.studentId,
+          studentName: studentData.studentName,
+          email: studentData.email,
+          studyMode: studentData.studyMode,
+          major: studentData.major,
         });
 
         const coursesList: Course[] = [];
@@ -105,38 +91,39 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         let totalAttendance = 0;
         let attendanceCount = 0;
 
-        userEnrollments.forEach((enrollment: any) => {
-          const credits = Number(enrollment.credits) || 0;
-          const grade = enrollment.grade || '';
-          const attendance = Number(enrollment.attendancePercentage) || 0;
-          
-          coursesList.push({
-            id: enrollment.courseId,
-            courseId: enrollment.courseId,
-            courseName: enrollment.courseName,
-            teacherName: enrollment.teacherName,
-            credits: credits,
-            grade: grade,
-            attendancePercentage: attendance,
-            googleClassroomLink: enrollment.googleClassroomLink,
-          });
+        if (studentData.courses) {
+          Object.entries(studentData.courses).forEach(([courseId, course]: any) => {
+            const credits = Number(course.credits) || 0;
+            const grade = course.grade || '';
+            const attendance = Number(course.attendancePercentage) || 0;
 
-          if (grade && GRADE_POINTS[grade]) {
-            totalGradePoints += GRADE_POINTS[grade] * credits;
-            totalCreditsEarned += credits;
-          }
-          
-          if (attendance > 0) {
-            totalAttendance += attendance;
-            attendanceCount++;
-          }
-        });
+            coursesList.push({
+              id: courseId,
+              courseId: courseId,
+              courseName: course.courseName,
+              teacherName: course.teacherName,
+              credits: credits,
+              grade: grade,
+              attendancePercentage: attendance,
+              googleClassroomLink: course.googleClassroomLink,
+            });
+
+            if (grade && GRADE_POINTS[grade]) {
+              totalGradePoints += GRADE_POINTS[grade] * credits;
+              totalCreditsEarned += credits;
+            }
+
+            if (attendance > 0) {
+              totalAttendance += attendance;
+              attendanceCount++;
+            }
+          });
+        }
 
         setCourses(coursesList);
         setGpa(totalCreditsEarned > 0 ? totalGradePoints / totalCreditsEarned : 0);
         setTotalCredits(totalCreditsEarned);
         setAverageAttendance(attendanceCount > 0 ? totalAttendance / attendanceCount : 0);
-        
       } catch (err) {
         console.error('Error fetching data:', err);
         setError('Failed to load data');
@@ -149,15 +136,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   return (
-    <DataContext.Provider value={{ 
-      courses, 
-      student,
-      gpa, 
-      totalCredits, 
-      averageAttendance,
-      loading, 
-      error
-    }}>
+    <DataContext.Provider value={{ courses, student, gpa, totalCredits, averageAttendance, loading, error }}>
       {children}
     </DataContext.Provider>
   );

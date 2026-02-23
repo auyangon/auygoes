@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ref, get } from 'firebase/database';
+import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
 import { db } from '../lib/firebase';
 import { useAuth } from './AuthContext';
 
@@ -62,9 +62,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       try {
         console.log('Fetching data for email:', user.email);
         
-        // Get all enrollments
         const enrollmentsRef = ref(db, 'enrollments');
-        const snapshot = await get(enrollmentsRef);
+        const enrollmentsQuery = query(
+          enrollmentsRef,
+          orderByChild('email'),
+          equalTo(user.email)
+        );
+        
+        const snapshot = await get(enrollmentsQuery);
         
         if (!snapshot.exists()) {
           setError('No enrollment data found');
@@ -73,33 +78,19 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         }
 
         const enrollments = snapshot.val();
-        const userEnrollments: any[] = [];
+        const userEnrollments: any[] = Object.values(enrollments);
         let studentInfo: any = null;
 
-        // Filter enrollments by email
-        Object.values(enrollments).forEach((enrollment: any) => {
-          if (enrollment.email === user.email) {
-            userEnrollments.push(enrollment);
-            
-            // Capture student info from first enrollment
-            if (!studentInfo) {
-              studentInfo = {
-                studentId: enrollment.studentId,
-                studentName: enrollment.studentName,
-                studyMode: enrollment.studyMode,
-                major: enrollment.major,
-              };
-            }
-          }
-        });
-
-        if (userEnrollments.length === 0) {
-          setError('No enrollments found for this email');
-          setLoading(false);
-          return;
+        // Capture student info from first enrollment
+        if (userEnrollments.length > 0) {
+          studentInfo = {
+            studentId: userEnrollments[0].studentId,
+            studentName: userEnrollments[0].studentName,
+            studyMode: userEnrollments[0].studyMode,
+            major: userEnrollments[0].major,
+          };
         }
 
-        // Set student info
         setStudent({
           studentId: studentInfo.studentId,
           studentName: studentInfo.studentName,
@@ -108,7 +99,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           major: studentInfo.major,
         });
 
-        // Build courses from enrollments
         const coursesList: Course[] = [];
         let totalGradePoints = 0;
         let totalCreditsEarned = 0;
@@ -143,18 +133,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         });
 
         setCourses(coursesList);
-        
-        // Calculate GPA
-        if (totalCreditsEarned > 0) {
-          setGpa(totalGradePoints / totalCreditsEarned);
-        }
-        
+        setGpa(totalCreditsEarned > 0 ? totalGradePoints / totalCreditsEarned : 0);
         setTotalCredits(totalCreditsEarned);
-        
-        // Calculate average attendance
-        if (attendanceCount > 0) {
-          setAverageAttendance(totalAttendance / attendanceCount);
-        }
+        setAverageAttendance(attendanceCount > 0 ? totalAttendance / attendanceCount : 0);
         
       } catch (err) {
         console.error('Error fetching data:', err);

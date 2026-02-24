@@ -5,61 +5,29 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "build": "node build.js",
     "preview": "vite preview",
     "data:calendar": "node scripts/convertCalendar.js"
-=======
-    "build": "vite build",
-    "preview": "vite preview"
->>>>>>> 4c2d295d309d4cb4114d59e23dac87315e08ab52
   },
   "dependencies": {
-=======
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint ."
-  },
-  "dependencies": {
-    "clsx": "^2.1.0",
->>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
     "firebase": "^10.8.0",
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0",
-<<<<<<< HEAD
     "clsx": "^2.1.0",
-    "tailwind-merge": "^2.2.0",
-    "react-firebaseui": "^6.0.0"
-  },
-  "devDependencies": {
-=======
     "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.2.0",
->>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
     "@types/node": "^20.11.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.17",
-<<<<<<< HEAD
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.2.0",
-=======
-    "eslint": "^9.39.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.5.0",
-    "postcss": "^8.4.33",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.2.0",
-    "typescript-eslint": "^8.48.0",
->>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
     "vite": "^5.0.0"
   }
 }

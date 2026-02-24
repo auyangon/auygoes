@@ -1,0 +1,116 @@
+[
+  {
+    "date": "2026-02-18",
+    "title": "Orientation",
+    "description": "Start of Orientation",
+    "type": "academic"
+  },
+  {
+    "date": "2026-02-19",
+    "title": "Semester Start",
+    "description": "Start of Semester Start",
+    "type": "academic"
+  },
+  {
+    "date": "2026-04-06",
+    "title": "Midterm Exam",
+    "description": "Start of Midterm Exam",
+    "type": "academic"
+  },
+  {
+    "date": "2026-04-07",
+    "title": "Midterm Exam",
+    "description": "Midterm Exam (day)",
+    "type": "academic"
+  },
+  {
+    "date": "2026-04-08",
+    "title": "Midterm Exam",
+    "description": "Midterm Exam (day)",
+    "type": "academic"
+  },
+  {
+    "date": "2026-04-09",
+    "title": "Midterm Exam",
+    "description": "Midterm Exam (day)",
+    "type": "academic"
+  },
+  {
+    "date": "2026-04-10",
+    "title": "Midterm Exam",
+    "description": "End of Midterm Exam",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-08",
+    "title": "Final Exam",
+    "description": "Start of Final Exam",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-09",
+    "title": "Final Exam",
+    "description": "Final Exam (day)",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-10",
+    "title": "Final Exam",
+    "description": "Final Exam (day)",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-11",
+    "title": "Final Exam",
+    "description": "Final Exam (day)",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-12",
+    "title": "Final Exam",
+    "description": "End of Final Exam",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-12",
+    "title": "Semester End",
+    "description": "Start of Semester End",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-15",
+    "title": "Term Break",
+    "description": "Start of Term Break",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-16",
+    "title": "Term Break",
+    "description": "Term Break (day)",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-17",
+    "title": "Term Break",
+    "description": "Term Break (day)",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-18",
+    "title": "Term Break",
+    "description": "Term Break (day)",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-19",
+    "title": "Term Break",
+    "description": "End of Term Break",
+    "type": "academic"
+  },
+  {
+    "date": "2026-06-26",
+    "title": "Grade Submission",
+    "description": "Start of Grade Submission",
+    "type": "academic"
+  }
+]

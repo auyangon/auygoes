@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "node build.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "data:calendar": "node scripts/convertCalendar.js"
   },
   "dependencies": {
     "firebase": "^10.8.0",

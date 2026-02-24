@@ -15,8 +15,13 @@ export function Login() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      // err is unknown; we need to extract the message safely
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     }
   };
 

@@ -72,14 +72,6 @@ export default function Dashboard() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="text-white/70 text-center py-12">
-        {error}
-      </div>
-    );
-  }
-
   const displayCourses = courses.slice(0, 4);
 
   return (
@@ -90,6 +82,13 @@ export default function Dashboard() {
           🎓 yo yo yo welcome to AUY portal!
         </span>
       </motion.div>
+
+      {/* Optional non‑blocking error banner */}
+      {error && (
+        <motion.div variants={fadeUp} className="bg-red-500/20 border border-red-500/30 text-red-200 p-3 rounded-xl text-sm text-center">
+          ⚠️ {error} – showing default data
+        </motion.div>
+      )}
 
       {/* Header */}
       <motion.div variants={fadeUp} className="flex items-start justify-between">
@@ -111,22 +110,32 @@ export default function Dashboard() {
                 <User className="w-6 h-6 text-emerald-300" />
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-white/90 truncate">{student?.studentName}</p>
-                <p className="text-xs text-white/40 truncate">{student?.studentId}</p>
+                <p className="text-sm font-semibold text-white/90 truncate">
+                  {student?.studentName || 'Student'}
+                </p>
+                <p className="text-xs text-white/40 truncate">
+                  {student?.studentId || 'ID not available'}
+                </p>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
                 <span className="text-white/40">Major</span>
-                <span className="text-white/70 font-medium">{student?.major}</span>
+                <span className="text-white/70 font-medium">
+                  {student?.major || 'Undeclared'}
+                </span>
               </div>
               <div className="flex justify-between text-xs">
                 <span className="text-white/40">Mode</span>
-                <span className="text-white/70 font-medium">{student?.studyMode}</span>
+                <span className="text-white/70 font-medium">
+                  {student?.studyMode || 'Full-time'}
+                </span>
               </div>
               <div className="flex justify-between text-xs">
                 <span className="text-white/40">Attendance</span>
-                <span className="text-emerald-300 font-medium">{averageAttendance.toFixed(0)}%</span>
+                <span className="text-emerald-300 font-medium">
+                  {averageAttendance.toFixed(0)}%
+                </span>
               </div>
             </div>
           </GlassCard>

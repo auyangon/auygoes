@@ -35,15 +35,12 @@
 .animate-blob-1 {
   animation: blob-1 20s ease-in-out infinite;
 }
-
 .animate-blob-2 {
   animation: blob-2 25s ease-in-out infinite;
 }
-
 .animate-blob-3 {
   animation: blob-3 22s ease-in-out infinite;
 }
-
 .animate-pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;
 }
@@ -53,27 +50,22 @@
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Selection color */
 ::selection {
   background: rgba(52, 211, 153, 0.3);
   color: white;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
   font-family: 'Inter', sans-serif;

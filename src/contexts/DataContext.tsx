@@ -46,7 +46,6 @@ function encodeEmail(email: string): string {
   return email.replace(/\./g, ',,,').replace(/@/g, ',,@,,');
 }
 
-// Type for the raw course data from Firebase
 interface RawCourse {
   courseName: string;
   teacherName: string;

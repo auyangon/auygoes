@@ -84,6 +84,13 @@ export default function Dashboard() {
 
   return (
     <motion.div variants={stagger} initial="hidden" animate="show" className="space-y-6">
+      {/* Fun welcome message */}
+      <motion.div variants={fadeUp} className="text-center mb-2">
+        <span className="inline-block px-4 py-1 bg-emerald-500/20 rounded-full text-emerald-300 text-sm font-medium">
+          🎓 yo yo yo welcome to AUY portal!
+        </span>
+      </motion.div>
+
       {/* Header */}
       <motion.div variants={fadeUp} className="flex items-start justify-between">
         <div>

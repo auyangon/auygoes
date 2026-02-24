@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,10 +35,58 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+=======
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Floating blob animations */
+@keyframes blob-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, -40px) scale(1.1); }
+  50% { transform: translate(20px, 40px) scale(0.95); }
+  75% { transform: translate(-30px, 20px) scale(1.05); }
+}
+
+@keyframes blob-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-50px, 30px) scale(1.05); }
+  50% { transform: translate(30px, -50px) scale(1.1); }
+  75% { transform: translate(40px, 20px) scale(0.95); }
+}
+
+@keyframes blob-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(40px, 50px) scale(0.95); }
+  50% { transform: translate(-60px, -20px) scale(1.08); }
+  75% { transform: translate(20px, -40px) scale(1.02); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-blob-1 {
+  animation: blob-1 20s ease-in-out infinite;
+}
+.animate-blob-2 {
+  animation: blob-2 25s ease-in-out infinite;
+}
+.animate-blob-3 {
+  animation: blob-3 22s ease-in-out infinite;
+}
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
+<<<<<<< HEAD
   width: 8px;
   height: 8px;
 }
@@ -53,4 +102,33 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
+=======
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+::selection {
+  background: rgba(52, 211, 153, 0.3);
+  color: white;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
 }

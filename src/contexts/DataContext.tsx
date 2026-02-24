@@ -1,11 +1,16 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { ref, get, child } from 'firebase/database';
+=======
+import { ref, get } from 'firebase/database';
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
 import { db } from '../lib/firebase';
 import { useAuth } from './AuthContext';
 
 export interface Course {
   id: string;
   courseId: string;
+<<<<<<< HEAD
   name: string;
   teacherName: string;
   credits: number;
@@ -13,10 +18,27 @@ export interface Course {
   room?: string;
   googleClassroomLink?: string;
   grade?: string;
+=======
+  courseName: string;
+  teacherName: string;
+  credits: number;
+  grade: string;
+  attendancePercentage: number;
+  googleClassroomLink?: string;
+}
+
+export interface Student {
+  studentId: string;
+  studentName: string;
+  email: string;
+  studyMode: string;
+  major: string;
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
 }
 
 interface DataContextType {
   courses: Course[];
+<<<<<<< HEAD
   loading: boolean;
   error: string | null;
   gpa: number;
@@ -25,10 +47,19 @@ interface DataContextType {
   studentName: string;
   studentId: string;
   major: string;
+=======
+  student: Student | null;
+  gpa: number;
+  totalCredits: number;
+  averageAttendance: number;
+  loading: boolean;
+  error: string | null;
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
+<<<<<<< HEAD
 const gradePoints: Record<string, number> = {
   'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7,
   'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0, 'F': 0.0
@@ -45,6 +76,38 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [studentName, setStudentName] = useState('');
   const [studentId, setStudentId] = useState('');
   const [major, setMajor] = useState('');
+=======
+const GRADE_POINTS: Record<string, number> = {
+  'A': 4.0, 'A-': 3.7,
+  'B+': 3.3, 'B': 3.0, 'B-': 2.7,
+  'C+': 2.3, 'C': 2.0, 'C-': 1.7,
+  'D+': 1.3, 'D': 1.0,
+  'F': 0.0
+};
+
+function encodeEmail(email: string): string {
+  return email.replace(/\./g, ',,,').replace(/@/g, ',,@,,');
+}
+
+interface RawCourse {
+  courseName: string;
+  teacherName: string;
+  credits: number;
+  grade: string;
+  attendancePercentage: number;
+  googleClassroomLink?: string;
+}
+
+export function DataProvider({ children }: { children: React.ReactNode }) {
+  const { user } = useAuth();
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [student, setStudent] = useState<Student | null>(null);
+  const [gpa, setGpa] = useState(0);
+  const [totalCredits, setTotalCredits] = useState(0);
+  const [averageAttendance, setAverageAttendance] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
 
   useEffect(() => {
     async function fetchStudentData() {
@@ -54,6 +117,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
+<<<<<<< HEAD
         const dbRef = ref(db);
         
         const studentsSnapshot = await get(child(dbRef, 'students'));
@@ -130,10 +194,34 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         const gradesData = gradesSnapshot.val() || {};
         
         const studentGrades: any[] = [];
+=======
+        const encoded = encodeEmail(user.email);
+        const studentRef = ref(db, `students/${encoded}`);
+        const snapshot = await get(studentRef);
+
+        if (!snapshot.exists()) {
+          setError('Student record not found');
+          setLoading(false);
+          return;
+        }
+
+        const data = snapshot.val();
+
+        setStudent({
+          studentId: data.studentId,
+          studentName: data.studentName,
+          email: data.email,
+          studyMode: data.studyMode,
+          major: data.major,
+        });
+
+        const courseList: Course[] = [];
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
         let totalGradePoints = 0;
         let totalCreditsEarned = 0;
         let totalAttendance = 0;
         let attendanceCount = 0;
+<<<<<<< HEAD
         
         for (const [key, data] of Object.entries(gradesData)) {
           if ((data as any).studentId === currentStudentId) {
@@ -223,6 +311,41 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setGpa(3.4);
         setTotalCredits(10);
         setAttendance(92);
+=======
+
+        if (data.courses) {
+          Object.entries(data.courses).forEach(([id, rawCourse]) => {
+            const course = rawCourse as RawCourse;
+            courseList.push({
+              id,
+              courseId: id,
+              courseName: course.courseName,
+              teacherName: course.teacherName,
+              credits: course.credits,
+              grade: course.grade,
+              attendancePercentage: course.attendancePercentage,
+              googleClassroomLink: course.googleClassroomLink,
+            });
+
+            const points = GRADE_POINTS[course.grade] || 0;
+            totalGradePoints += points * course.credits;
+            totalCreditsEarned += course.credits;
+
+            if (course.attendancePercentage) {
+              totalAttendance += course.attendancePercentage;
+              attendanceCount++;
+            }
+          });
+        }
+
+        setCourses(courseList);
+        setGpa(totalCreditsEarned > 0 ? totalGradePoints / totalCreditsEarned : 0);
+        setTotalCredits(totalCreditsEarned);
+        setAverageAttendance(attendanceCount > 0 ? totalAttendance / attendanceCount : 0);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load data');
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
       } finally {
         setLoading(false);
       }
@@ -232,6 +355,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   return (
+<<<<<<< HEAD
     <DataContext.Provider value={{ 
       courses, 
       loading, 
@@ -243,15 +367,25 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       studentId,
       major
     }}>
+=======
+    <DataContext.Provider value={{ courses, student, gpa, totalCredits, averageAttendance, loading, error }}>
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
       {children}
     </DataContext.Provider>
   );
 }
 
+<<<<<<< HEAD
 export function useData() {
   const context = useContext(DataContext);
   if (context === undefined) {
     throw new Error('useData must be used within a DataProvider');
   }
+=======
+// eslint-disable-next-line react-refresh/only-export-components
+export function useData() {
+  const context = useContext(DataContext);
+  if (!context) throw new Error('useData must be used within DataProvider');
+>>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec
   return context;
 }

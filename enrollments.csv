@@ -1,0 +1,337 @@
+enrollmentId,studentId,studentName,email,studyMode,major,courseId,courseName,teacherName,credits,grade,googleClassroomLink,attendancePercentage,lastUpdated
+ENR00001,S001,Aung Khant Phyo,aung.khant.phyo@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,86,2026-02-22
+ENR00001,S001,Aung Khant Phyo,aung.khant.phyo@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,95,2026-02-22
+ENR00006,S001,Aung Khant Phyo,aung.khant.phyo@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,87,2026-02-22
+ENR00003,S001,Aung Khant Phyo,aung.khant.phyo@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A-,https://classroom.google.com/,97,2026-02-22
+ENR00004,S001,Aung Khant Phyo,aung.khant.phyo@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,90,2026-02-22
+ENR00005,S001,Aung Khant Phyo,aung.khant.phyo@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B-,https://classroom.google.com/,90,2026-02-22
+ENR00008,S002,Hsu Eain Htet,hsu.eain.htet@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00007,S002,Hsu Eain Htet,hsu.eain.htet@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,86,2026-02-22
+ENR00012,S002,Hsu Eain Htet,hsu.eain.htet@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B,https://classroom.google.com/,89,2026-02-22
+ENR00009,S002,Hsu Eain Htet,hsu.eain.htet@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,87,2026-02-22
+ENR00010,S002,Hsu Eain Htet,hsu.eain.htet@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,91,2026-02-22
+ENR00011,S002,Hsu Eain Htet,hsu.eain.htet@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,93,2026-02-22
+ENR00014,S003,Htoo Yadanar Oo,htoo.yadanar.oo@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,88,2026-02-22
+ENR00013,S003,Htoo Yadanar Oo,htoo.yadanar.oo@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,91,2026-02-22
+ENR00018,S003,Htoo Yadanar Oo,htoo.yadanar.oo@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,90,2026-02-22
+ENR00015,S003,Htoo Yadanar Oo,htoo.yadanar.oo@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B+,https://classroom.google.com/,87,2026-02-22
+ENR00016,S003,Htoo Yadanar Oo,htoo.yadanar.oo@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,94,2026-02-22
+ENR00017,S003,Htoo Yadanar Oo,htoo.yadanar.oo@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,93,2026-02-22
+ENR00020,S004,Kaung Pyae Phyo Kyaw,kaung.pyae.phyo.kyaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,94,2026-02-22
+ENR00019,S004,Kaung Pyae Phyo Kyaw,kaung.pyae.phyo.kyaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,87,2026-02-22
+ENR00024,S004,Kaung Pyae Phyo Kyaw,kaung.pyae.phyo.kyaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B,https://classroom.google.com/,89,2026-02-22
+ENR00021,S004,Kaung Pyae Phyo Kyaw,kaung.pyae.phyo.kyaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B+,https://classroom.google.com/,91,2026-02-22
+ENR00022,S004,Kaung Pyae Phyo Kyaw,kaung.pyae.phyo.kyaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,92,2026-02-22
+ENR00023,S004,Kaung Pyae Phyo Kyaw,kaung.pyae.phyo.kyaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,85,2026-02-22
+ENR00026,S005,Man Sian Hoih,man.sian.hoih@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,93,2026-02-22
+ENR00025,S005,Man Sian Hoih,man.sian.hoih@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,89,2026-02-22
+ENR00030,S005,Man Sian Hoih,man.sian.hoih@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,96,2026-02-22
+ENR00027,S005,Man Sian Hoih,man.sian.hoih@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,94,2026-02-22
+ENR00028,S005,Man Sian Hoih,man.sian.hoih@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,91,2026-02-22
+ENR00029,S005,Man Sian Hoih,man.sian.hoih@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,95,2026-02-22
+ENR00032,S006,Phone Pyae Han,phone.pyae.han@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B+,https://classroom.google.com/,87,2026-02-22
+ENR00031,S006,Phone Pyae Han,phone.pyae.han@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,86,2026-02-22
+ENR00036,S006,Phone Pyae Han,phone.pyae.han@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B+,https://classroom.google.com/,98,2026-02-22
+ENR00033,S006,Phone Pyae Han,phone.pyae.han@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,85,2026-02-22
+ENR00034,S006,Phone Pyae Han,phone.pyae.han@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,88,2026-02-22
+ENR00035,S006,Phone Pyae Han,phone.pyae.han@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,91,2026-02-22
+ENR00038,S007,Thin Zar Li Htay,thin.zar.li.htay@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,95,2026-02-22
+ENR00037,S007,Thin Zar Li Htay,thin.zar.li.htay@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,90,2026-02-22
+ENR00042,S007,Thin Zar Li Htay,thin.zar.li.htay@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,94,2026-02-22
+ENR00039,S007,Thin Zar Li Htay,thin.zar.li.htay@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,94,2026-02-22
+ENR00040,S007,Thin Zar Li Htay,thin.zar.li.htay@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A-,https://classroom.google.com/,87,2026-02-22
+ENR00041,S007,Thin Zar Li Htay,thin.zar.li.htay@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B-,https://classroom.google.com/,91,2026-02-22
+ENR00044,S008,Yoon Thiri Naing,yoon.thiri.naing@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,89,2026-02-22
+ENR00043,S008,Yoon Thiri Naing,yoon.thiri.naing@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,85,2026-02-22
+ENR00048,S008,Yoon Thiri Naing,yoon.thiri.naing@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B,https://classroom.google.com/,91,2026-02-22
+ENR00045,S008,Yoon Thiri Naing,yoon.thiri.naing@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,86,2026-02-22
+ENR00046,S008,Yoon Thiri Naing,yoon.thiri.naing@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,89,2026-02-22
+ENR00047,S008,Yoon Thiri Naing,yoon.thiri.naing@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,94,2026-02-22
+ENR00050,S009,Zau Myu Lat,zau.myu.lat@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,98,2026-02-22
+ENR00049,S009,Zau Myu Lat,zau.myu.lat@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,98,2026-02-22
+ENR00054,S009,Zau Myu Lat,zau.myu.lat@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,94,2026-02-22
+ENR00051,S009,Zau Myu Lat,zau.myu.lat@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00052,S009,Zau Myu Lat,zau.myu.lat@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,94,2026-02-22
+ENR00053,S009,Zau Myu Lat,zau.myu.lat@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,96,2026-02-22
+ENR00056,S010,En Sian Piang,en.sian.piang@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,87,2026-02-22
+ENR00055,S010,En Sian Piang,en.sian.piang@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,90,2026-02-22
+ENR00060,S010,En Sian Piang,en.sian.piang@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B,https://classroom.google.com/,96,2026-02-22
+ENR00057,S010,En Sian Piang,en.sian.piang@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,95,2026-02-22
+ENR00058,S010,En Sian Piang,en.sian.piang@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A-,https://classroom.google.com/,94,2026-02-22
+ENR00059,S010,En Sian Piang,en.sian.piang@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B-,https://classroom.google.com/,87,2026-02-22
+ENR00062,S011,Hsu Kyal Sin Zaw,hsu.kyal.sin.zaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,90,2026-02-22
+ENR00061,S011,Hsu Kyal Sin Zaw,hsu.kyal.sin.zaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,98,2026-02-22
+ENR00066,S011,Hsu Kyal Sin Zaw,hsu.kyal.sin.zaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,98,2026-02-22
+ENR00063,S011,Hsu Kyal Sin Zaw,hsu.kyal.sin.zaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,87,2026-02-22
+ENR00064,S011,Hsu Kyal Sin Zaw,hsu.kyal.sin.zaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00065,S011,Hsu Kyal Sin Zaw,hsu.kyal.sin.zaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,87,2026-02-22
+ENR00068,S012,Kaung Khant Kyaw,kaung.khant.kyaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,87,2026-02-22
+ENR00067,S012,Kaung Khant Kyaw,kaung.khant.kyaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,87,2026-02-22
+ENR00072,S012,Kaung Khant Kyaw,kaung.khant.kyaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,88,2026-02-22
+ENR00069,S012,Kaung Khant Kyaw,kaung.khant.kyaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,98,2026-02-22
+ENR00070,S012,Kaung Khant Kyaw,kaung.khant.kyaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,89,2026-02-22
+ENR00071,S012,Kaung Khant Kyaw,kaung.khant.kyaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B-,https://classroom.google.com/,89,2026-02-22
+ENR00074,S013,May Lin Phyu,may.lin.phyu@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,98,2026-02-22
+ENR00073,S013,May Lin Phyu,may.lin.phyu@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A-,https://classroom.google.com/,95,2026-02-22
+ENR00078,S013,May Lin Phyu,may.lin.phyu@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B+,https://classroom.google.com/,87,2026-02-22
+ENR00075,S013,May Lin Phyu,may.lin.phyu@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,96,2026-02-22
+ENR00076,S013,May Lin Phyu,may.lin.phyu@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,96,2026-02-22
+ENR00077,S013,May Lin Phyu,may.lin.phyu@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,92,2026-02-22
+ENR00080,S014,Min Hein Kyaw,min.hein.kyaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B+,https://classroom.google.com/,89,2026-02-22
+ENR00079,S014,Min Hein Kyaw,min.hein.kyaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,88,2026-02-22
+ENR00084,S014,Min Hein Kyaw,min.hein.kyaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,85,2026-02-22
+ENR00081,S014,Min Hein Kyaw,min.hein.kyaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,98,2026-02-22
+ENR00082,S014,Min Hein Kyaw,min.hein.kyaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,95,2026-02-22
+ENR00083,S014,Min Hein Kyaw,min.hein.kyaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,97,2026-02-22
+ENR00086,S015,Thint Myat Aung,thint.myat.aung@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,94,2026-02-22
+ENR00085,S015,Thint Myat Aung,thint.myat.aung@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,92,2026-02-22
+ENR00090,S015,Thint Myat Aung,thint.myat.aung@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,92,2026-02-22
+ENR00087,S015,Thint Myat Aung,thint.myat.aung@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,94,2026-02-22
+ENR00088,S015,Thint Myat Aung,thint.myat.aung@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A-,https://classroom.google.com/,94,2026-02-22
+ENR00089,S015,Thint Myat Aung,thint.myat.aung@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,93,2026-02-22
+ENR00092,S016,Chan Htet Zan,chan.htet.zan@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,98,2026-02-22
+ENR00091,S016,Chan Htet Zan,chan.htet.zan@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,86,2026-02-22
+ENR00096,S016,Chan Htet Zan,chan.htet.zan@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B,https://classroom.google.com/,85,2026-02-22
+ENR00093,S016,Chan Htet Zan,chan.htet.zan@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00094,S016,Chan Htet Zan,chan.htet.zan@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A-,https://classroom.google.com/,88,2026-02-22
+ENR00095,S016,Chan Htet Zan,chan.htet.zan@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,90,2026-02-22
+ENR00098,S017,Swan Sa Phyo,swan.sa.phyo@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,89,2026-02-22
+ENR00097,S017,Swan Sa Phyo,swan.sa.phyo@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,96,2026-02-22
+ENR00102,S017,Swan Sa Phyo,swan.sa.phyo@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,89,2026-02-22
+ENR00099,S017,Swan Sa Phyo,swan.sa.phyo@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,94,2026-02-22
+ENR00100,S017,Swan Sa Phyo,swan.sa.phyo@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,96,2026-02-22
+ENR00101,S017,Swan Sa Phyo,swan.sa.phyo@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A-,https://classroom.google.com/,96,2026-02-22
+ENR00104,S018,Mya Hmue May Zaw,mya.hmue.may.zaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,88,2026-02-22
+ENR00103,S018,Mya Hmue May Zaw,mya.hmue.may.zaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,92,2026-02-22
+ENR00108,S018,Mya Hmue May Zaw,mya.hmue.may.zaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B+,https://classroom.google.com/,93,2026-02-22
+ENR00105,S018,Mya Hmue May Zaw,mya.hmue.may.zaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,85,2026-02-22
+ENR00106,S018,Mya Hmue May Zaw,mya.hmue.may.zaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,85,2026-02-22
+ENR00107,S018,Mya Hmue May Zaw,mya.hmue.may.zaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,97,2026-02-22
+ENR00110,S019,Kaung Nyan Lin,kaung.nyan.lin@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B+,https://classroom.google.com/,87,2026-02-22
+ENR00109,S019,Kaung Nyan Lin,kaung.nyan.lin@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,95,2026-02-22
+ENR00114,S019,Kaung Nyan Lin,kaung.nyan.lin@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,86,2026-02-22
+ENR00111,S019,Kaung Nyan Lin,kaung.nyan.lin@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00112,S019,Kaung Nyan Lin,kaung.nyan.lin@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,90,2026-02-22
+ENR00113,S019,Kaung Nyan Lin,kaung.nyan.lin@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A-,https://classroom.google.com/,90,2026-02-22
+ENR00116,S020,Thaw Thaw Zin,thaw.thaw.zin@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B+,https://classroom.google.com/,95,2026-02-22
+ENR00115,S020,Thaw Thaw Zin,thaw.thaw.zin@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A-,https://classroom.google.com/,95,2026-02-22
+ENR00120,S020,Thaw Thaw Zin,thaw.thaw.zin@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,93,2026-02-22
+ENR00117,S020,Thaw Thaw Zin,thaw.thaw.zin@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A-,https://classroom.google.com/,91,2026-02-22
+ENR00118,S020,Thaw Thaw Zin,thaw.thaw.zin@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,88,2026-02-22
+ENR00119,S020,Thaw Thaw Zin,thaw.thaw.zin@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,97,2026-02-22
+ENR00122,S021,L Seng Rail,l.seng.rail@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B+,https://classroom.google.com/,90,2026-02-22
+ENR00121,S021,L Seng Rail,l.seng.rail@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,93,2026-02-22
+ENR00126,S021,L Seng Rail,l.seng.rail@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,93,2026-02-22
+ENR00123,S021,L Seng Rail,l.seng.rail@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A-,https://classroom.google.com/,85,2026-02-22
+ENR00124,S021,L Seng Rail,l.seng.rail@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,94,2026-02-22
+ENR00125,S021,L Seng Rail,l.seng.rail@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,94,2026-02-22
+ENR00128,S022,Min Hein Khant,min.hein.khant@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,87,2026-02-22
+ENR00127,S022,Min Hein Khant,min.hein.khant@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,98,2026-02-22
+ENR00132,S022,Min Hein Khant,min.hein.khant@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,88,2026-02-22
+ENR00129,S022,Min Hein Khant,min.hein.khant@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A-,https://classroom.google.com/,86,2026-02-22
+ENR00130,S022,Min Hein Khant,min.hein.khant@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A-,https://classroom.google.com/,90,2026-02-22
+ENR00131,S022,Min Hein Khant,min.hein.khant@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00134,S023,Thawdar Shoon Lei,thawdar.shoon.lei@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,93,2026-02-22
+ENR00133,S023,Thawdar Shoon Lei,thawdar.shoon.lei@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A-,https://classroom.google.com/,85,2026-02-22
+ENR00138,S023,Thawdar Shoon Lei,thawdar.shoon.lei@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B,https://classroom.google.com/,89,2026-02-22
+ENR00135,S023,Thawdar Shoon Lei,thawdar.shoon.lei@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,92,2026-02-22
+ENR00136,S023,Thawdar Shoon Lei,thawdar.shoon.lei@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,86,2026-02-22
+ENR00137,S023,Thawdar Shoon Lei,thawdar.shoon.lei@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,92,2026-02-22
+ENR00140,S024,Sian San Nuam,sian.san.nuam@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,86,2026-02-22
+ENR00139,S024,Sian San Nuam,sian.san.nuam@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,96,2026-02-22
+ENR00144,S024,Sian San Nuam,sian.san.nuam@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B+,https://classroom.google.com/,92,2026-02-22
+ENR00141,S024,Sian San Nuam,sian.san.nuam@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,86,2026-02-22
+ENR00142,S024,Sian San Nuam,sian.san.nuam@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,86,2026-02-22
+ENR00143,S024,Sian San Nuam,sian.san.nuam@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,88,2026-02-22
+ENR00146,S025,Zaw Seng Awng,zaw.seng.awng@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,90,2026-02-22
+ENR00145,S025,Zaw Seng Awng,zaw.seng.awng@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,95,2026-02-22
+ENR00150,S025,Zaw Seng Awng,zaw.seng.awng@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B+,https://classroom.google.com/,97,2026-02-22
+ENR00147,S025,Zaw Seng Awng,zaw.seng.awng@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,95,2026-02-22
+ENR00148,S025,Zaw Seng Awng,zaw.seng.awng@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,96,2026-02-22
+ENR00149,S025,Zaw Seng Awng,zaw.seng.awng@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00152,S026,Thet Hayman Kyaw,thet.hayman.kyaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,86,2026-02-22
+ENR00151,S026,Thet Hayman Kyaw,thet.hayman.kyaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,87,2026-02-22
+ENR00156,S026,Thet Hayman Kyaw,thet.hayman.kyaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,87,2026-02-22
+ENR00153,S026,Thet Hayman Kyaw,thet.hayman.kyaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B+,https://classroom.google.com/,93,2026-02-22
+ENR00154,S026,Thet Hayman Kyaw,thet.hayman.kyaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,96,2026-02-22
+ENR00155,S026,Thet Hayman Kyaw,thet.hayman.kyaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,96,2026-02-22
+ENR00158,S027,Aung Khant Zaw,aung.khant.zaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,95,2026-02-22
+ENR00157,S027,Aung Khant Zaw,aung.khant.zaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,92,2026-02-22
+ENR00162,S027,Aung Khant Zaw,aung.khant.zaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,94,2026-02-22
+ENR00159,S027,Aung Khant Zaw,aung.khant.zaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B+,https://classroom.google.com/,96,2026-02-22
+ENR00160,S027,Aung Khant Zaw,aung.khant.zaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A-,https://classroom.google.com/,91,2026-02-22
+ENR00161,S027,Aung Khant Zaw,aung.khant.zaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,91,2026-02-22
+ENR00164,S028,Aung Kyaw Min,aung.kyaw.min@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,86,2026-02-22
+ENR00163,S028,Aung Kyaw Min,aung.kyaw.min@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,98,2026-02-22
+ENR00168,S028,Aung Kyaw Min,aung.kyaw.min@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,85,2026-02-22
+ENR00165,S028,Aung Kyaw Min,aung.kyaw.min@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B+,https://classroom.google.com/,92,2026-02-22
+ENR00166,S028,Aung Kyaw Min,aung.kyaw.min@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,85,2026-02-22
+ENR00167,S028,Aung Kyaw Min,aung.kyaw.min@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B-,https://classroom.google.com/,93,2026-02-22
+ENR00170,S029,Aye Chan Myae Aung,aye.chan.myae.aung@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,89,2026-02-22
+ENR00169,S029,Aye Chan Myae Aung,aye.chan.myae.aung@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,93,2026-02-22
+ENR00174,S029,Aye Chan Myae Aung,aye.chan.myae.aung@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,91,2026-02-22
+ENR00171,S029,Aye Chan Myae Aung,aye.chan.myae.aung@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,96,2026-02-22
+ENR00172,S029,Aye Chan Myae Aung,aye.chan.myae.aung@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,97,2026-02-22
+ENR00173,S029,Aye Chan Myae Aung,aye.chan.myae.aung@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,90,2026-02-22
+ENR00176,S030,Eaint Myat Kyaw,eaint.myat.kyaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,88,2026-02-22
+ENR00175,S030,Eaint Myat Kyaw,eaint.myat.kyaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,93,2026-02-22
+ENR00180,S030,Eaint Myat Kyaw,eaint.myat.kyaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,92,2026-02-22
+ENR00177,S030,Eaint Myat Kyaw,eaint.myat.kyaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00178,S030,Eaint Myat Kyaw,eaint.myat.kyaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,90,2026-02-22
+ENR00179,S030,Eaint Myat Kyaw,eaint.myat.kyaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B-,https://classroom.google.com/,87,2026-02-22
+ENR00182,S031,Hnin Wai Phyo,hnin.wai.phyo@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,93,2026-02-22
+ENR00181,S031,Hnin Wai Phyo,hnin.wai.phyo@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,89,2026-02-22
+ENR00186,S031,Hnin Wai Phyo,hnin.wai.phyo@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,92,2026-02-22
+ENR00183,S031,Hnin Wai Phyo,hnin.wai.phyo@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,88,2026-02-22
+ENR00184,S031,Hnin Wai Phyo,hnin.wai.phyo@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,88,2026-02-22
+ENR00185,S031,Hnin Wai Phyo,hnin.wai.phyo@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A-,https://classroom.google.com/,89,2026-02-22
+ENR00188,S032,Hpa La Hpone Ram,hpa.la.hpone.ram@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,87,2026-02-22
+ENR00187,S032,Hpa La Hpone Ram,hpa.la.hpone.ram@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00192,S032,Hpa La Hpone Ram,hpa.la.hpone.ram@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B,https://classroom.google.com/,86,2026-02-22
+ENR00189,S032,Hpa La Hpone Ram,hpa.la.hpone.ram@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00190,S032,Hpa La Hpone Ram,hpa.la.hpone.ram@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A-,https://classroom.google.com/,92,2026-02-22
+ENR00191,S032,Hpa La Hpone Ram,hpa.la.hpone.ram@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,86,2026-02-22
+ENR00194,S033,Hsu Pyae La Min,hsu.pyae.la.min@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,96,2026-02-22
+ENR00193,S033,Hsu Pyae La Min,hsu.pyae.la.min@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,85,2026-02-22
+ENR00198,S033,Hsu Pyae La Min,hsu.pyae.la.min@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,94,2026-02-22
+ENR00195,S033,Hsu Pyae La Min,hsu.pyae.la.min@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,85,2026-02-22
+ENR00196,S033,Hsu Pyae La Min,hsu.pyae.la.min@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,96,2026-02-22
+ENR00197,S033,Hsu Pyae La Min,hsu.pyae.la.min@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A-,https://classroom.google.com/,91,2026-02-22
+ENR00200,S034,Indira,indira@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,92,2026-02-22
+ENR00199,S034,Indira,indira@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,91,2026-02-22
+ENR00204,S034,Indira,indira@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,98,2026-02-22
+ENR00201,S034,Indira,indira@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,86,2026-02-22
+ENR00202,S034,Indira,indira@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,97,2026-02-22
+ENR00203,S034,Indira,indira@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,94,2026-02-22
+ENR00206,S035,La Mye Gyung Naw,la.mye.gyung.naw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,90,2026-02-22
+ENR00205,S035,La Mye Gyung Naw,la.mye.gyung.naw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,93,2026-02-22
+ENR00210,S035,La Mye Gyung Naw,la.mye.gyung.naw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,94,2026-02-22
+ENR00207,S035,La Mye Gyung Naw,la.mye.gyung.naw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,88,2026-02-22
+ENR00208,S035,La Mye Gyung Naw,la.mye.gyung.naw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,90,2026-02-22
+ENR00209,S035,La Mye Gyung Naw,la.mye.gyung.naw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A-,https://classroom.google.com/,87,2026-02-22
+ENR00212,S036,La Pyae Chit,la.pyae.chit@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,93,2026-02-22
+ENR00211,S036,La Pyae Chit,la.pyae.chit@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A-,https://classroom.google.com/,90,2026-02-22
+ENR00216,S036,La Pyae Chit,la.pyae.chit@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,87,2026-02-22
+ENR00213,S036,La Pyae Chit,la.pyae.chit@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,96,2026-02-22
+ENR00214,S036,La Pyae Chit,la.pyae.chit@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,85,2026-02-22
+ENR00215,S036,La Pyae Chit,la.pyae.chit@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,95,2026-02-22
+ENR00218,S037,Lin Sandar Kyaw,lin.sandar.kyaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,97,2026-02-22
+ENR00217,S037,Lin Sandar Kyaw,lin.sandar.kyaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,93,2026-02-22
+ENR00222,S037,Lin Sandar Kyaw,lin.sandar.kyaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,96,2026-02-22
+ENR00219,S037,Lin Sandar Kyaw,lin.sandar.kyaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B+,https://classroom.google.com/,90,2026-02-22
+ENR00220,S037,Lin Sandar Kyaw,lin.sandar.kyaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,98,2026-02-22
+ENR00221,S037,Lin Sandar Kyaw,lin.sandar.kyaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A-,https://classroom.google.com/,89,2026-02-22
+ENR00224,S038,Min Thiha Kyaw,min.thiha.kyaw@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,88,2026-02-22
+ENR00223,S038,Min Thiha Kyaw,min.thiha.kyaw@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,87,2026-02-22
+ENR00228,S038,Min Thiha Kyaw,min.thiha.kyaw@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,89,2026-02-22
+ENR00225,S038,Min Thiha Kyaw,min.thiha.kyaw@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,97,2026-02-22
+ENR00226,S038,Min Thiha Kyaw,min.thiha.kyaw@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,87,2026-02-22
+ENR00227,S038,Min Thiha Kyaw,min.thiha.kyaw@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,90,2026-02-22
+ENR00230,S039,Nan Moe Nwe Oo,nan.moe.nwe.oo@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,94,2026-02-22
+ENR00229,S039,Nan Moe Nwe Oo,nan.moe.nwe.oo@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,94,2026-02-22
+ENR00234,S039,Nan Moe Nwe Oo,nan.moe.nwe.oo@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,87,2026-02-22
+ENR00231,S039,Nan Moe Nwe Oo,nan.moe.nwe.oo@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A,https://classroom.google.com/,89,2026-02-22
+ENR00232,S039,Nan Moe Nwe Oo,nan.moe.nwe.oo@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,92,2026-02-22
+ENR00233,S039,Nan Moe Nwe Oo,nan.moe.nwe.oo@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,87,2026-02-22
+ENR00236,S040,Nlang Seng Htoi Pan,nlang.seng.htoi.pan@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,98,2026-02-22
+ENR00235,S040,Nlang Seng Htoi Pan,nlang.seng.htoi.pan@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,85,2026-02-22
+ENR00240,S040,Nlang Seng Htoi Pan,nlang.seng.htoi.pan@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,90,2026-02-22
+ENR00237,S040,Nlang Seng Htoi Pan,nlang.seng.htoi.pan@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A-,https://classroom.google.com/,86,2026-02-22
+ENR00238,S040,Nlang Seng Htoi Pan,nlang.seng.htoi.pan@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,93,2026-02-22
+ENR00239,S040,Nlang Seng Htoi Pan,nlang.seng.htoi.pan@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,85,2026-02-22
+ENR00242,S041,Nlang Seng Myo Myat,nlang.seng.myo.myat@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B+,https://classroom.google.com/,96,2026-02-22
+ENR00241,S041,Nlang Seng Myo Myat,nlang.seng.myo.myat@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A-,https://classroom.google.com/,86,2026-02-22
+ENR00246,S041,Nlang Seng Myo Myat,nlang.seng.myo.myat@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,87,2026-02-22
+ENR00243,S041,Nlang Seng Myo Myat,nlang.seng.myo.myat@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,91,2026-02-22
+ENR00244,S041,Nlang Seng Myo Myat,nlang.seng.myo.myat@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,91,2026-02-22
+ENR00245,S041,Nlang Seng Myo Myat,nlang.seng.myo.myat@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,94,2026-02-22
+ENR00248,S042,Shoon Lae Aung,shoon.lae.aung@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,96,2026-02-22
+ENR00247,S042,Shoon Lae Aung,shoon.lae.aung@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A-,https://classroom.google.com/,95,2026-02-22
+ENR00252,S042,Shoon Lae Aung,shoon.lae.aung@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,85,2026-02-22
+ENR00249,S042,Shoon Lae Aung,shoon.lae.aung@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,89,2026-02-22
+ENR00250,S042,Shoon Lae Aung,shoon.lae.aung@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,87,2026-02-22
+ENR00251,S042,Shoon Lae Aung,shoon.lae.aung@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,90,2026-02-22
+ENR00254,S043,Su Pyae Than Dar,su.pyae.than.dar@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,91,2026-02-22
+ENR00253,S043,Su Pyae Than Dar,su.pyae.than.dar@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,96,2026-02-22
+ENR00258,S043,Su Pyae Than Dar,su.pyae.than.dar@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,96,2026-02-22
+ENR00255,S043,Su Pyae Than Dar,su.pyae.than.dar@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B+,https://classroom.google.com/,85,2026-02-22
+ENR00256,S043,Su Pyae Than Dar,su.pyae.than.dar@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,87,2026-02-22
+ENR00257,S043,Su Pyae Than Dar,su.pyae.than.dar@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,87,2026-02-22
+ENR00260,S044,Thin Thin Aung,thin.thin.aung@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,93,2026-02-22
+ENR00259,S044,Thin Thin Aung,thin.thin.aung@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,98,2026-02-22
+ENR00264,S044,Thin Thin Aung,thin.thin.aung@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,97,2026-02-22
+ENR00261,S044,Thin Thin Aung,thin.thin.aung@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B+,https://classroom.google.com/,87,2026-02-22
+ENR00262,S044,Thin Thin Aung,thin.thin.aung@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,97,2026-02-22
+ENR00263,S044,Thin Thin Aung,thin.thin.aung@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,97,2026-02-22
+ENR00266,S045,Thiri Thansin,thiri.thansin@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B+,https://classroom.google.com/,90,2026-02-22
+ENR00265,S045,Thiri Thansin,thiri.thansin@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,95,2026-02-22
+ENR00270,S045,Thiri Thansin,thiri.thansin@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,B+,https://classroom.google.com/,88,2026-02-22
+ENR00267,S045,Thiri Thansin,thiri.thansin@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B+,https://classroom.google.com/,94,2026-02-22
+ENR00268,S045,Thiri Thansin,thiri.thansin@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A-,https://classroom.google.com/,94,2026-02-22
+ENR00269,S045,Thiri Thansin,thiri.thansin@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B-,https://classroom.google.com/,85,2026-02-22
+ENR00272,S046,Yatanar Moe,yatanar.moe@student.au.edu.mm,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,88,2026-02-22
+ENR00271,S046,Yatanar Moe,yatanar.moe@student.au.edu.mm,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,91,2026-02-22
+ENR00276,S046,Yatanar Moe,yatanar.moe@student.au.edu.mm,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,97,2026-02-22
+ENR00273,S046,Yatanar Moe,yatanar.moe@student.au.edu.mm,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,92,2026-02-22
+ENR00274,S046,Yatanar Moe,yatanar.moe@student.au.edu.mm,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,91,2026-02-22
+ENR00275,S046,Yatanar Moe,yatanar.moe@student.au.edu.mm,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B+,https://classroom.google.com/,87,2026-02-22
+ENR00278,S047,Htut Khaung Oo,htut.khaung.oo@student.au.edu.mm,Remote,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B+,https://classroom.google.com/,80,2026-02-22
+ENR00277,S047,Htut Khaung Oo,htut.khaung.oo@student.au.edu.mm,Remote,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,80,2026-02-22
+ENR00282,S047,Htut Khaung Oo,htut.khaung.oo@student.au.edu.mm,Remote,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,82,2026-02-22
+ENR00279,S047,Htut Khaung Oo,htut.khaung.oo@student.au.edu.mm,Remote,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,87,2026-02-22
+ENR00280,S047,Htut Khaung Oo,htut.khaung.oo@student.au.edu.mm,Remote,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,92,2026-02-22
+ENR00281,S047,Htut Khaung Oo,htut.khaung.oo@student.au.edu.mm,Remote,ISP program,STAT100,Statistics,Dr. White,3,B-,https://classroom.google.com/,85,2026-02-22
+ENR00284,S048,Mung Hkawng La,mung.hkawng.la@student.au.edu.mm,Remote,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,77,2026-02-22
+ENR00283,S048,Mung Hkawng La,mung.hkawng.la@student.au.edu.mm,Remote,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,91,2026-02-22
+ENR00288,S048,Mung Hkawng La,mung.hkawng.la@student.au.edu.mm,Remote,ISP program,HUM11,Humanities,Prof. Green,3,B+,https://classroom.google.com/,86,2026-02-22
+ENR00285,S048,Mung Hkawng La,mung.hkawng.la@student.au.edu.mm,Remote,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,89,2026-02-22
+ENR00286,S048,Mung Hkawng La,mung.hkawng.la@student.au.edu.mm,Remote,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,80,2026-02-22
+ENR00287,S048,Mung Hkawng La,mung.hkawng.la@student.au.edu.mm,Remote,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,85,2026-02-22
+ENR00290,S049,Thet Mon Chit,thet.mon.chit@student.au.edu.mm,Remote,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,90,2026-02-22
+ENR00289,S049,Thet Mon Chit,thet.mon.chit@student.au.edu.mm,Remote,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,75,2026-02-22
+ENR00294,S049,Thet Mon Chit,thet.mon.chit@student.au.edu.mm,Remote,ISP program,HUM11,Humanities,Prof. Green,3,B-,https://classroom.google.com/,76,2026-02-22
+ENR00291,S049,Thet Mon Chit,thet.mon.chit@student.au.edu.mm,Remote,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,76,2026-02-22
+ENR00292,S049,Thet Mon Chit,thet.mon.chit@student.au.edu.mm,Remote,ISP program,MATH101,College Mathematics,Prof. Lee,3,B,https://classroom.google.com/,87,2026-02-22
+ENR00293,S049,Thet Mon Chit,thet.mon.chit@student.au.edu.mm,Remote,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,76,2026-02-22
+ENR00296,S050,Myat Thiri Kyaw,myat.thiri.kyaw@student.au.edu.mm,Remote,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B-,https://classroom.google.com/,91,2026-02-22
+ENR00295,S050,Myat Thiri Kyaw,myat.thiri.kyaw@student.au.edu.mm,Remote,ISP program,ENG101,English Composition,Dr. Smith,3,A-,https://classroom.google.com/,90,2026-02-22
+ENR00300,S050,Myat Thiri Kyaw,myat.thiri.kyaw@student.au.edu.mm,Remote,ISP program,HUM11,Humanities,Prof. Green,3,B,https://classroom.google.com/,89,2026-02-22
+ENR00297,S050,Myat Thiri Kyaw,myat.thiri.kyaw@student.au.edu.mm,Remote,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A-,https://classroom.google.com/,78,2026-02-22
+ENR00298,S050,Myat Thiri Kyaw,myat.thiri.kyaw@student.au.edu.mm,Remote,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,88,2026-02-22
+ENR00299,S050,Myat Thiri Kyaw,myat.thiri.kyaw@student.au.edu.mm,Remote,ISP program,STAT100,Statistics,Dr. White,3,B-,https://classroom.google.com/,84,2026-02-22
+ENR00302,S051,Aye Chan Pyone,aye.chan.pyone@student.au.edu.mm,Remote,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,89,2026-02-22
+ENR00301,S051,Aye Chan Pyone,aye.chan.pyone@student.au.edu.mm,Remote,ISP program,ENG101,English Composition,Dr. Smith,3,A-,https://classroom.google.com/,80,2026-02-22
+ENR00306,S051,Aye Chan Pyone,aye.chan.pyone@student.au.edu.mm,Remote,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,88,2026-02-22
+ENR00303,S051,Aye Chan Pyone,aye.chan.pyone@student.au.edu.mm,Remote,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B-,https://classroom.google.com/,76,2026-02-22
+ENR00304,S051,Aye Chan Pyone,aye.chan.pyone@student.au.edu.mm,Remote,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,77,2026-02-22
+ENR00305,S051,Aye Chan Pyone,aye.chan.pyone@student.au.edu.mm,Remote,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,75,2026-02-22
+ENR00308,S052,Aung Min Khant,aung.min.khant@student.au.edu.mm,Remote,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B+,https://classroom.google.com/,85,2026-02-22
+ENR00307,S052,Aung Min Khant,aung.min.khant@student.au.edu.mm,Remote,ISP program,ENG101,English Composition,Dr. Smith,3,A,https://classroom.google.com/,86,2026-02-22
+ENR00312,S052,Aung Min Khant,aung.min.khant@student.au.edu.mm,Remote,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,86,2026-02-22
+ENR00309,S052,Aung Min Khant,aung.min.khant@student.au.edu.mm,Remote,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A-,https://classroom.google.com/,92,2026-02-22
+ENR00310,S052,Aung Min Khant,aung.min.khant@student.au.edu.mm,Remote,ISP program,MATH101,College Mathematics,Prof. Lee,3,A,https://classroom.google.com/,77,2026-02-22
+ENR00311,S052,Aung Min Khant,aung.min.khant@student.au.edu.mm,Remote,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,85,2026-02-22
+ENR00314,S053,Chan Myae Testing,chanmyae.au.edu.mm@gmail.com,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,96,2026-02-22
+ENR00313,S053,Chan Myae Testing,chanmyae.au.edu.mm@gmail.com,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,85,2026-02-22
+ENR00318,S053,Chan Myae Testing,chanmyae.au.edu.mm@gmail.com,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,95,2026-02-22
+ENR00315,S053,Chan Myae Testing,chanmyae.au.edu.mm@gmail.com,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A-,https://classroom.google.com/,91,2026-02-22
+ENR00316,S053,Chan Myae Testing,chanmyae.au.edu.mm@gmail.com,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,90,2026-02-22
+ENR00317,S053,Chan Myae Testing,chanmyae.au.edu.mm@gmail.com,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,86,2026-02-22
+ENR00314,S054,jbthaw,jbthaw@gmail.com,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A,https://classroom.google.com/,,
+ENR00313,S054,jbthaw,jbthaw@gmail.com,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B,https://classroom.google.com/,,
+ENR00318,S054,jbthaw,jbthaw@gmail.com,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,,
+ENR00315,S054,jbthaw,jbthaw@gmail.com,OnCampus,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,A-,https://classroom.google.com/,,
+ENR00316,S054,jbthaw,jbthaw@gmail.com,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B-,https://classroom.google.com/,,
+ENR00317,S054,jbthaw,jbthaw@gmail.com,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A,https://classroom.google.com/,,
+ENR00314,S053,Jino Chan,jinochan1991@gmail.com,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,A-,https://classroom.google.com/,95,2026-02-24
+ENR00313,S053,Jino Chan,jinochan1991@gmail.com,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B+,https://classroom.google.com/,88,2026-02-24
+ENR00318,S053,Jino Chan,jinochan1991@gmail.com,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A,https://classroom.google.com/,91,2026-02-24
+ENR00315,S053,Jino Chan,jinochan1991@gmail.com,Remote,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,82,2026-02-24
+ENR00316,S053,Jino Chan,jinochan1991@gmail.com,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,97,2026-02-24
+ENR00317,S053,Jino Chan,jinochan1991@gmail.com,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,A-,https://classroom.google.com/,94,2026-02-24
+ENR00314,S054,Hnin Yamone Oo,hninyamoneoo.au.edu@gmail.com,OnCampus,ISP program,BUS101,Introduction to Business,Prof. Johnson,3,B,https://classroom.google.com/,79,2026-02-24
+ENR00313,S054,Hnin Yamone Oo,hninyamoneoo.au.edu@gmail.com,OnCampus,ISP program,ENG101,English Composition,Dr. Smith,3,B-,https://classroom.google.com/,85,2026-02-24
+ENR00318,S054,Hnin Yamone Oo,hninyamoneoo.au.edu@gmail.com,OnCampus,ISP program,HUM11,Humanities,Prof. Green,3,A-,https://classroom.google.com/,90,2026-02-24
+ENR00315,S054,Hnin Yamone Oo,hninyamoneoo.au.edu@gmail.com,Remote,ISP program,IT101,Computer Fundamentals,Dr. Brown,3,B,https://classroom.google.com/,77,2026-02-24
+ENR00316,S054,Hnin Yamone Oo,hninyamoneoo.au.edu@gmail.com,OnCampus,ISP program,MATH101,College Mathematics,Prof. Lee,3,B+,https://classroom.google.com/,93,2026-02-24
+ENR00317,S054,Hnin Yamone Oo,hninyamoneoo.au.edu@gmail.com,OnCampus,ISP program,STAT100,Statistics,Dr. White,3,B,https://classroom.google.com/,89,2026-02-24

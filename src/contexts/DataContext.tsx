@@ -56,63 +56,165 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        console.log('🔍 Fetching data for:', user.email);
+        console.log('🔍 Looking up student with email:', user.email);
         
-        // Based on your data structure, courses are at the root level
-        // Each course is a key like "ENG101" with course data
-        const coursesRef = ref(db, '/');
-        const snapshot = await get(coursesRef);
+        // Get all data from Firebase root
+        const rootRef = ref(db, '/');
+        const snapshot = await get(rootRef);
         const allData = snapshot.val() || {};
         
         console.log('📚 All Firebase data:', allData);
         
-        // Filter out only the course keys (like ENG101, BUS101, etc.)
-        const courseKeys = ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'];
+        // ===========================================
+        // STEP 1: FIND STUDENT BY EMAIL
+        // ===========================================
+        let currentStudent: any = null;
+        let currentStudentId = '';
         
-        const enrolledCourses: Course[] = [];
+        // Check if there's a 'students' node
+        if (allData.students) {
+          for (const [id, student] of Object.entries(allData.students)) {
+            const studentData = student as any;
+            if (studentData.email === user.email) {
+              currentStudent = studentData;
+              currentStudentId = id;
+              break;
+            }
+          }
+        }
+        
+        // If no students node, try to find by email in root
+        if (!currentStudent) {
+          for (const [key, value] of Object.entries(allData)) {
+            if (value && typeof value === 'object' && 'email' in value && value.email === user.email) {
+              currentStudent = value;
+              currentStudentId = key;
+              break;
+            }
+          }
+        }
+        
+        console.log('👤 Student found:', currentStudent ? 'YES' : 'NO', currentStudent);
+        
+        // Set student info
+        if (currentStudent) {
+          setStudentName(currentStudent.name || currentStudent.studentName || user.displayName || 'Student');
+          setStudentId(currentStudent.studentId || currentStudentId || 'AUY-2025-001');
+          setMajor(currentStudent.major || 'Computer Science');
+        } else {
+          setStudentName(user.displayName?.split(' ')[0] || 'Student');
+          setStudentId('AUY-2025-001');
+          setMajor('Computer Science');
+        }
+        
+        // ===========================================
+        // STEP 2: GET ALL COURSES FROM FIREBASE
+        // ===========================================
+        const allCourses: Record<string, any> = {};
+        
+        if (allData.courses) {
+          Object.assign(allCourses, allData.courses);
+        } else {
+          const coursePattern = /^[A-Z]{3,4}\d{0,3}$/;
+          for (const [key, value] of Object.entries(allData)) {
+            if (value && typeof value === 'object' && 'courseName' in value) {
+              allCourses[key] = value;
+            } else if (value && typeof value === 'object' && coursePattern.test(key)) {
+              allCourses[key] = value;
+            }
+          }
+        }
+        
+        console.log('📖 All available courses:', allCourses);
+        
+        // ===========================================
+        // STEP 3: DETERMINE WHICH COURSES THIS STUDENT IS ENROLLED IN
+        // ===========================================
+        const enrolledCourseIds = new Set<string>();
+        
+        if (currentStudent?.enrolledCourses && Array.isArray(currentStudent.enrolledCourses)) {
+          currentStudent.enrolledCourses.forEach((courseId: string) => {
+            enrolledCourseIds.add(courseId);
+          });
+        }
+        
+        if (allData.studentCourses) {
+          for (const [key, record] of Object.entries(allData.studentCourses)) {
+            const gradeRecord = record as any;
+            if (gradeRecord.studentId === currentStudentId || 
+                gradeRecord.studentId === currentStudent?.studentId ||
+                gradeRecord.email === user.email) {
+              if (gradeRecord.courseId) {
+                enrolledCourseIds.add(gradeRecord.courseId);
+              }
+            }
+          }
+        }
+        
+        console.log('🎯 Student enrolled in courses:', Array.from(enrolledCourseIds));
+        
+        // ===========================================
+        // STEP 4: BUILD STUDENT'S COURSES WITH GRADES
+        // ===========================================
+        const studentCourses: Course[] = [];
         let totalGradePoints = 0;
         let totalCreditsEarned = 0;
         let totalAttendance = 0;
         let attendanceCount = 0;
         
-        // Loop through possible course keys
-        for (const courseId of courseKeys) {
-          const courseData = allData[courseId];
-          
-          if (courseData && courseData.courseName) {
-            console.log(`✅ Found course ${courseId}:`, courseData);
-            
-            enrolledCourses.push({
-              id: courseId,
-              courseId: courseId,
-              name: courseData.courseName || courseId,
-              teacherName: courseData.teacherName || '',
-              credits: courseData.credits || 3,
-              schedule: courseData.schedule || '',
-              room: courseData.room || '',
-              googleClassroomLink: courseData.googleClassroomLink || '',
-              grade: courseData.grade || '',
-              attendancePercentage: courseData.attendancePercentage
-            });
-            
-            // Calculate GPA
-            if (courseData.grade) {
-              const points = gradePoints[courseData.grade] || 0;
-              totalGradePoints += points * (courseData.credits || 3);
-              totalCreditsEarned += (courseData.credits || 3);
-            }
-            
-            // Calculate attendance
-            if (courseData.attendancePercentage) {
-              totalAttendance += courseData.attendancePercentage;
-              attendanceCount++;
+        const gradeMap = new Map();
+        if (allData.studentCourses) {
+          for (const [key, record] of Object.entries(allData.studentCourses)) {
+            const gradeRecord = record as any;
+            if (gradeRecord.studentId === currentStudentId || 
+                gradeRecord.studentId === currentStudent?.studentId ||
+                gradeRecord.email === user.email) {
+              if (gradeRecord.courseId) {
+                gradeMap.set(gradeRecord.courseId, {
+                  grade: gradeRecord.grade,
+                  attendance: gradeRecord.attendancePercentage
+                });
+              }
             }
           }
         }
         
-        console.log('🎓 Enrolled courses found:', enrolledCourses);
+        for (const courseId of enrolledCourseIds) {
+          const courseData = allCourses[courseId] || {};
+          const gradeInfo = gradeMap.get(courseId) || {};
+          
+          const grade = gradeInfo.grade || courseData.grade || '';
+          const points = gradePoints[grade] || 0;
+          const credits = courseData.credits || 3;
+          
+          if (grade) {
+            totalGradePoints += points * credits;
+            totalCreditsEarned += credits;
+          }
+          
+          const attendanceValue = gradeInfo.attendance || courseData.attendancePercentage;
+          if (attendanceValue) {
+            totalAttendance += attendanceValue;
+            attendanceCount++;
+          }
+          
+          studentCourses.push({
+            id: courseId,
+            courseId: courseId,
+            name: courseData.courseName || courseData.name || courseId,
+            teacherName: courseData.teacherName || '',
+            credits: credits,
+            schedule: courseData.schedule || '',
+            room: courseData.room || '',
+            googleClassroomLink: courseData.googleClassroomLink || '',
+            grade: grade,
+            attendancePercentage: attendanceValue
+          });
+        }
         
-        setCourses(enrolledCourses);
+        console.log('✅ Final student courses:', studentCourses);
+        
+        setCourses(studentCourses);
         
         if (totalCreditsEarned > 0) {
           setGpa(Number((totalGradePoints / totalCreditsEarned).toFixed(2)));
@@ -121,13 +223,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setTotalCredits(totalCreditsEarned);
         setAttendance(attendanceCount > 0 ? Math.round(totalAttendance / attendanceCount) : 0);
         
-        // Set student info (you might want to add a students node later)
-        setStudentName(user.displayName || 'Student');
-        setStudentId('AUY-' + Math.floor(1000 + Math.random() * 9000));
-        setMajor('Computer Science');
-        
       } catch (err) {
-        console.error('❌ Error:', err);
+        console.error('❌ Error fetching data:', err);
         setError('Failed to load data');
       } finally {
         setLoading(false);

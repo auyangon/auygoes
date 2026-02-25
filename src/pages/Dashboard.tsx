@@ -44,6 +44,7 @@ export const Dashboard: React.FC = () => {
     studentId, 
     major, 
     loading,
+    error,
     announcements = []
   } = useData();
 
@@ -55,19 +56,8 @@ export const Dashboard: React.FC = () => {
     return "Good evening";
   };
 
-  // Get the first name for personalized greeting
-  const getFirstName = () => {
-    if (studentName) {
-      return studentName.split(' ')[0];
-    }
-    if (user?.displayName) {
-      return user.displayName.split(' ')[0];
-    }
-    return "Student";
-  };
-
   const greeting = getGreeting();
-  const firstName = getFirstName();
+  const firstName = studentName ? studentName.split(' ')[0] : (user?.displayName?.split(' ')[0] || 'Student');
 
   if (loading) {
     return (
@@ -80,7 +70,7 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Header with personalized greeting */}
+        {/* Header with student name - NOW SHOWING REAL NAME */}
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-2xl">
@@ -89,11 +79,11 @@ export const Dashboard: React.FC = () => {
               {greeting === "Good evening" && <Moon className="text-emerald-300" size={28} />}
             </div>
             <div>
-              <h2 className="text-4xl font-bold text-white mb-1 flex items-center gap-2">
-                {greeting}, {firstName}! 
+              <h2 className="text-4xl font-bold text-white mb-1 flex items-center gap-2 flex-wrap">
+                {greeting}, <span className="text-emerald-400">{firstName}</span>!
                 <Sparkles className="text-emerald-400" size={24} />
               </h2>
-              <p className="text-white/60">Welcome to American University of Yangon</p>
+              <p className="text-white/60">American University of Yangon</p>
             </div>
           </div>
           
@@ -112,7 +102,7 @@ export const Dashboard: React.FC = () => {
                   <User className="text-emerald-400" size={32} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-white">{studentName || user?.displayName || 'Student Name'}</h3>
+                  <h3 className="text-2xl font-bold text-white">{studentName || user?.displayName || 'Student'}</h3>
                   <p className="text-emerald-400 font-medium">{major || 'Computer Science'}</p>
                   <div className="grid grid-cols-2 gap-2 mt-3">
                     <div className="flex items-center gap-2 text-white/60">
@@ -155,14 +145,16 @@ export const Dashboard: React.FC = () => {
               <div className="mt-auto">
                 <p className="text-white/40 text-xs font-semibold uppercase tracking-widest mb-1">Current GPA</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-bold text-white">{gpa?.toFixed(2) || '3.5'}</span>
+                  <span className="text-5xl font-bold text-white">{gpa?.toFixed(2) || '0.0'}</span>
                   <span className="text-white/40 text-lg font-medium">/ 4.0</span>
                 </div>
                 <div className="mt-4 h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
                   <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full" 
-                       style={{ width: `${((gpa || 3.5) / 4) * 100}%` }} />
+                       style={{ width: `${((gpa || 0) / 4) * 100}%` }} />
                 </div>
-                <p className="text-emerald-400/80 text-xs mt-2">Dean's List eligible</p>
+                <p className="text-emerald-400/80 text-xs mt-2">
+                  {gpa >= 3.5 ? 'Dean\'s List eligible' : gpa >= 2.0 ? 'Good standing' : 'Academic probation'}
+                </p>
               </div>
             </GlassCard>
           </div>
@@ -178,11 +170,11 @@ export const Dashboard: React.FC = () => {
               <div className="mt-auto">
                 <p className="text-white/40 text-xs font-semibold uppercase tracking-widest mb-1">Progress</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-bold text-white">{totalCredits || 45}</span>
+                  <span className="text-5xl font-bold text-white">{totalCredits || 0}</span>
                   <span className="text-white/40 text-sm">/ 120</span>
                 </div>
                 <p className="text-emerald-400/80 text-xs mt-3 flex items-center gap-1 font-medium">
-                  <CheckCircle2 size={12} /> {Math.round((totalCredits || 45)/120*100)}% Complete
+                  <CheckCircle2 size={12} /> {totalCredits ? Math.round((totalCredits || 0)/120*100) : 0}% Complete
                 </p>
               </div>
             </GlassCard>
@@ -198,7 +190,12 @@ export const Dashboard: React.FC = () => {
             </button>
           </div>
           
-          {courses.length > 0 ? (
+          {error ? (
+            <GlassCard className="p-8 text-center border-red-500/20">
+              <p className="text-red-400 font-medium">{error}</p>
+              <p className="text-white/40 text-xs mt-2">Please check Firebase data structure</p>
+            </GlassCard>
+          ) : courses.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {courses.map((course, idx) => (
                 <GlassCard key={course.courseId || idx} className="p-4 flex items-center gap-4 hover:scale-[1.01] transition-transform cursor-pointer border-emerald-500/20 hover:border-emerald-500/40">
@@ -206,9 +203,9 @@ export const Dashboard: React.FC = () => {
                     <BookMarked className="text-emerald-400" size={24} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-white truncate">{course.name || 'Course Name'}</h4>
+                    <h4 className="font-semibold text-white truncate">{course.name}</h4>
                     <p className="text-xs text-white/40 truncate">
-                      {course.courseId || 'CS101'} • {course.credits || 3} Credits
+                      {course.courseId} • {course.credits} Credits
                     </p>
                     {course.teacherName && (
                       <p className="text-xs text-emerald-400/60 mt-1">{course.teacherName}</p>
@@ -219,14 +216,17 @@ export const Dashboard: React.FC = () => {
                   </div>
                   <div className="text-right">
                     <div className="text-emerald-400 font-bold text-lg">{course.grade || '—'}</div>
+                    {course.attendancePercentage && (
+                      <div className="text-xs text-white/40 mt-1">{course.attendancePercentage}%</div>
+                    )}
                   </div>
                 </GlassCard>
               ))}
             </div>
           ) : (
             <GlassCard className="p-8 text-center">
-              <p className="text-white/60">No courses enrolled yet</p>
-              <p className="text-xs text-white/40 mt-2">Check back later or contact your advisor</p>
+              <p className="text-white/60">No courses found for this student</p>
+              <p className="text-xs text-white/40 mt-2">Check your enrollment in Firebase</p>
             </GlassCard>
           )}
         </section>
@@ -273,13 +273,6 @@ export const Dashboard: React.FC = () => {
             </GlassCard>
           </div>
         </section>
-
-        {/* Additional course info if needed */}
-        {courses.length > 0 && (
-          <div className="text-xs text-white/30 text-center mt-4">
-            Showing {courses.length} course{courses.length !== 1 ? 's' : ''} from Firebase
-          </div>
-        )}
       </div>
     </div>
   );

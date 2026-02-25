@@ -71,11 +71,22 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         let currentStudent: any = null;
         let currentStudentId = '';
         
-        // Look through all nodes for student with matching email
-        for (const [key, value] of Object.entries(allData)) {
-          if (value && typeof value === 'object') {
-            // Check if this entry has an email field that matches
-            if ('email' in value && value.email === user.email) {
+        // Look for a students node or direct student entry
+        if (allData.students) {
+          for (const [id, student] of Object.entries(allData.students)) {
+            const studentData = student as any;
+            if (studentData.email === user.email) {
+              currentStudent = studentData;
+              currentStudentId = id;
+              break;
+            }
+          }
+        }
+        
+        // If not found in students node, look through all nodes
+        if (!currentStudent) {
+          for (const [key, value] of Object.entries(allData)) {
+            if (value && typeof value === 'object' && 'email' in value && value.email === user.email) {
               currentStudent = value;
               currentStudentId = key;
               break;
@@ -85,36 +96,33 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         
         console.log('👤 Student found:', currentStudent ? 'YES' : 'NO', currentStudent);
         
-        // Set student info (use displayName from auth if no student record)
+        // Set student info
         setStudentName(currentStudent?.name || currentStudent?.studentName || user.displayName || 'Student');
         setStudentId(currentStudent?.studentId || currentStudentId || 'AUY-2025-001');
         setMajor(currentStudent?.major || 'Computer Science');
         
         // ===========================================
-        // STEP 2: GET ALL COURSES
-        // Each course is a top-level node with courseName field
+        // STEP 2: GET ALL COURSES (COURSE CODES ARE TOP-LEVEL KEYS)
         // ===========================================
-        const allCourses: Record<string, any> = {};
         const courseList: Course[] = [];
         let totalGradePoints = 0;
         let totalCreditsEarned = 0;
         let totalAttendance = 0;
         let attendanceCount = 0;
         
-        // Loop through all top-level nodes to find courses
-        for (const [key, value] of Object.entries(allData)) {
-          // Check if this node looks like a course (has courseName field)
-          if (value && typeof value === 'object' && 'courseName' in value) {
-            console.log(`📖 Found course: ${key}`, value);
+        // List of possible course codes from your data
+        const possibleCourses = ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'];
+        
+        for (const courseId of possibleCourses) {
+          const courseData = allData[courseId];
+          
+          if (courseData && courseData.courseName) {
+            console.log(`📖 Found course ${courseId}:`, courseData);
             
-            const courseData = value as any;
-            
-            // Check if this course belongs to the student
-            // For now, include all courses (you can filter by student's enrolledCourses later)
             courseList.push({
-              id: key,
-              courseId: key,
-              name: courseData.courseName || key,
+              id: courseId,
+              courseId: courseId,
+              name: courseData.courseName,
               teacherName: courseData.teacherName || '',
               credits: courseData.credits || 3,
               schedule: courseData.schedule || '',
@@ -143,7 +151,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         
         setCourses(courseList);
         
-        // Calculate overall GPA
         if (totalCreditsEarned > 0) {
           setGpa(Number((totalGradePoints / totalCreditsEarned).toFixed(2)));
         }
@@ -152,8 +159,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setAttendance(attendanceCount > 0 ? Math.round(totalAttendance / attendanceCount) : 0);
         
       } catch (err: any) {
-        console.error('❌ Error fetching data:', err);
-        setError(err.message || 'Failed to load data');
+        console.error('❌ Error:', err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }

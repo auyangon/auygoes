@@ -20,7 +20,7 @@ import {
   Coffee
 } from 'lucide-react';
 
-// Hardcoded Myanmar 2026 holidays
+// Hardcoded Myanmar 2026 holidays (keep this - it's static data)
 const importantDates = [
   { month: 'January', days: [1, 2, 3, 4], name: 'New Year & Independence Day' },
   { month: 'February', days: [12, 13, 16, 17], name: 'Union Day & Chinese New Year' },
@@ -36,27 +36,16 @@ const importantDates = [
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { 
-    courses = [], 
-    gpa = 0, 
-    totalCredits = 0, 
-    attendance = 0, 
-    studentName = '', 
-    studentId = '', 
-    major = '', 
-    loading = true,
-    announcements = []
+    courses, 
+    gpa, 
+    totalCredits, 
+    attendance, 
+    studentName, 
+    studentId, 
+    major, 
+    loading,
+    announcements
   } = useData();
-
-  // Safe values with fallbacks
-  const displayName = studentName || user?.displayName || 'Student';
-  const displayEmail = user?.email || 'student@auy.edu.mm';
-  const displayMajor = major || 'Computer Science';
-  const displayId = studentId || 'AUY-2025-001';
-  const displayGpa = typeof gpa === 'number' && !isNaN(gpa) ? gpa : 3.5;
-  const displayCredits = typeof totalCredits === 'number' && !isNaN(totalCredits) ? totalCredits : 45;
-  const displayAttendance = typeof attendance === 'number' && !isNaN(attendance) ? attendance : 92;
-  const totalRequiredCredits = 120;
-  const progressPercent = Math.min(100, Math.round((displayCredits / totalRequiredCredits) * 100));
 
   // Get time-based greeting
   const getGreeting = () => {
@@ -76,6 +65,21 @@ export const Dashboard: React.FC = () => {
     );
   }
 
+  // If no user data, show login prompt
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-900 to-teal-950 flex items-center justify-center">
+        <GlassCard className="p-8 text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">Please log in</h2>
+          <p className="text-white/60">Redirecting to login page...</p>
+        </GlassCard>
+      </div>
+    );
+  }
+
+  const totalRequiredCredits = 120;
+  const progressPercent = totalCredits ? Math.min(100, Math.round((totalCredits / totalRequiredCredits) * 100)) : 0;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -87,12 +91,12 @@ export const Dashboard: React.FC = () => {
             </div>
             <div>
               <h2 className="text-4xl font-bold text-white mb-1 flex items-center gap-2">
-                {greeting.text}, {displayName.split(' ')[0]}
+                {greeting.text}, {studentName?.split(' ')[0] || user?.displayName?.split(' ')[0] || 'Student'}
                 <Sparkles className="text-emerald-400" size={24} />
               </h2>
               <div className="flex items-center gap-3 text-white/60">
                 <Mail size={14} />
-                <span className="text-sm">{displayEmail}</span>
+                <span className="text-sm">{user?.email}</span>
                 <span className="w-1 h-1 bg-white/20 rounded-full" />
                 <MapPin size={14} />
                 <span className="text-sm">Yangon</span>
@@ -100,12 +104,14 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
           
-          <GlassBadge color="bg-emerald-500/20 text-emerald-300 border-emerald-500/30" className="text-base px-4 py-2">
-            ID: {displayId}
-          </GlassBadge>
+          {studentId && (
+            <GlassBadge color="bg-emerald-500/20 text-emerald-300 border-emerald-500/30" className="text-base px-4 py-2">
+              ID: {studentId}
+            </GlassBadge>
+          )}
         </header>
 
-        {/* Stats Cards */}
+        {/* Stats Cards - Only show if data exists */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Student Profile Card */}
           <div className="lg:col-span-2">
@@ -115,12 +121,12 @@ export const Dashboard: React.FC = () => {
                   <User className="text-emerald-400" size={32} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-white">{displayName}</h3>
-                  <p className="text-emerald-400 font-medium">{displayMajor}</p>
+                  <h3 className="text-2xl font-bold text-white">{studentName || user?.displayName || 'Student'}</h3>
+                  {major && <p className="text-emerald-400 font-medium">{major}</p>}
                   <div className="grid grid-cols-2 gap-2 mt-3">
                     <div className="flex items-center gap-2 text-white/60">
                       <Mail size={14} />
-                      <span className="text-xs truncate">{displayEmail}</span>
+                      <span className="text-xs truncate">{user?.email}</span>
                     </div>
                     <div className="flex items-center gap-2 text-white/60">
                       <Globe size={14} />
@@ -132,45 +138,52 @@ export const Dashboard: React.FC = () => {
               
               <div className="grid grid-cols-3 gap-3 mt-2 pt-4 border-t border-white/10">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-emerald-400">{courses.length}</p>
+                  <p className="text-2xl font-bold text-emerald-400">{courses?.length || 0}</p>
                   <p className="text-xs text-white/40">Courses</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-emerald-400">{displayCredits}</p>
+                  <p className="text-2xl font-bold text-emerald-400">{totalCredits || 0}</p>
                   <p className="text-xs text-white/40">Credits</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-emerald-400">{displayAttendance}%</p>
+                  <p className="text-2xl font-bold text-emerald-400">{attendance || 0}%</p>
                   <p className="text-xs text-white/40">Attendance</p>
                 </div>
               </div>
             </GlassCard>
           </div>
 
-          {/* GPA Card */}
-          <div>
-            <GlassCard className="p-6 h-full flex flex-col bg-gradient-to-br from-emerald-500/20 to-teal-500/10">
-              <div className="flex justify-between items-start">
-                <div className="p-3 bg-emerald-500/20 rounded-2xl">
-                  <Award className="text-emerald-400" size={24} />
+          {/* GPA Card - Only show if GPA exists */}
+          {gpa ? (
+            <div>
+              <GlassCard className="p-6 h-full flex flex-col bg-gradient-to-br from-emerald-500/20 to-teal-500/10">
+                <div className="flex justify-between items-start">
+                  <div className="p-3 bg-emerald-500/20 rounded-2xl">
+                    <Award className="text-emerald-400" size={24} />
+                  </div>
                 </div>
-              </div>
-              <div className="mt-auto">
-                <p className="text-white/40 text-xs font-semibold uppercase tracking-widest mb-1">Current GPA</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-bold text-white">{displayGpa.toFixed(2)}</span>
-                  <span className="text-white/40 text-lg font-medium">/ 4.0</span>
+                <div className="mt-auto">
+                  <p className="text-white/40 text-xs font-semibold uppercase tracking-widest mb-1">Current GPA</p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-bold text-white">{gpa.toFixed(2)}</span>
+                    <span className="text-white/40 text-lg font-medium">/ 4.0</span>
+                  </div>
+                  <div className="mt-4 h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full" 
+                      style={{ width: ${(gpa / 4) * 100}% }}
+                    />
+                  </div>
                 </div>
-                <div className="mt-4 h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full" 
-                    style={{ width: ${(displayGpa / 4) * 100}% }}
-                  />
-                </div>
-                <p className="text-emerald-400/80 text-xs mt-2">Dean's List eligible</p>
-              </div>
-            </GlassCard>
-          </div>
+              </GlassCard>
+            </div>
+          ) : (
+            <div>
+              <GlassCard className="p-6 h-full flex flex-col items-center justify-center">
+                <p className="text-white/40">No GPA data</p>
+              </GlassCard>
+            </div>
+          )}
 
           {/* Credits Card */}
           <div>
@@ -183,27 +196,33 @@ export const Dashboard: React.FC = () => {
               <div className="mt-auto">
                 <p className="text-white/40 text-xs font-semibold uppercase tracking-widest mb-1">Progress</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-bold text-white">{displayCredits}</span>
-                  <span className="text-white/40 text-sm">/ {totalRequiredCredits}</span>
+                  <span className="text-5xl font-bold text-white">{totalCredits || 0}</span>
+                  <span className="text-white/40 text-sm">/ 120</span>
                 </div>
-                <p className="text-emerald-400/80 text-xs mt-3 flex items-center gap-1 font-medium">
-                  <CheckCircle2 size={12} /> {progressPercent}% Complete
-                </p>
+                {totalCredits ? (
+                  <p className="text-emerald-400/80 text-xs mt-3 flex items-center gap-1 font-medium">
+                    <CheckCircle2 size={12} /> {progressPercent}% Complete
+                  </p>
+                ) : (
+                  <p className="text-white/40 text-xs mt-3">No credit data</p>
+                )}
               </div>
             </GlassCard>
           </div>
         </div>
 
-        {/* Current Courses */}
+        {/* Current Courses - Only show real courses */}
         <section>
           <div className="flex items-center justify-between mb-6">
-            <SectionTitle className="text-emerald-400">My Courses ({courses.length})</SectionTitle>
-            <button className="text-emerald-400 text-sm font-medium flex items-center gap-1 hover:underline decoration-2">
-              View all <ArrowUpRight size={14} />
-            </button>
+            <SectionTitle className="text-emerald-400">My Courses ({courses?.length || 0})</SectionTitle>
+            {courses?.length > 0 && (
+              <button className="text-emerald-400 text-sm font-medium flex items-center gap-1 hover:underline decoration-2">
+                View all <ArrowUpRight size={14} />
+              </button>
+            )}
           </div>
           
-          {courses.length > 0 ? (
+          {courses && courses.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {courses.slice(0, 4).map((course, idx) => (
                 <GlassCard key={course?.courseId || idx} className="p-4 flex items-center gap-4 hover:scale-[1.01] transition-transform cursor-pointer border-emerald-500/20 hover:border-emerald-500/40">
@@ -211,9 +230,9 @@ export const Dashboard: React.FC = () => {
                     <BookMarked className="text-emerald-400" size={24} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-white truncate">{course?.name || 'Course Name'}</h4>
+                    <h4 className="font-semibold text-white truncate">{course?.name}</h4>
                     <p className="text-xs text-white/40 truncate">
-                      {course?.courseId || 'CS101'} • {course?.credits || 3} Credits
+                      {course?.courseId} • {course?.credits} Credits
                     </p>
                     {course?.teacherName && (
                       <p className="text-xs text-emerald-400/60 mt-1">{course.teacherName}</p>
@@ -235,7 +254,7 @@ export const Dashboard: React.FC = () => {
         {/* Calendar & Announcements */}
         <section className="mt-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Calendar Card */}
+            {/* Calendar Card - Static Myanmar holidays */}
             <GlassCard className="p-6 border-emerald-500/20">
               <div className="flex items-center gap-2 mb-4">
                 <Calendar className="text-emerald-400" size={20} />
@@ -252,19 +271,19 @@ export const Dashboard: React.FC = () => {
               </div>
             </GlassCard>
 
-            {/* Announcements Card */}
+            {/* Announcements Card - Real Firebase data */}
             <GlassCard className="p-6 border-emerald-500/20">
               <div className="flex items-center gap-2 mb-4">
                 <Megaphone className="text-emerald-400" size={20} />
                 <SectionTitle className="!mb-0 text-emerald-400">Announcements</SectionTitle>
               </div>
               <div className="space-y-4 max-h-80 overflow-y-auto pr-2">
-                {announcements.length > 0 ? (
+                {announcements && announcements.length > 0 ? (
                   announcements.map((ann, idx) => (
                     <div key={idx} className="border-b border-emerald-500/10 pb-3 last:border-0">
-                      <h4 className="text-white font-medium text-sm">{ann?.title || 'Announcement'}</h4>
-                      <p className="text-white/60 text-xs mt-1">{ann?.content || 'No content'}</p>
-                      <p className="text-emerald-400/60 text-xs mt-1">{ann?.date || '2024-01-01'}</p>
+                      <h4 className="text-white font-medium text-sm">{ann?.title}</h4>
+                      <p className="text-white/60 text-xs mt-1">{ann?.content}</p>
+                      <p className="text-emerald-400/60 text-xs mt-1">{ann?.date}</p>
                     </div>
                   ))
                 ) : (

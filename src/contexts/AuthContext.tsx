@@ -1,68 +1,59 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import {
-  signInWithRedirect,
-  signOut,
-  onAuthStateChanged,
-  User,
-  GoogleAuthProvider,
-  getRedirectResult
-} from 'firebase/auth';
-import { auth } from '../lib/firebase';
 
 interface AuthContextType {
-  user: User | null;
+  user: any;
   loading: boolean;
-  signInWithGoogle: () => Promise<void>;
-  logout: () => Promise<void>;
+  login: (email: string, password: string) => Promise<boolean>;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Hardcoded users for testing (you can change these)
+const VALID_USERS = [
+  { email: 'student@auy.edu.mm', password: 'student123', name: 'Student User' },
+  { email: 'test@auy.edu.mm', password: 'test123', name: 'Test User' },
+  { email: 'demo@auy.edu.mm', password: 'demo123', name: 'Demo User' },
+];
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result) {
-          console.log('User signed in via redirect', result.user);
-        }
-      } catch (error) {
-        console.error('Redirect sign-in error:', error);
-      }
-    };
-    handleRedirectResult();
-  }, []);
-
-  const signInWithGoogle = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      await signInWithRedirect(auth, provider);
-    } catch (error) {
-      console.error('Error initiating redirect sign-in:', error);
+    // Check localStorage for saved user
+    const savedUser = localStorage.getItem('auy_user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
     }
+    setLoading(false);
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    const foundUser = VALID_USERS.find(
+      (u) => u.email === email && u.password === password
+    );
+    
+    if (foundUser) {
+      const userData = { 
+        email: foundUser.email, 
+        name: foundUser.name,
+        uid: email.replace(/[^a-zA-Z0-9]/g, '') 
+      };
+      setUser(userData);
+      localStorage.setItem('auy_user', JSON.stringify(userData));
+      return true;
+    }
+    return false;
   };
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('auy_user');
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

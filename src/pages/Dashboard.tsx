@@ -126,7 +126,7 @@ export const Dashboard: React.FC = () => {
     const days = [];
     for (let i = 0; i < firstDay; i++) days.push(null);
     for (let d = 1; d <= daysInMonth; d++) {
-      const dateStr = ${year}--;
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
       const dayEvents = eventsMap.get(dateStr) || [];
       days.push({ day: d, events: dayEvents });
     }
@@ -151,7 +151,7 @@ export const Dashboard: React.FC = () => {
           {days.map((day, idx) => (
             <div key={idx} className="aspect-square flex items-center justify-center">
               {day ? (
-                <div className={w-8 h-8 rounded-full flex items-center justify-center relative group }>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center relative group ${getDayClass(day.events)}`}>
                   {day.day}
                   {day.events.length > 0 && (
                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-10 w-max max-w-48">
@@ -159,7 +159,7 @@ export const Dashboard: React.FC = () => {
                         {day.events.map((ev, i) => (
                           <div key={i} className={i > 0 ? 'mt-1 pt-1 border-t border-white/10' : ''}>
                             <div className="font-semibold flex items-center gap-1">
-                              <span className={w-1.5 h-1.5 rounded-full } />
+                              <span className={`w-1.5 h-1.5 rounded-full ${ev.type === 'academic' ? 'bg-blue-400' : 'bg-emerald-400'}`} />
                               {ev.title}
                             </div>
                             {ev.description && <div className="text-white/70 text-[10px]">{ev.description}</div>}
@@ -221,7 +221,7 @@ export const Dashboard: React.FC = () => {
                 <span className="text-white/40 text-lg font-medium">/ 4.0</span>
               </div>
               <div className="mt-4 h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-emerald-400 rounded-full" style={{ width: ${(gpa / 4) * 100}% }} />
+                <div className="h-full bg-emerald-400 rounded-full" style={{ width: `${(gpa / 4) * 100}%` }} />
               </div>
             </div>
           </GlassCard>

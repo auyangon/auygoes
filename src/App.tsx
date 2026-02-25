@@ -7,7 +7,7 @@ import { Courses } from "./pages/Courses";
 import { Grades } from "./pages/Grades";
 import { Materials } from "./pages/Materials";
 import { Progress } from "./pages/Progress";
-import { SimpleLogin } from "./pages/SimpleLogin";
+import { EmailLogin } from "./pages/EmailLogin";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
@@ -33,7 +33,7 @@ export function App() {
       <DataProvider>
         <Router>
           <Routes>
-            <Route path="/login" element={<SimpleLogin />} />
+            <Route path="/login" element={<EmailLogin />} />
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
             <Route path="/grades" element={<ProtectedRoute><Grades /></ProtectedRoute>} />

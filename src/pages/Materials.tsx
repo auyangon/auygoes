@@ -1,11 +1,8 @@
 ﻿import React from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { GlassCard, SectionTitle } from '../components/Common';
+import { GlassCard } from '../components/Common';
 import { FileText } from 'lucide-react';
 
 export const Materials: React.FC = () => {
-  const { user } = useAuth();
-
   return (
     <div className="space-y-8">
       <header className="mb-10">

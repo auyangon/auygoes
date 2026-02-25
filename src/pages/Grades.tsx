@@ -1,11 +1,9 @@
 ﻿import React from 'react';
-import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
-import { GlassCard, SectionTitle } from '../components/Common';
+import { GlassCard } from '../components/Common';
 import { Award } from 'lucide-react';
 
 export const Grades: React.FC = () => {
-  const { user } = useAuth();
   const { courses, gpa } = useData();
 
   return (

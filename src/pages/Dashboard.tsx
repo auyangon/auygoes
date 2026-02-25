@@ -23,26 +23,26 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">
+        <h1 className="text-3xl font-normal text-gray-900 mb-8">
           Welcome, {studentName || user?.displayName || 'Student'}
         </h1>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <GlassCard className="p-6">
             <User className="text-green-600 mb-2" size={32} />
-            <p className="text-2xl font-bold text-gray-900">{courses?.length || 0}</p>
+            <p className="text-xl font-normal text-gray-900">{courses?.length || 0}</p>
             <p className="text-gray-600">Courses</p>
           </GlassCard>
           
           <GlassCard className="p-6">
             <Award className="text-green-600 mb-2" size={32} />
-            <p className="text-2xl font-bold text-gray-900">{gpa?.toFixed(2) || '0.00'}</p>
+            <p className="text-xl font-normal text-gray-900">{gpa?.toFixed(2) || '0.00'}</p>
             <p className="text-gray-600">GPA</p>
           </GlassCard>
           
           <GlassCard className="p-6">
             <GraduationCap className="text-green-600 mb-2" size={32} />
-            <p className="text-2xl font-bold text-gray-900">{totalCredits || 0}</p>
+            <p className="text-xl font-normal text-gray-900">{totalCredits || 0}</p>
             <p className="text-gray-600">Credits</p>
           </GlassCard>
         </div>
@@ -50,11 +50,11 @@ export const Dashboard: React.FC = () => {
         <GlassCard className="p-6">
           <div className="flex items-center gap-2 mb-4">
             <Calendar className="text-green-600" size={20} />
-            <h2 className="text-xl font-bold text-gray-900">Myanmar Holidays 2026</h2>
+            <h2 className="text-xl font-normal text-gray-900">Myanmar Holidays 2026</h2>
           </div>
           {importantDates.map((d, i) => (
             <div key={i} className="mb-2 pb-2 border-b border-gray-200">
-              <p className="font-semibold text-gray-900">{d.month}</p>
+              <p className="font-normal text-gray-900">{d.month}</p>
               <p className="text-green-600 text-sm">Days: {d.days}</p>
               <p className="text-gray-600 text-xs">{d.name}</p>
             </div>
@@ -64,6 +64,7 @@ export const Dashboard: React.FC = () => {
     </div>
   );
 };
+
 
 
 

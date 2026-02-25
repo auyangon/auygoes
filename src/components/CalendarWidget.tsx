@@ -62,7 +62,7 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <Calendar className="text-jet" size={20} />
-          <h3 className="text-lg font-semibold text-jet">Academic Calendar</h3>
+          <h3 className="text-base font-normal text-jet">Academic Calendar</h3>
         </div>
         <div className="flex gap-2">
           <button 
@@ -82,7 +82,7 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
 
       {/* Month and Year */}
       <div className="text-center mb-4">
-        <h3 className="text-xl font-semibold text-jet">
+        <h3 className="text-lg font-normal text-jet">
           {monthNames[month]} {year}
         </h3>
       </div>
@@ -173,3 +173,4 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
     </GlassCard>
   );
 };
+

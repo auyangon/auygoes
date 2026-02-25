@@ -11,58 +11,54 @@
   
   body {
     font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(135deg, #0B4F3A 0%, #1E7B5C 50%, #E8F6F0 100%);
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     color: #1A1A1A;
   }
 }
 
-/* Glass effect classes */
-.glass-dark {
-  background: rgba(11, 79, 58, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(11, 79, 58, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-.glass-light {
-  background: rgba(232, 246, 240, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(11, 79, 58, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-}
-
+/* Glass effect classes for seafoam cards */
 .glass-card {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(209, 242, 229, 0.25);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(11, 79, 58, 0.2);
-  box-shadow: 0 8px 32px rgba(11, 79, 58, 0.15);
+  border: 1px solid rgba(11, 79, 58, 0.15);
+  box-shadow: 0 8px 32px rgba(11, 79, 58, 0.08);
   transition: all 0.3s ease;
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 12px 48px rgba(11, 79, 58, 0.25);
+  background: rgba(209, 242, 229, 0.35);
+  box-shadow: 0 12px 48px rgba(11, 79, 58, 0.12);
   transform: translateY(-2px);
 }
 
 .glass-sidebar {
-  background: rgba(11, 79, 58, 0.2);
+  background: rgba(209, 242, 229, 0.3);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-right: 1px solid rgba(11, 79, 58, 0.25);
-  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(11, 79, 58, 0.15);
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.05);
 }
 
 /* Jet Black text */
 .text-jet {
   color: #1A1A1A;
 }
+
+/* Smaller font utilities */
+.text-xs { font-size: 0.75rem; line-height: 1rem; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.text-base { font-size: 1rem; line-height: 1.5rem; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+.text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+.text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -71,16 +67,15 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(11, 79, 58, 0.05);
+  background: rgba(11, 79, 58, 0.03);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(11, 79, 58, 0.3);
+  background: rgba(11, 79, 58, 0.15);
   border-radius: 10px;
-  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(11, 79, 58, 0.5);
+  background: rgba(11, 79, 58, 0.25);
 }

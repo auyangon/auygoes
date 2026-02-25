@@ -12,7 +12,7 @@ export const GlassCard: React.FC<GlassCardProps> = ({ children, className, ...pr
     <div
       className={twMerge(
         clsx(
-          'glass-card rounded-2xl p-6',
+          'glass-card rounded-xl p-5',
           className
         )
       )}
@@ -30,7 +30,7 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
   return (
     <h3 className={twMerge(
       clsx(
-        'text-2xl font-semibold text-jet',
+        'text-lg font-normal text-jet',
         className
       )
     )}>
@@ -49,7 +49,7 @@ export const GlassBadge: React.FC<GlassBadgeProps> = ({ children, className }) =
     <span
       className={twMerge(
         clsx(
-          'px-3 py-1 rounded-full text-xs font-medium glass-light text-jet',
+          'px-2.5 py-1 rounded-full text-xs font-normal glass-card text-jet',
           className
         )
       )}

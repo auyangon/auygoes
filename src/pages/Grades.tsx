@@ -9,18 +9,18 @@ export const Grades: React.FC = () => {
   return (
     <div className="space-y-8">
       <header className="mb-10">
-        <h2 className="text-4xl font-bold text-white mb-2">My Grades</h2>
-        <p className="text-white/60">Current GPA: {gpa.toFixed(2)}</p>
+        <h2 className="text-3xl font-normal text-jet mb-2">My Grades</h2>
+        <p className="text-jet/70">Current GPA: {gpa.toFixed(2)}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-4">
         {courses.map((course) => (
           <GlassCard key={course.courseId} className="p-4 flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-white">{course.name}</h3>
-              <p className="text-sm text-white/60">{course.courseId}</p>
+              <h3 className="text-lg font-normal text-jet">{course.name}</h3>
+              <p className="text-sm text-jet/70">{course.courseId}</p>
             </div>
-            <div className="text-2xl font-bold text-emerald-400">
+            <div className="text-xl font-normal text-jet">
               {course.grade || '-'}
             </div>
           </GlassCard>
@@ -29,3 +29,4 @@ export const Grades: React.FC = () => {
     </div>
   );
 };
+

@@ -21,28 +21,28 @@
   }
 }
 
-/* Glass effect classes for seafoam cards */
+/* Glass effect classes - 90% transparent (10% opacity) */
 .glass-card {
-  background: rgba(209, 242, 229, 0.25);
+  background: rgba(209, 242, 229, 0.1); /* 90% transparent */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(11, 79, 58, 0.15);
-  box-shadow: 0 8px 32px rgba(11, 79, 58, 0.08);
+  border: 1px solid rgba(11, 79, 58, 0.1);
+  box-shadow: 0 8px 32px rgba(11, 79, 58, 0.05);
   transition: all 0.3s ease;
 }
 
 .glass-card:hover {
-  background: rgba(209, 242, 229, 0.35);
-  box-shadow: 0 12px 48px rgba(11, 79, 58, 0.12);
+  background: rgba(209, 242, 229, 0.15);
+  box-shadow: 0 12px 48px rgba(11, 79, 58, 0.08);
   transform: translateY(-2px);
 }
 
 .glass-sidebar {
-  background: rgba(209, 242, 229, 0.3);
+  background: rgba(209, 242, 229, 0.1); /* 90% transparent */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-right: 1px solid rgba(11, 79, 58, 0.15);
-  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(11, 79, 58, 0.1);
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.03);
 }
 
 /* Jet Black text */
@@ -72,10 +72,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(11, 79, 58, 0.15);
+  background: rgba(11, 79, 58, 0.1);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(11, 79, 58, 0.25);
+  background: rgba(11, 79, 58, 0.2);
 }

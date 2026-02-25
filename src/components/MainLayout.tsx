@@ -22,7 +22,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       {/* Sidebar overlay */}
       <div
         className={
-          fixed inset-0 bg-black/10 backdrop-blur-sm z-40 transition-opacity lg:hidden
+          fixed inset-0 bg-black/5 backdrop-blur-sm z-40 transition-opacity lg:hidden
           
         }
         onClick={() => setSidebarOpen(false)}

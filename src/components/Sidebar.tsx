@@ -21,51 +21,15 @@ interface SidebarProps {
 }
 
 const navigation = [
-  { 
-    name: 'Dashboard', 
-    to: '/', 
-    icon: LayoutDashboard
-  },
-  { 
-    name: 'My Courses', 
-    to: '/courses', 
-    icon: BookOpen
-  },
-  { 
-    name: 'Grades', 
-    to: '/grades', 
-    icon: GraduationCap
-  },
-  { 
-    name: 'Materials', 
-    to: '/materials', 
-    icon: FileText
-  },
-  { 
-    name: 'Progress', 
-    to: '/progress', 
-    icon: TrendingUp
-  },
-  { 
-    name: 'Calendar', 
-    to: '/calendar', 
-    icon: Calendar
-  },
-  { 
-    name: 'Announcements', 
-    to: '/announcements', 
-    icon: Bell
-  },
-  { 
-    name: 'Profile', 
-    to: '/profile', 
-    icon: User
-  },
-  { 
-    name: 'Settings', 
-    to: '/settings', 
-    icon: Settings
-  }
+  { name: 'Dashboard', to: '/', icon: LayoutDashboard },
+  { name: 'My Courses', to: '/courses', icon: BookOpen },
+  { name: 'Grades', to: '/grades', icon: GraduationCap },
+  { name: 'Materials', to: '/materials', icon: FileText },
+  { name: 'Progress', to: '/progress', icon: TrendingUp },
+  { name: 'Calendar', to: '/calendar', icon: Calendar },
+  { name: 'Announcements', to: '/announcements', icon: Bell },
+  { name: 'Profile', to: '/profile', icon: User },
+  { name: 'Settings', to: '/settings', icon: Settings }
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
@@ -77,8 +41,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
 
   return (
     <aside className="h-full w-56 glass-sidebar flex flex-col">
-      {/* University Logo */}
-      <div className="p-5 border-b border-seafoam-soft/30">
+      {/* Logo */}
+      <div className="p-5 border-b border-seafoam-soft/20">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-lg glass-card flex items-center justify-center">
             <Award className="text-jet" size={20} />
@@ -91,7 +55,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       </div>
 
       {/* Student Info */}
-      <div className="p-4 border-b border-seafoam-soft/30 glass-card m-3 rounded-lg">
+      <div className="p-4 border-b border-seafoam-soft/20 glass-card m-3 rounded-lg">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-full glass-card flex items-center justify-center">
             <User className="text-jet" size={16} />
@@ -135,7 +99,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       </nav>
 
       {/* Logout */}
-      <div className="p-4 border-t border-seafoam-soft/30">
+      <div className="p-4 border-t border-seafoam-soft/20">
         <button
           onClick={logout}
           className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-jet/70 hover:glass-card hover:text-jet transition-all text-sm"

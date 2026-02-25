@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { GlassCard } from '../components/Common';
@@ -47,8 +47,8 @@ export const SimpleLogin: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-emerald-900 to-emerald-950 flex items-center justify-center p-4">
       <GlassCard className="p-8 max-w-md w-full">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">AUY Portal</h1>
-          <p className="text-white/60">American University of Yangon</p>
+          <h1 className="text-3xl font-normal text-jet mb-2">AUY Portal</h1>
+          <p className="text-jet/70">American University of Yangon</p>
         </div>
 
         {error && (
@@ -59,14 +59,14 @@ export const SimpleLogin: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-white/60 text-sm mb-1">Email</label>
+            <label className="block text-jet/70 text-sm mb-1">Email</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40" size={18} />
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jet/70" size={18} />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-10 pr-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                className="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-10 pr-4 text-jet placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                 placeholder="student@auy.edu.mm"
                 required
               />
@@ -74,15 +74,15 @@ export const SimpleLogin: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-white/60 text-sm mb-1">Password</label>
+            <label className="block text-jet/70 text-sm mb-1">Password</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40" size={18} />
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jet/70" size={18} />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-10 pr-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
-                placeholder="••••••••"
+                className="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-10 pr-4 text-jet placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                 required
               />
             </div>
@@ -91,7 +91,7 @@ export const SimpleLogin: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-jet font-normal py-3 px-6 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {loading ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -105,7 +105,7 @@ export const SimpleLogin: React.FC = () => {
         </form>
 
         <div className="mt-8 pt-6 border-t border-white/10">
-          <p className="text-white/40 text-sm mb-3 text-center">Demo Accounts</p>
+          <p className="text-jet/70 text-sm mb-3 text-center">Demo Accounts</p>
           <div className="grid grid-cols-1 gap-2">
             {demoUsers.map((demo, idx) => (
               <button
@@ -113,8 +113,8 @@ export const SimpleLogin: React.FC = () => {
                 onClick={() => fillDemo(demo.email, demo.password)}
                 className="text-left px-3 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
               >
-                <p className="text-white text-sm">{demo.label}</p>
-                <p className="text-white/40 text-xs">{demo.email}</p>
+                <p className="text-jet text-sm">{demo.label}</p>
+                <p className="text-jet/70 text-xs">{demo.email}</p>
               </button>
             ))}
           </div>

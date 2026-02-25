@@ -47,6 +47,3 @@ export function App() {
     </AuthProvider>
   );
 }
-
-
-

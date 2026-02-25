@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { DataProvider } from "./contexts/DataContext";
@@ -8,7 +7,7 @@ import { Courses } from "./pages/Courses";
 import { Grades } from "./pages/Grades";
 import { Materials } from "./pages/Materials";
 import { Progress } from "./pages/Progress";
-import { SimpleLogin } from "./pages/SimpleLogin";
+import { LoginPage } from "./pages/Login";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
@@ -34,53 +33,12 @@ export function App() {
       <DataProvider>
         <Router>
           <Routes>
-            <Route path="/login" element={<SimpleLogin />} />
-            
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            
-            <Route
-              path="/courses"
-              element={
-                <ProtectedRoute>
-                  <Courses />
-                </ProtectedRoute>
-              }
-            />
-            
-            <Route
-              path="/grades"
-              element={
-                <ProtectedRoute>
-                  <Grades />
-                </ProtectedRoute>
-              }
-            />
-            
-            <Route
-              path="/materials"
-              element={
-                <ProtectedRoute>
-                  <Materials />
-                </ProtectedRoute>
-              }
-            />
-            
-            <Route
-              path="/progress"
-              element={
-                <ProtectedRoute>
-                  <Progress />
-                </ProtectedRoute>
-              }
-            />
-
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
+            <Route path="/grades" element={<ProtectedRoute><Grades /></ProtectedRoute>} />
+            <Route path="/materials" element={<ProtectedRoute><Materials /></ProtectedRoute>} />
+            <Route path="/progress" element={<ProtectedRoute><Progress /></ProtectedRoute>} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Router>
@@ -88,37 +46,3 @@ export function App() {
     </AuthProvider>
   );
 }
-=======
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
-import { AuthProvider } from './contexts/AuthContext'; 
-import { DataProvider } from './contexts/DataContext'; 
-import { ProtectedRoute } from './components/ProtectedRoute'; 
-import MainLayout from './components/MainLayout'; 
-import { Login } from './pages/Login'; 
-import Dashboard from './pages/Dashboard'; 
-import Courses from './pages/Courses'; 
-import Grades from './pages/Grades'; 
-import Materials from './pages/Materials'; 
-import Progress from './pages/Progress'; 
- 
-export default function App() { 
-  return ( 
-    <AuthProvider> 
-      <DataProvider> 
-        <BrowserRouter> 
-          <Routes> 
-            <Route path="/login" element={<Login />} /> 
-            <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}> 
-              <Route path="/" element={<Dashboard />} /> 
-              <Route path="/courses" element={<Courses />} /> 
-              <Route path="/grades" element={<Grades />} /> 
-              <Route path="/materials" element={<Materials />} /> 
-              <Route path="/progress" element={<Progress />} /> 
-            </Route> 
-          </Routes> 
-        </BrowserRouter> 
-      </DataProvider> 
-    </AuthProvider> 
-  ); 
-} 
->>>>>>> 7e787996e344ec0e38973ffd84b2419f9c179aec

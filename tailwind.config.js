@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+﻿/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -13,7 +13,8 @@ export default {
           light: '#2A9D7A',
           soft: '#D1F2E5',
           pale: '#E8F6F0',
-        }
+        },
+        jet: '#1A1A1A',
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],

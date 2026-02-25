@@ -166,7 +166,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
             credits: courseData.credits || 0,
             schedule: courseData.schedule || '',
             room: courseData.room || '',
-            googleClassroomLink: courseData.googleClassroomLink || `https://classroom.google.com/c/${id}`,
+            googleClassroomLink: courseData.googleClassroomLink || https://classroom.google.com/c/,
             grade: grade?.grade || ''
           });
         }
@@ -257,4 +257,3 @@ export function useData() {
   }
   return context;
 }
-// fix applied

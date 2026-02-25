@@ -2,15 +2,14 @@
 import { ref, get } from 'firebase/database';
 import { db } from '../lib/firebase';
 import { useAuth } from './AuthContext';
+import { sanitizeEmail } from '../utils/sanitizeEmail';
 
 export interface Course {
   id: string;
   courseId: string;
   name: string;
-  teacherName: string;
+  teacher: string;
   credits: number;
-  schedule?: string;
-  room?: string;
   googleClassroomLink?: string;
   grade?: string;
   attendancePercentage?: number;
@@ -47,6 +46,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [studentName, setStudentName] = useState('');
   const [studentId, setStudentId] = useState('');
   const [major, setMajor] = useState('');
+  const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
     async function fetchStudentData() {
@@ -56,110 +56,75 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        console.log('🔍 Looking up student with email:', user.email);
-        
-        // Get all students data from Firebase
-        const studentsRef = ref(db, 'students');
-        const snapshot = await get(studentsRef);
-        const studentsData = snapshot.val() || {};
-        
-        console.log('📚 All students data:', studentsData);
-        
-        // Clean the email to match Firebase keys (remove dots, etc.)
-        // Firebase keys have commas instead of dots
-        const cleanEmail = user.email.replace(/\./g, ',,,');
-        console.log('🔑 Looking for student key:', cleanEmail);
-        
-        // Try to find the student by email (exact match or partial)
-        let currentStudent: any = null;
-        let currentStudentKey = '';
-        
-        // Method 1: Direct key match with cleaned email
-        if (studentsData[cleanEmail]) {
-          currentStudent = studentsData[cleanEmail];
-          currentStudentKey = cleanEmail;
-          console.log('✅ Found student by cleaned email key');
-        } else {
-          // Method 2: Search through all students
-          for (const [key, student] of Object.entries(studentsData)) {
-            const studentData = student as any;
-            if (studentData.email === user.email) {
-              currentStudent = studentData;
-              currentStudentKey = key;
-              console.log('✅ Found student by email field match');
-              break;
-            }
-          }
-        }
-        
-        console.log('👤 Student found:', currentStudent ? 'YES' : 'NO', currentStudent);
-        
-        if (!currentStudent) {
-          setError(`No student found with email: ${user.email}`);
+        const emailKey = sanitizeEmail(user.email);
+        console.log('🔍 Looking up student with key:', emailKey);
+
+        // 1. Fetch the student node directly
+        const studentRef = ref(db, students/);
+        const snapshot = await get(studentRef);
+        const studentData = snapshot.val();
+
+        if (!studentData) {
+          setError(No student found with email: );
           setLoading(false);
           return;
         }
-        
+
         // Set student info
-        setStudentName(currentStudent.studentName || user.displayName || 'Student');
-        setStudentId(currentStudent.studentId || 'AUY-2025-001');
-        setMajor(currentStudent.major || 'ISP program');
-        
-        // Get courses from the student's courses object
-        const studentCourses = currentStudent.courses || {};
-        console.log('📖 Student courses:', studentCourses);
-        
+        setStudentName(studentData.name || user.displayName || 'Student');
+        setStudentId(studentData.studentId || '');
+        setMajor(studentData.major || 'ISP program');
+
+        // 2. Build courses from enrollments
+        const enrollments = studentData.enrollments || {};
         const courseList: Course[] = [];
         let totalGradePoints = 0;
         let totalCreditsEarned = 0;
         let totalAttendance = 0;
         let attendanceCount = 0;
-        
-        // Loop through each course in the student's courses
-        for (const [courseId, courseData] of Object.entries(studentCourses)) {
-          const data = courseData as any;
-          console.log(`📚 Processing course ${courseId}:`, data);
-          
+
+        for (const [courseId, enrollment] of Object.entries(enrollments)) {
+          const e = enrollment as any;
+          const course = e.courseData || {};
+
           courseList.push({
             id: courseId,
-            courseId: courseId,
-            name: data.courseName || courseId,
-            teacherName: data.teacherName || '',
-            credits: data.credits || 3,
-            schedule: data.schedule || '',
-            room: data.room || '',
-            googleClassroomLink: data.googleClassroomLink || '',
-            grade: data.grade || '',
-            attendancePercentage: data.attendancePercentage
+            courseId,
+            name: course.name || courseId,
+            teacher: course.teacher || '',
+            credits: course.credits || 3,
+            googleClassroomLink: course.googleClassroomLink || '',
+            grade: e.grade || '',
+            attendancePercentage: e.attendancePercentage,
           });
-          
-          // Calculate GPA
-          if (data.grade) {
-            const points = gradePoints[data.grade] || 0;
-            totalGradePoints += points * (data.credits || 3);
-            totalCreditsEarned += (data.credits || 3);
+
+          if (e.grade) {
+            const points = gradePoints[e.grade] || 0;
+            totalGradePoints += points * (course.credits || 3);
+            totalCreditsEarned += (course.credits || 3);
           }
-          
-          // Calculate attendance
-          if (data.attendancePercentage) {
-            totalAttendance += data.attendancePercentage;
+
+          if (e.attendancePercentage) {
+            totalAttendance += e.attendancePercentage;
             attendanceCount++;
           }
         }
-        
-        console.log('✅ Final course list:', courseList);
-        
+
         setCourses(courseList);
-        
-        if (totalCreditsEarned > 0) {
-          setGpa(Number((totalGradePoints / totalCreditsEarned).toFixed(2)));
-        }
-        
+        setGpa(totalCreditsEarned > 0 ? Number((totalGradePoints / totalCreditsEarned).toFixed(2)) : 0);
         setTotalCredits(totalCreditsEarned);
         setAttendance(attendanceCount > 0 ? Math.round(totalAttendance / attendanceCount) : 0);
-        
+
+        // 3. Fetch announcements (separate node)
+        const annRef = ref(db, 'announcements');
+        const annSnap = await get(annRef);
+        if (annSnap.exists()) {
+          const annData = annSnap.val();
+          setAnnouncements(Object.values(annData));
+        }
+
       } catch (err: any) {
-        console.error('❌ Error fetching data:', err);
+        console.error('❌ Error:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -170,17 +135,17 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   return (
-    <DataContext.Provider value={{ 
-      courses, 
-      loading, 
-      error, 
-      gpa, 
-      totalCredits, 
+    <DataContext.Provider value={{
+      courses,
+      loading,
+      error,
+      gpa,
+      totalCredits,
       attendance,
       studentName,
       studentId,
       major,
-      announcements: [] 
+      announcements,
     }}>
       {children}
     </DataContext.Provider>
@@ -189,8 +154,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
 export function useData() {
   const context = useContext(DataContext);
-  if (context === undefined) {
-    throw new Error('useData must be used within a DataProvider');
-  }
+  if (!context) throw new Error('useData must be used within a DataProvider');
   return context;
 }

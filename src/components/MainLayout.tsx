@@ -21,19 +21,13 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
       {/* Sidebar - mobile overlay */}
       <div
-        className={
-          fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity lg:hidden
-          
-        }
+        className={ixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity lg:hidden }
         onClick={() => setSidebarOpen(false)}
       />
 
       {/* Sidebar */}
       <div
-        className={
-          fixed top-0 left-0 h-full z-50 transition-transform duration-300 lg:translate-x-0
-          
-        }
+        className={ixed top-0 left-0 h-full z-50 transition-transform duration-300 lg:translate-x-0 }
       >
         <Sidebar onClose={() => setSidebarOpen(false)} />
       </div>

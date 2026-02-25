@@ -1,56 +1,70 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, GraduationCap, FileText, TrendingUp, LogOut } from 'lucide-react';
+import { 
+  LayoutDashboard, 
+  BookOpen, 
+  GraduationCap, 
+  FileText, 
+  TrendingUp,
+  LogOut,
+  X
+} from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { cn } from '../utils/cn';
+import { GlassCard } from './Common';
 
-const navigation = [
-  { name: 'Dashboard', to: '/', icon: LayoutDashboard },
-  { name: 'Courses', to: '/courses', icon: BookOpen },
-  { name: 'Grades', to: '/grades', icon: GraduationCap },
-  { name: 'Materials', to: '/materials', icon: FileText },
-  { name: 'Progress', to: '/progress', icon: TrendingUp },
-];
+interface SidebarProps {
+  onClose?: () => void;
+}
 
-export default function Sidebar() {
+export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   const { logout } = useAuth();
 
+  const navItems = [
+    { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
+    { path: '/courses', icon: BookOpen, label: 'Courses' },
+    { path: '/grades', icon: GraduationCap, label: 'Grades' },
+    { path: '/materials', icon: FileText, label: 'Materials' },
+    { path: '/progress', icon: TrendingUp, label: 'Progress' },
+  ];
+
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-white/10 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col">
-      <div className="mb-8">
-        <h1 className="text-xl font-bold text-white/90">AUY Portal</h1>
-        <p className="text-xs text-white/40 mt-1">Student Dashboard</p>
+    <GlassCard className="h-full w-64 rounded-none p-4 flex flex-col">
+      <div className="flex items-center justify-between mb-8">
+        <h2 className="text-xl font-bold text-white">AUY Portal</h2>
+        {onClose && (
+          <button onClick={onClose} className="lg:hidden text-white/60 hover:text-white">
+            <X size={24} />
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 space-y-2">
-        {navigation.map((item) => {
-          const Icon = item.icon;
-          return (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                cn(
-                  'flex items-center gap-3 px-4 py-3 rounded-xl transition',
-                  isActive
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                    : 'text-white/70 hover:bg-white/10 hover:text-white'
-                )
-              }
-            >
-              <Icon size={20} />
-              <span className="text-sm font-medium">{item.name}</span>
-            </NavLink>
-          );
-        })}
+        {navItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            onClick={onClose}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                isActive
+                  ? 'bg-emerald-500/20 text-emerald-400'
+                  : 'text-white/60 hover:bg-white/5 hover:text-white'
+              }`
+            }
+          >
+            <item.icon size={20} />
+            <span>{item.label}</span>
+          </NavLink>
+        ))}
       </nav>
 
       <button
         onClick={logout}
-        className="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:bg-white/10 hover:text-white transition mt-auto"
+        className="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white transition-all mt-auto"
       >
         <LogOut size={20} />
-        <span className="text-sm font-medium">Logout</span>
+        <span>Logout</span>
       </button>
-    </aside>
+    </GlassCard>
   );
-}
+};

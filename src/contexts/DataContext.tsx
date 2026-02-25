@@ -166,7 +166,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
             credits: courseData.credits || 0,
             schedule: courseData.schedule || '',
             room: courseData.room || '',
-            googleClassroomLink: courseData.googleClassroomLink || https://classroom.google.com/c/,
+            googleClassroomLink: courseData.googleClassroomLink || `https://classroom.google.com/c/${id}`,
             grade: grade?.grade || ''
           });
         }

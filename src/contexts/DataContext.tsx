@@ -66,43 +66,84 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         console.log('📚 All Firebase data:', allData);
         
         // ===========================================
-        // STEP 1: FIND STUDENT BY EMAIL
+        // STEP 1: FIND STUDENT BY EMAIL from CSV data
+        // We need to know which courses this student is enrolled in
         // ===========================================
-        let currentStudent: any = null;
-        let currentStudentId = '';
         
-        // Look for a students node or direct student entry
-        if (allData.students) {
-          for (const [id, student] of Object.entries(allData.students)) {
-            const studentData = student as any;
-            if (studentData.email === user.email) {
-              currentStudent = studentData;
-              currentStudentId = id;
-              break;
-            }
-          }
-        }
+        // For now, we'll create a mapping based on your CSV data
+        // This is a temporary solution until you upload CSV to Firebase
+        const studentCoursesMap: Record<string, string[]> = {
+          'jinochan1991@gmail.com': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'aung.khant.phyo@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'hsu.eain.htet@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'htoo.yadanar.oo@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'kaung.pyae.phyo.kyaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'man.sian.hoih@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'phone.pyae.han@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'thin.zar.li.htay@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'yoon.thiri.naing@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'zau.myu.lat@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'en.sian.piang@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'hsu.kyal.sin.zaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'kaung.khant.kyaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'may.lin.phyu@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'min.hein.kyaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'thint.myat.aung@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'chan.htet.zan@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'swan.sa.phyo@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'mya.hmue.may.zaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'kaung.nyan.lin@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'thaw.thaw.zin@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'l.seng.rail@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'min.hein.khant@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'thawdar.shoon.lei@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'sian.san.nuam@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'zaw.seng.awng@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'thet.hayman.kyaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'aung.khant.zaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'aung.kyaw.min@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'aye.chan.myae.aung@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'eaint.myat.kyaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'hnin.wai.phyo@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'hpa.la.hpone.ram@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'hsu.pyae.la.min@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'indira@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'la.mye.gyung.naw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'la.pyae.chit@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'lin.sandar.kyaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'min.thiha.kyaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'nan.moe.nwe.oo@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'nlang.seng.htoi.pan@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'nlang.seng.myo.myat@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'shoon.lae.aung@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'su.pyae.than.dar@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'thin.thin.aung@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'thiri.thansin@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'yatanar.moe@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'htut.khaung.oo@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'mung.hkawng.la@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'thet.mon.chit@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'myat.thiri.kyaw@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'aye.chan.pyone@student.au.edu.mm': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'chanmyae.au.edu.mm@gmail.com': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'jbthaw@gmail.com': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'hninyamoneoo.au.edu@gmail.com': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'],
+          'moh.au.edu@gmail.com': ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100']
+        };
+
+        // Get the list of courses this student is enrolled in
+        const enrolledCourseIds = studentCoursesMap[user.email] || [];
         
-        // If not found in students node, look through all nodes
-        if (!currentStudent) {
-          for (const [key, value] of Object.entries(allData)) {
-            if (value && typeof value === 'object' && 'email' in value && value.email === user.email) {
-              currentStudent = value;
-              currentStudentId = key;
-              break;
-            }
-          }
-        }
+        console.log('🎯 Student enrolled courses:', enrolledCourseIds);
         
-        console.log('👤 Student found:', currentStudent ? 'YES' : 'NO', currentStudent);
-        
-        // Set student info
-        setStudentName(currentStudent?.name || currentStudent?.studentName || user.displayName || 'Student');
-        setStudentId(currentStudent?.studentId || currentStudentId || 'AUY-2025-001');
-        setMajor(currentStudent?.major || 'Computer Science');
+        // Set student name from email (or you can fetch from Firebase later)
+        const nameFromEmail = user.email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        setStudentName(nameFromEmail || 'Student');
+        setStudentId('S' + Math.floor(Math.random() * 1000).toString().padStart(3, '0'));
+        setMajor('ISP Program');
         
         // ===========================================
-        // STEP 2: GET ALL COURSES (COURSE CODES ARE TOP-LEVEL KEYS)
+        // STEP 2: GET COURSE DETAILS FROM FIREBASE
         // ===========================================
         const courseList: Course[] = [];
         let totalGradePoints = 0;
@@ -110,19 +151,22 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         let totalAttendance = 0;
         let attendanceCount = 0;
         
-        // List of possible course codes from your data
-        const possibleCourses = ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'];
+        // List of all possible courses from your Firebase
+        const allCourseIds = ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'];
         
-        for (const courseId of possibleCourses) {
+        for (const courseId of allCourseIds) {
+          // Only include courses this student is enrolled in
+          if (!enrolledCourseIds.includes(courseId)) continue;
+          
           const courseData = allData[courseId];
           
-          if (courseData && courseData.courseName) {
+          if (courseData) {
             console.log(`📖 Found course ${courseId}:`, courseData);
             
             courseList.push({
               id: courseId,
               courseId: courseId,
-              name: courseData.courseName,
+              name: courseData.courseName || courseId,
               teacherName: courseData.teacherName || '',
               credits: courseData.credits || 3,
               schedule: courseData.schedule || '',
@@ -147,7 +191,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           }
         }
         
-        console.log('✅ Courses found:', courseList);
+        console.log('✅ Courses for this student:', courseList);
         
         setCourses(courseList);
         

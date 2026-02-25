@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+﻿import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { DataProvider } from "./contexts/DataContext";
 import { MainLayout } from "./components/MainLayout";
@@ -33,7 +33,8 @@ export function App() {
       <DataProvider>
         <Router>
           <Routes>
-            <Route path="/login" element={<EmailLogin />} />
+            <Route path="/login" element={<EmailLogin />
+            <Route path='/forgot-password' element={<ForgotPassword />} />} />
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
             <Route path="/grades" element={<ProtectedRoute><Grades /></ProtectedRoute>} />

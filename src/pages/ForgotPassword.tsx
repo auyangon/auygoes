@@ -1,26 +1,26 @@
 ﻿import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { GlassCard } from '../components/Common';
-import { Mail, Lock, LogIn, Sparkles } from 'lucide-react';
+import { Mail, ArrowLeft, Sparkles } from 'lucide-react';
 
-export const LoginPage: React.FC = () => {
+export const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const { resetPassword } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMessage('');
     setError('');
     setLoading(true);
     try {
-      await login(email, password);
-      navigate('/');
+      await resetPassword(email);
+      setMessage('✅ Check your email for the reset link!');
     } catch (err: any) {
-      setError(err.message || 'Failed to login');
+      setError(err.message || 'Failed to reset password');
     } finally {
       setLoading(false);
     }
@@ -29,14 +29,21 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center p-4">
       <GlassCard className="p-8 max-w-md w-full">
+        {/* Fun header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-3">
             <Sparkles className="text-seafoam-dark" size={40} />
           </div>
-          <h1 className="text-3xl font-normal text-jet mb-2">Welcome Back!</h1>
-          <p className="text-jet/70">Sign in to your student portal</p>
+          <h1 className="text-3xl font-normal text-jet mb-2">Aiyo, forget password?</h1>
+          <p className="text-jet/70">Don't worry, we all have those moments! 😊</p>
+          <p className="text-sm text-jet/50 mt-1">Enter your email and we'll send you a reset link.</p>
         </div>
 
+        {message && (
+          <div className="mb-4 p-3 bg-seafoam-soft/50 border border-seafoam-soft rounded-lg text-jet text-sm">
+            {message}
+          </div>
+        )}
         {error && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
             {error}
@@ -59,27 +66,6 @@ export const LoginPage: React.FC = () => {
             </div>
           </div>
 
-          <div>
-            <label className="block text-jet/70 text-sm mb-1">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jet/40" size={18} />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-white/50 border border-seafoam-soft/30 rounded-xl py-3 pl-10 pr-4 text-jet placeholder-jet/40 focus:outline-none focus:ring-2 focus:ring-seafoam-dark/20"
-                placeholder="••••••••"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="text-right">
-            <Link to="/forgot-password" className="text-sm text-jet/60 hover:text-jet transition">
-              Aiyo, forget password?
-            </Link>
-          </div>
-
           <button
             type="submit"
             disabled={loading}
@@ -88,17 +74,17 @@ export const LoginPage: React.FC = () => {
             {loading ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
-              <>
-                <LogIn size={20} />
-                Sign In
-              </>
+              'Send Reset Link'
             )}
           </button>
         </form>
 
-        <p className="text-center text-jet/50 text-sm mt-6">
-          Don't have an account? Contact your administrator.
-        </p>
+        <div className="mt-6 text-center">
+          <Link to="/login" className="inline-flex items-center gap-1 text-jet/60 hover:text-jet transition">
+            <ArrowLeft size={16} />
+            Back to Login
+          </Link>
+        </div>
       </GlassCard>
     </div>
   );

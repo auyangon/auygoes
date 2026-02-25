@@ -1,5 +1,5 @@
 ﻿import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ref, get, child } from 'firebase/database';
+import { ref, get } from 'firebase/database';
 import { db } from '../lib/firebase';
 import { useAuth } from './AuthContext';
 
@@ -13,6 +13,7 @@ export interface Course {
   room?: string;
   googleClassroomLink?: string;
   grade?: string;
+  attendancePercentage?: number;
 }
 
 interface DataContextType {
@@ -55,175 +56,79 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        const dbRef = ref(db);
+        console.log('🔍 Fetching data for:', user.email);
         
-        const studentsSnapshot = await get(child(dbRef, 'students'));
-        const students = studentsSnapshot.val() || {};
+        // Based on your data structure, courses are at the root level
+        // Each course is a key like "ENG101" with course data
+        const coursesRef = ref(db, '/');
+        const snapshot = await get(coursesRef);
+        const allData = snapshot.val() || {};
         
-        let currentStudent: any = null;
-        let currentStudentId = '';
+        console.log('📚 All Firebase data:', allData);
         
-        for (const [id, student] of Object.entries(students)) {
-          if ((student as any).email === user.email) {
-            currentStudent = student;
-            currentStudentId = id;
-            break;
-          }
-        }
+        // Filter out only the course keys (like ENG101, BUS101, etc.)
+        const courseKeys = ['BUS101', 'ENG101', 'HUM11', 'IT101', 'MATH101', 'STAT100'];
         
-        if (!currentStudent) {
-          setStudentName(user.displayName || 'Student');
-          setStudentId('AUY' + Math.floor(1000 + Math.random() * 9000));
-          setMajor('Computer Science');
-          
-          const mockCourses: Course[] = [
-            {
-              id: 'CS101',
-              courseId: 'CS101',
-              name: 'Introduction to Computer Science',
-              teacherName: 'Dr. Smith',
-              credits: 3,
-              schedule: 'Mon/Wed 10:00-11:30',
-              room: 'Room 201',
-              googleClassroomLink: 'https://classroom.google.com/c/CS101',
-              grade: 'A-'
-            },
-            {
-              id: 'ENG101',
-              courseId: 'ENG101',
-              name: 'English Composition',
-              teacherName: 'Dr. Brown',
-              credits: 3,
-              schedule: 'Tue/Thu 09:00-10:30',
-              room: 'Humanities 205',
-              googleClassroomLink: 'https://classroom.google.com/c/ENG101',
-              grade: 'B+'
-            },
-            {
-              id: 'MATH101',
-              courseId: 'MATH101',
-              name: 'College Mathematics',
-              teacherName: 'Prof. Lee',
-              credits: 4,
-              schedule: 'Mon/Wed/Fri 11:00-12:00',
-              room: 'Science 210',
-              googleClassroomLink: 'https://classroom.google.com/c/MATH101',
-              grade: 'B'
-            }
-          ];
-          
-          setCourses(mockCourses);
-          setGpa(3.4);
-          setTotalCredits(10);
-          setAttendance(92);
-          setLoading(false);
-          return;
-        }
-        
-        setStudentName(currentStudent.studentName || user.displayName || '');
-        setStudentId(currentStudent.studentId || currentStudentId);
-        setMajor(currentStudent.major || 'Computer Science');
-        
-        const coursesSnapshot = await get(child(dbRef, 'courses'));
-        const coursesData = coursesSnapshot.val() || {};
-        
-        const gradesSnapshot = await get(child(dbRef, 'studentCourses'));
-        const gradesData = gradesSnapshot.val() || {};
-        
-        const studentGrades: any[] = [];
+        const enrolledCourses: Course[] = [];
         let totalGradePoints = 0;
         let totalCreditsEarned = 0;
         let totalAttendance = 0;
         let attendanceCount = 0;
         
-        for (const [key, data] of Object.entries(gradesData)) {
-          if ((data as any).studentId === currentStudentId) {
-            studentGrades.push(data);
-            const points = gradePoints[(data as any).grade] || 0;
-            totalGradePoints += points * (data as any).credits;
-            totalCreditsEarned += (data as any).credits;
-          }
-        }
-        
-        for (const [key, data] of Object.entries(gradesData)) {
-          if ((data as any).studentId === currentStudentId && (data as any).attendancePercentage) {
-            totalAttendance += (data as any).attendancePercentage || 0;
-            attendanceCount++;
-          }
-        }
-        
-        const enrolledCourses: Course[] = [];
-        
-        for (const [id, course] of Object.entries(coursesData)) {
-          const courseData = course as any;
-          const grade = studentGrades.find(g => g.courseId === id);
+        // Loop through possible course keys
+        for (const courseId of courseKeys) {
+          const courseData = allData[courseId];
           
-          enrolledCourses.push({
-            id: id,
-            courseId: id,
-            name: courseData.courseName || id,
-            teacherName: courseData.teacherName || '',
-            credits: courseData.credits || 0,
-            schedule: courseData.schedule || '',
-            room: courseData.room || '',
-            googleClassroomLink: courseData.googleClassroomLink || `https://classroom.google.com/c/${id}`,
-            grade: grade?.grade || ''
-          });
+          if (courseData && courseData.courseName) {
+            console.log(`✅ Found course ${courseId}:`, courseData);
+            
+            enrolledCourses.push({
+              id: courseId,
+              courseId: courseId,
+              name: courseData.courseName || courseId,
+              teacherName: courseData.teacherName || '',
+              credits: courseData.credits || 3,
+              schedule: courseData.schedule || '',
+              room: courseData.room || '',
+              googleClassroomLink: courseData.googleClassroomLink || '',
+              grade: courseData.grade || '',
+              attendancePercentage: courseData.attendancePercentage
+            });
+            
+            // Calculate GPA
+            if (courseData.grade) {
+              const points = gradePoints[courseData.grade] || 0;
+              totalGradePoints += points * (courseData.credits || 3);
+              totalCreditsEarned += (courseData.credits || 3);
+            }
+            
+            // Calculate attendance
+            if (courseData.attendancePercentage) {
+              totalAttendance += courseData.attendancePercentage;
+              attendanceCount++;
+            }
+          }
         }
+        
+        console.log('🎓 Enrolled courses found:', enrolledCourses);
         
         setCourses(enrolledCourses);
-        setGpa(totalCreditsEarned > 0 ? Number((totalGradePoints / totalCreditsEarned).toFixed(2)) : 0);
+        
+        if (totalCreditsEarned > 0) {
+          setGpa(Number((totalGradePoints / totalCreditsEarned).toFixed(2)));
+        }
+        
         setTotalCredits(totalCreditsEarned);
-        setAttendance(attendanceCount > 0 ? Math.round(totalAttendance / attendanceCount) : 85);
+        setAttendance(attendanceCount > 0 ? Math.round(totalAttendance / attendanceCount) : 0);
         
-      } catch (err) {
-        console.error('Error fetching student data:', err);
-        setError('Failed to load data');
-        
+        // Set student info (you might want to add a students node later)
         setStudentName(user.displayName || 'Student');
-        setStudentId('AUY' + Math.floor(1000 + Math.random() * 9000));
+        setStudentId('AUY-' + Math.floor(1000 + Math.random() * 9000));
         setMajor('Computer Science');
         
-        const mockCourses: Course[] = [
-          {
-            id: 'CS101',
-            courseId: 'CS101',
-            name: 'Introduction to Computer Science',
-            teacherName: 'Dr. Smith',
-            credits: 3,
-            schedule: 'Mon/Wed 10:00-11:30',
-            room: 'Room 201',
-            googleClassroomLink: 'https://classroom.google.com/c/CS101',
-            grade: 'A-'
-          },
-          {
-            id: 'ENG101',
-            courseId: 'ENG101',
-            name: 'English Composition',
-            teacherName: 'Dr. Brown',
-            credits: 3,
-            schedule: 'Tue/Thu 09:00-10:30',
-            room: 'Humanities 205',
-            googleClassroomLink: 'https://classroom.google.com/c/ENG101',
-            grade: 'B+'
-          },
-          {
-            id: 'MATH101',
-            courseId: 'MATH101',
-            name: 'College Mathematics',
-            teacherName: 'Prof. Lee',
-            credits: 4,
-            schedule: 'Mon/Wed/Fri 11:00-12:00',
-            room: 'Science 210',
-            googleClassroomLink: 'https://classroom.google.com/c/MATH101',
-            grade: 'B'
-          }
-        ];
-        
-        setCourses(mockCourses);
-        setGpa(3.4);
-        setTotalCredits(10);
-        setAttendance(92);
+      } catch (err) {
+        console.error('❌ Error:', err);
+        setError('Failed to load data');
       } finally {
         setLoading(false);
       }

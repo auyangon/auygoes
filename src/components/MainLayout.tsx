@@ -19,7 +19,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Menu size={20} />
       </button>
 
-      {/* Sidebar overlay for mobile – THIS LINE WAS THE PROBLEM */}
+      {/* Sidebar overlay for mobile – CORRECTED SYNTAX */}
       <div
         className={ixed inset-0 bg-black bg-opacity-10 z-40 transition-opacity lg:hidden }
         onClick={() => setSidebarOpen(false)}

@@ -59,7 +59,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         const emailKey = sanitizeEmail(user.email);
         console.log('🔍 Looking up student with key:', emailKey);
 
-        // 1. Fetch the student node directly – FIXED LINE
+        // 1. Fetch the student node directly – THIS IS THE FIXED LINE 63
         const studentRef = ref(db, students/);
         const snapshot = await get(studentRef);
         const studentData = snapshot.val();

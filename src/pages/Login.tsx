@@ -99,8 +99,9 @@ export const LoginPage: React.FC = () => {
         <p className="text-center text-jet/50 text-sm mt-6">
           Don't have an account? Contact your administrator.
         </p>
-      </GlassCard>
+      </Card>
     </div>
   );
 };
+
 

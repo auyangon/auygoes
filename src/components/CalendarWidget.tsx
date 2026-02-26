@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { GlassCard } from './Common';
+import { Card } from './Common';
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Event {
@@ -57,7 +57,7 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
   };
 
   return (
-    <GlassCard className={p-6 \}>
+    <Card className={p-6 \}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
@@ -164,6 +164,7 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
           </div>
         </div>
       </div>
-    </GlassCard>
+    </Card>
   );
 };
+

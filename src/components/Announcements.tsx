@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { GlassCard } from './Common';
+import { Card } from './Common';
 import { Bell, Clock } from 'lucide-react';
 
 interface Announcement {
@@ -28,7 +28,7 @@ export const Announcements: React.FC<AnnouncementsProps> = ({ announcements = []
   };
 
   return (
-    <GlassCard className="p-6">
+    <Card className="p-6">
       <div className="flex items-center gap-2 mb-4">
         <Bell size={18} className="text-gray-700" />
         <h3 className="text-base font-medium text-gray-700">Announcements</h3>
@@ -52,6 +52,7 @@ export const Announcements: React.FC<AnnouncementsProps> = ({ announcements = []
           <p className="text-sm text-gray-600">No announcements yet</p>
         )}
       </div>
-    </GlassCard>
+    </Card>
   );
 };
+

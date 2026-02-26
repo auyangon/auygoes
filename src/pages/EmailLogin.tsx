@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { GlassCard } from '../components/Common';
+import { Card } from '../components/Common';
 import { Mail, Lock, LogIn } from 'lucide-react';
 
 export const EmailLogin: React.FC = () => {
@@ -29,7 +29,7 @@ export const EmailLogin: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-900 to-emerald-950 flex items-center justify-center p-4">
-      <GlassCard className="p-8 max-w-md w-full">
+      <Card className="p-8 max-w-md w-full">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-normal text-jet mb-2">AUY Portal</h1>
           <p className="text-jet/70">American University of Yangon</p>
@@ -91,7 +91,8 @@ export const EmailLogin: React.FC = () => {
         <p className="text-jet/70 text-xs text-center mt-6">
           Use your AUY email and password
         </p>
-      </GlassCard>
+      </Card>
     </div>
   );
 };
+

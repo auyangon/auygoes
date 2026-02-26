@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { GlassCard } from '../components/Common';
+import { Card } from '../components/Common';
 import { Mail, ArrowLeft, Sparkles } from 'lucide-react';
 
 export const ForgotPassword: React.FC = () => {
@@ -28,7 +28,7 @@ export const ForgotPassword: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center p-4">
-      <GlassCard className="p-8 max-w-md w-full">
+      <Card className="p-8 max-w-md w-full">
         {/* Fun header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-3">
@@ -85,7 +85,8 @@ export const ForgotPassword: React.FC = () => {
             Back to Login
           </Link>
         </div>
-      </GlassCard>
+      </Card>
     </div>
   );
 };
+

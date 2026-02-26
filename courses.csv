@@ -1,13 +1,7 @@
-﻿"courseId","courseName","teacherName","credits","googleClassroomLink"
-"BUS101","Introduction to Business","Prof. Johnson","3","https://classroom.google.com/"
-"ENG101","English Composition","Dr. Smith","3","https://classroom.google.com/"
-"HUM11","Humanities","Prof. Green","3","https://classroom.google.com/"
-"IT101","Computer Fundamentals","Dr. Brown","3","https://classroom.google.com/"
-"MATH101","College Mathematics","Prof. Lee","3","https://classroom.google.com/"
-"STAT100","Statistics","Dr. White","3","https://classroom.google.com/"
-"BUS101","","","",""
-"ENG101","","","",""
-"HUM11","","","",""
-"IT101","","","",""
-"MATH101","","","",""
-"STAT100","","","",""
+﻿courseId,courseName,teacherName,credits,googleClassroomLink
+BUS101,Introduction to Business,Prof. Johnson,3,https://classroom.google.com/
+ENG101,English Composition,Dr. Smith,3,https://classroom.google.com/
+HUM11,Humanities,Prof. Green,3,https://classroom.google.com/
+IT101,Computer Fundamentals,Dr. Brown,3,https://classroom.google.com/
+MATH101,College Mathematics,Prof. Lee,3,https://classroom.google.com/
+STAT100,Statistics,Dr. White,3,https://classroom.google.com/

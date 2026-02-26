@@ -1,6 +1,16 @@
-﻿const csv = require('csvtojson');
-const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccountKey.json');
+﻿import csv from 'csvtojson';
+import admin from 'firebase-admin';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load service account
+const serviceAccount = JSON.parse(
+  readFileSync(join(__dirname, 'serviceAccountKey.json'), 'utf8')
+);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -14,6 +24,8 @@ function sanitize(email) {
 }
 
 async function upload() {
+  console.log('📤 Starting upload to Firebase...');
+
   // 1. Upload courses
   const courses = {};
   const coursesList = await csv().fromFile('courses.csv');
@@ -28,7 +40,7 @@ async function upload() {
   await db.ref('courses').set(courses);
   console.log('✅ Courses uploaded');
 
-  // 2. Upload students with enrollments
+  // 2. Build students object
   const students = {};
   const studentsList = await csv().fromFile('students.csv');
   for (const s of studentsList) {
@@ -39,12 +51,15 @@ async function upload() {
       email: s.email,
       major: s.major,
       studyMode: s.studyMode,
-      enrollments: {}
+      courses: {}  // Store courses directly under the student
     };
   }
 
+  // 3. Add enrollments to students
   const enrollmentsList = await csv().fromFile('enrollments.csv');
+  let count = 0;
   for (const e of enrollmentsList) {
+    // Find the student by studentId
     let studentKey = null;
     for (const [key, stu] of Object.entries(students)) {
       if (stu.studentId === e.studentId) {
@@ -52,38 +67,38 @@ async function upload() {
         break;
       }
     }
-    if (!studentKey) continue;
-
-    students[studentKey].enrollments[e.courseId] = {
-      grade: e.grade,
-      attendancePercentage: Number(e.attendancePercentage),
-      lastUpdated: e.lastUpdated,
-      courseData: courses[e.courseId] || {}
-    };
-  }
-
-  await db.ref('students').set(students);
-  console.log('✅ Students & enrollments uploaded');
-
-  // 3. Upload announcements (optional)
-  try {
-    const annList = await csv().fromFile('announcements.csv');
-    const announcements = {};
-    for (const a of annList) {
-      announcements[a.announcementId] = {
-        title: a.title,
-        content: a.content,
-        date: a.date,
-        target: a.targetAudience
-      };
+    if (!studentKey) {
+      continue;
     }
-    await db.ref('announcements').set(announcements);
-    console.log('✅ Announcements uploaded');
-  } catch (e) {
-    console.log('ℹ️ No announcements file or error, skipping.');
+
+    // Add course data to student's courses
+    students[studentKey].courses[e.courseId] = {
+      courseName: courses[e.courseId]?.name || e.courseId,
+      teacherName: courses[e.courseId]?.teacher || '',
+      credits: courses[e.courseId]?.credits || 3,
+      googleClassroomLink: courses[e.courseId]?.googleClassroomLink || '',
+      grade: e.grade || '',
+      attendancePercentage: Number(e.attendancePercentage) || 0
+    };
+    count++;
   }
 
-  console.log('🎉 All done!');
+  // 4. Upload students to Firebase
+  await db.ref('students').set(students);
+  console.log(`✅ Students and ${count} enrollments uploaded`);
+
+  // 5. Verify sample student data
+  const testEmails = ['jbthaw@gmail.com', 'jinochan1991@gmail.com'];
+  for (const email of testEmails) {
+    const key = sanitize(email);
+    const snap = await db.ref(`students/${key}`).once('value');
+    if (snap.exists()) {
+      const student = snap.val();
+      console.log(`✅ ${email} verified - ${Object.keys(student.courses || {}).length} courses`);
+    }
+  }
+
+  console.log('🎉 Upload complete!');
 }
 
 upload().catch(console.error);

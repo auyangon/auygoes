@@ -29,7 +29,7 @@ const navigation = [
     name: 'My Courses',
     to: '/courses',
     icon: BookOpen,
-    description: 'Enrolled courses'
+    description: 'View enrolled courses'
   },
   {
     name: 'My Exams',
@@ -71,6 +71,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   };
 
   const getInitials = (name: string) => {
+    if (!name) return 'ST';
     return name
       .split(' ')
       .map(word => word[0])
@@ -84,41 +85,37 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   const email = user?.email || 'student@auy.edu.mm';
 
   return (
-    <aside className="uni-sidebar h-full w-64 flex flex-col">
+    <aside className="sidebar h-full w-64 flex flex-col">
       {/* University Logo */}
-      <div className="uni-sidebar-header">
-        <div className="uni-logo">
-          <div className="uni-logo-icon">AU</div>
+      <div className="sidebar-header">
+        <div className="sidebar-logo">
+          <div className="logo-icon">AU</div>
           <div>
-            <div className="uni-logo-text">American University</div>
-            <div className="uni-logo-subtext">of Yangon</div>
+            <div className="logo-text">American University</div>
+            <div className="logo-subtext">of Yangon</div>
           </div>
         </div>
       </div>
 
       {/* Student Info Card */}
-      <div className="uni-student-card">
+      <div className="student-card">
         <div className="flex items-center gap-3">
-          <div className="uni-student-avatar">
+          <div className="student-avatar">
             {initials}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="font-medium text-gray-800 text-sm truncate">
-              {displayName}
-            </div>
-            <div className="text-xs text-gray-500 truncate mt-0.5">
-              {email}
-            </div>
+            <div className="student-name truncate">{displayName}</div>
+            <div className="student-email truncate">{email}</div>
             <div className="flex items-center gap-2 mt-2">
-              <span className="uni-badge uni-badge-primary">Student</span>
-              <span className="uni-badge">Active</span>
+              <span className="badge badge-primary">Student</span>
+              <span className="badge badge-secondary">Active</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="uni-nav flex-1 overflow-y-auto">
+      <nav className="nav-section flex-1 overflow-y-auto">
         {navigation.map((item) => {
           const Icon = item.icon;
           return (
@@ -127,16 +124,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
               to={item.to}
               onClick={handleNavClick}
               className={({ isActive }) =>
-                `uni-nav-item ${isActive ? 'active' : ''}`
+                `nav-item ${isActive ? 'active' : ''}`
               }
             >
-              <Icon className="uni-nav-icon" size={18} />
+              <Icon className="nav-icon" size={18} />
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <span>{item.name}</span>
                   <ChevronRight size={14} className="opacity-50" />
                 </div>
-                <div className="uni-nav-description">{item.description}</div>
+                <div className="nav-description">{item.description}</div>
               </div>
             </NavLink>
           );
@@ -147,12 +144,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       <div className="p-4 border-t border-gray-100">
         <button
           onClick={logout}
-          className="uni-nav-item w-full text-left"
+          className="nav-item w-full text-left"
         >
-          <LogOut size={18} className="uni-nav-icon" />
+          <LogOut size={18} className="nav-icon" />
           <div className="flex-1">
             <div>Logout</div>
-            <div className="uni-nav-description">End session</div>
+            <div className="nav-description">End session</div>
           </div>
         </button>
       </div>

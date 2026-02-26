@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,135 +6,404 @@
 
 @layer base {
   :root {
-    --seafoam-deep: #0B4F3A;
-    --seafoam-dark: #1E7B5C;
-    --seafoam-medium: #2A9D7A;
-    --seafoam-light: #6BC9A8;
-    --seafoam-soft: #B8E2D6;
-    --seafoam-pale: #E8F6F0;
-    --seafoam-mist: #F0FAF5;
+    --primary: #0B4F3A;
+    --primary-light: #1E7B5C;
+    --primary-soft: #2A9D7A;
+    --primary-lighter: #6BC9A8;
+    --accent: #F5F5F5;
+    --text-primary: #1A1A1A;
+    --text-secondary: #4A4A4A;
+    --text-muted: #6B6B6B;
+    --border-light: #E8E8E8;
+    --bg-light: #F8F9FA;
+    --white: #FFFFFF;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.03);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02);
+    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
   }
 
   html {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
   body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #f8fafc 0%, #f0f5f3 100%);
-    color: #1E2B2A;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-primary);
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Seafoam Glass Card with 5% transparency */
-.glass-seafoam {
-  background: rgba(42, 157, 122, 0.05); /* 5% opacity seafoam medium */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(42, 157, 122, 0.15);
-  border-radius: 1.5rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* University Portal Sidebar */
+.uni-sidebar {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%);
+  border-right: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
 }
 
-.glass-seafoam:hover {
-  background: rgba(42, 157, 122, 0.08); /* Slightly more visible on hover */
-  border-color: rgba(42, 157, 122, 0.25);
-  transform: translateY(-2px);
+.uni-sidebar-header {
+  padding: 1.5rem 1.25rem;
+  border-bottom: 1px solid var(--border-light);
 }
 
-/* Shadow Utilities */
-.shadow-soft {
-  box-shadow: 0 10px 40px -15px rgba(11, 79, 58, 0.15),
-              0 4px 12px -8px rgba(0, 0, 0, 0.1);
-}
-
-.shadow-medium {
-  box-shadow: 0 20px 50px -20px rgba(11, 79, 58, 0.25),
-              0 8px 20px -10px rgba(0, 0, 0, 0.15);
-}
-
-.shadow-strong {
-  box-shadow: 0 30px 60px -25px rgba(11, 79, 58, 0.35),
-              0 12px 30px -12px rgba(0, 0, 0, 0.2);
-}
-
-/* Card wrapper for consistent styling */
-.card {
-  @apply glass-seafoam shadow-soft;
-}
-
-.card:hover {
-  @apply shadow-medium;
-}
-
-/* Sidebar Glass */
-.sidebar-glass {
-  background: rgba(42, 157, 122, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-right: 1px solid rgba(42, 157, 122, 0.15);
-  box-shadow: 4px 0 40px -20px rgba(11, 79, 58, 0.3);
-}
-
-/* Sidebar Link Styles */
-.sidebar-link {
+.uni-logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  margin: 0.25rem 0.5rem;
-  border-radius: 1rem;
-  transition: all 0.3s ease;
-  color: #2D4A43;
+}
+
+.uni-logo-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.uni-logo-text {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.uni-logo-subtext {
+  font-size: 0.75rem;
+  color: var(--text-muted);
   font-weight: 400;
 }
 
-.sidebar-link:hover {
-  background: rgba(42, 157, 122, 0.1);
-  box-shadow: 0 8px 20px -12px rgba(11, 79, 58, 0.3);
-  transform: translateX(4px);
+/* Student Info Card */
+.uni-student-card {
+  margin: 1rem 1.25rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
 }
 
-.sidebar-link.active {
-  background: rgba(30, 123, 92, 0.15);
-  color: #0B4F3A;
-  border-left: 3px solid #1E7B5C;
-  box-shadow: 0 10px 25px -8px rgba(30, 123, 92, 0.3);
+.uni-student-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-lighter);
+}
+
+.uni-student-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Navigation Links */
+.uni-nav {
+  padding: 1rem 0.75rem;
+}
+
+.uni-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 1rem;
+  margin: 0.125rem 0;
+  border-radius: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  transition: all 0.2s ease;
+}
+
+.uni-nav-item:hover {
+  background: var(--accent);
+  color: var(--primary);
+  transform: translateX(2px);
+}
+
+.uni-nav-item.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.uni-nav-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  opacity: 0.7;
+}
+
+.uni-nav-item.active .uni-nav-icon {
+  opacity: 1;
+}
+
+.uni-nav-description {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.125rem;
+}
+
+.uni-nav-item.active .uni-nav-description {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Main Content Cards */
+.uni-card {
+  background: var(--white);
+  border-radius: 1rem;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.uni-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-lighter);
+}
+
+.uni-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.uni-card-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.uni-card-title-icon {
+  color: var(--primary);
+}
+
+/* Stats Cards */
+.uni-stat {
+  background: var(--white);
+  border-radius: 1rem;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.uni-stat:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--primary-lighter);
+}
+
+.uni-stat-icon {
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.uni-stat-value {
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.uni-stat-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
 /* Badge Styles */
-.badge {
-  display: inline-block;
+.uni-badge {
+  display: inline-flex;
+  align-items: center;
   padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
+  border-radius: 2rem;
   font-size: 0.75rem;
   font-weight: 500;
-  background: rgba(42, 157, 122, 0.08);
-  color: #1E7B5C;
-  border: 1px solid rgba(42, 157, 122, 0.2);
-  backdrop-filter: blur(4px);
+  background: var(--accent);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+
+.uni-badge-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  border: none;
+}
+
+/* Progress Bar */
+.uni-progress {
+  height: 0.5rem;
+  background: var(--accent);
+  border-radius: 1rem;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+
+.uni-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: 1rem;
+  transition: width 0.3s ease;
+}
+
+/* Course Items */
+.uni-course-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--white);
+  border-radius: 1rem;
+  border: 1px solid var(--border-light);
+  transition: all 0.2s ease;
+  margin-bottom: 0.75rem;
+}
+
+.uni-course-item:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-lighter);
+  transform: translateX(2px);
+}
+
+.uni-course-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--accent);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.uni-course-info h4 {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  margin-bottom: 0.125rem;
+}
+
+.uni-course-info p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.uni-course-grade {
+  margin-left: auto;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--primary);
+  background: var(--accent);
+  padding: 0.25rem 0.75rem;
+  border-radius: 2rem;
+}
+
+/* Button Styles */
+.uni-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.uni-btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.uni-btn-primary:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.uni-btn-secondary {
+  background: var(--white);
+  color: var(--text-secondary);
+  border-color: var(--border-light);
+}
+
+.uni-btn-secondary:hover {
+  background: var(--accent);
+  border-color: var(--primary-lighter);
+}
+
+/* Table Styles */
+.uni-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.uni-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.uni-table td {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.uni-table tr:hover td {
+  background: var(--accent);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0f5f3;
-  border-radius: 10px;
+  background: var(--accent);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(42, 157, 122, 0.3);
-  border-radius: 10px;
-  backdrop-filter: blur(4px);
+  background: var(--primary-lighter);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(42, 157, 122, 0.5);
+  background: var(--primary-light);
 }

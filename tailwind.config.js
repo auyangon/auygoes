@@ -7,23 +7,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        seafoam: {
-          deep: '#0B4F3A',
-          dark: '#1E7B5C',
-          medium: '#2A9D7A',
-          light: '#6BC9A8',
-          soft: '#B8E2D6',
-          pale: '#E8F6F0',
-          mist: '#F0FAF5',
-        },
+        primary: '#0B4F3A',
+        'primary-light': '#1E7B5C',
+        'primary-soft': '#2A9D7A',
+        'primary-lighter': '#6BC9A8',
       },
       fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
       },
       boxShadow: {
-        'soft': '0 10px 40px -15px rgba(11, 79, 58, 0.15), 0 4px 12px -8px rgba(0, 0, 0, 0.1)',
-        'medium': '0 20px 50px -20px rgba(11, 79, 58, 0.25), 0 8px 20px -10px rgba(0, 0, 0, 0.15)',
-        'strong': '0 30px 60px -25px rgba(11, 79, 58, 0.35), 0 12px 30px -12px rgba(0, 0, 0, 0.2)',
+        'sm': '0 2px 4px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.03)',
+        'md': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
+        'lg': '0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02)',
+        'xl': '0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02)',
       },
     },
   },

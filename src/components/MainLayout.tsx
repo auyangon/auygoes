@@ -10,18 +10,18 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#fff9f2' }}>
+    <div className="min-h-screen bg-gradient-to-br from-seafoam-mist via-white to-seafoam-pale">
       {/* Mobile menu button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md text-gray-700 border border-pastel-peach"
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-white/80 backdrop-blur-sm rounded-xl shadow-soft text-seafoam-dark border border-seafoam-light/30"
       >
         <Menu size={20} />
       </button>
 
-      {/* Sidebar overlay for mobile – FIXED SYNTAX */}
+      {/* Sidebar overlay for mobile */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-10 z-40 transition-opacity lg:hidden ${
+        className={`fixed inset-0 bg-black/5 backdrop-blur-sm z-40 transition-opacity lg:hidden ${
           sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setSidebarOpen(false)}

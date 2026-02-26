@@ -7,21 +7,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        pastel: {
-          blue: '#a7c7e7',
-          pink: '#f9c9d3',
-          green: '#c1e1c1',
-          yellow: '#f9e4b7',
-          purple: '#d5b8ff',
-          peach: '#ffd8b1',
-          mint: '#b8e2d6',
-          lavender: '#e2d1ff',
-          rose: '#fadadd',
-          sky: '#b2d8fa',
+        seafoam: {
+          deep: '#0B4F3A',
+          dark: '#1E7B5C',
+          medium: '#2A9D7A',
+          light: '#6BC9A8',
+          soft: '#B8E2D6',
+          pale: '#E8F6F0',
+          mist: '#F0FAF5',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Poppins', 'sans-serif'],
+      },
+      boxShadow: {
+        'soft': '0 10px 40px -15px rgba(11, 79, 58, 0.15), 0 4px 12px -8px rgba(0, 0, 0, 0.1)',
+        'medium': '0 20px 50px -20px rgba(11, 79, 58, 0.25), 0 8px 20px -10px rgba(0, 0, 0, 0.15)',
+        'strong': '0 30px 60px -25px rgba(11, 79, 58, 0.35), 0 12px 30px -12px rgba(0, 0, 0, 0.2)',
       },
     },
   },

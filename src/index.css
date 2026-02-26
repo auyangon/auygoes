@@ -1,81 +1,140 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --seafoam-deep: #0B4F3A;
+    --seafoam-dark: #1E7B5C;
+    --seafoam-medium: #2A9D7A;
+    --seafoam-light: #6BC9A8;
+    --seafoam-soft: #B8E2D6;
+    --seafoam-pale: #E8F6F0;
+    --seafoam-mist: #F0FAF5;
+  }
+
   html {
     font-family: 'Poppins', sans-serif;
   }
-  
+
   body {
     font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f0f5f3 100%);
+    color: #1E2B2A;
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    color: #1A1A1A;
   }
 }
 
-/* Glass effect classes - 90% transparent (10% opacity) */
-.glass-card {
-  background: rgba(209, 242, 229, 0.1); /* 90% transparent */
+/* Seafoam Glass Card with 5% transparency */
+.glass-seafoam {
+  background: rgba(42, 157, 122, 0.05); /* 5% opacity seafoam medium */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(11, 79, 58, 0.1);
-  box-shadow: 0 8px 32px rgba(11, 79, 58, 0.05);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(42, 157, 122, 0.15);
+  border-radius: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.glass-card:hover {
-  background: rgba(209, 242, 229, 0.15);
-  box-shadow: 0 12px 48px rgba(11, 79, 58, 0.08);
+.glass-seafoam:hover {
+  background: rgba(42, 157, 122, 0.08); /* Slightly more visible on hover */
+  border-color: rgba(42, 157, 122, 0.25);
   transform: translateY(-2px);
 }
 
-.glass-sidebar {
-  background: rgba(209, 242, 229, 0.1); /* 90% transparent */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-right: 1px solid rgba(11, 79, 58, 0.1);
-  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.03);
+/* Shadow Utilities */
+.shadow-soft {
+  box-shadow: 0 10px 40px -15px rgba(11, 79, 58, 0.15),
+              0 4px 12px -8px rgba(0, 0, 0, 0.1);
 }
 
-/* Jet Black text */
-.text-jet {
-  color: #1A1A1A;
+.shadow-medium {
+  box-shadow: 0 20px 50px -20px rgba(11, 79, 58, 0.25),
+              0 8px 20px -10px rgba(0, 0, 0, 0.15);
 }
 
-/* Smaller font utilities */
-.text-xs { font-size: 0.75rem; line-height: 1rem; }
-.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
-.text-base { font-size: 1rem; line-height: 1.5rem; }
-.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
-.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-.text-2xl { font-size: 1.5rem; line-height: 2rem; }
-.text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
-.text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+.shadow-strong {
+  box-shadow: 0 30px 60px -25px rgba(11, 79, 58, 0.35),
+              0 12px 30px -12px rgba(0, 0, 0, 0.2);
+}
 
-/* Custom scrollbar */
+/* Card wrapper for consistent styling */
+.card {
+  @apply glass-seafoam shadow-soft;
+}
+
+.card:hover {
+  @apply shadow-medium;
+}
+
+/* Sidebar Glass */
+.sidebar-glass {
+  background: rgba(42, 157, 122, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(42, 157, 122, 0.15);
+  box-shadow: 4px 0 40px -20px rgba(11, 79, 58, 0.3);
+}
+
+/* Sidebar Link Styles */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  color: #2D4A43;
+  font-weight: 400;
+}
+
+.sidebar-link:hover {
+  background: rgba(42, 157, 122, 0.1);
+  box-shadow: 0 8px 20px -12px rgba(11, 79, 58, 0.3);
+  transform: translateX(4px);
+}
+
+.sidebar-link.active {
+  background: rgba(30, 123, 92, 0.15);
+  color: #0B4F3A;
+  border-left: 3px solid #1E7B5C;
+  box-shadow: 0 10px 25px -8px rgba(30, 123, 92, 0.3);
+}
+
+/* Badge Styles */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(42, 157, 122, 0.08);
+  color: #1E7B5C;
+  border: 1px solid rgba(42, 157, 122, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(11, 79, 58, 0.03);
+  background: #f0f5f3;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(11, 79, 58, 0.1);
+  background: rgba(42, 157, 122, 0.3);
   border-radius: 10px;
+  backdrop-filter: blur(4px);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(11, 79, 58, 0.2);
+  background: rgba(42, 157, 122, 0.5);
 }

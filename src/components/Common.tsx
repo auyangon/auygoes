@@ -5,14 +5,16 @@ import { twMerge } from 'tailwind-merge';
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
+  hover?: boolean;
 }
 
-export const GlassCard: React.FC<GlassCardProps> = ({ children, className, ...props }) => {
+export const GlassCard: React.FC<GlassCardProps> = ({ children, className, hover = true, ...props }) => {
   return (
     <div
       className={twMerge(
         clsx(
-          'bg-white rounded-xl shadow-md p-5 border border-pastel-peach hover:shadow-lg transition-shadow',
+          'card',
+          hover && 'hover:shadow-medium',
           className
         )
       )}
@@ -30,7 +32,7 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
   return (
     <h3 className={twMerge(
       clsx(
-        'text-lg font-medium text-gray-700',
+        'text-lg font-medium text-seafoam-deep',
         className
       )
     )}>
@@ -39,19 +41,25 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
   );
 };
 
-interface GlassBadgeProps {
+interface BadgeProps {
   children: React.ReactNode;
   className?: string;
-  color?: string;
+  color?: 'default' | 'success' | 'warning' | 'info';
 }
 
-export const GlassBadge: React.FC<GlassBadgeProps> = ({ children, className, color }) => {
+export const Badge: React.FC<BadgeProps> = ({ children, className, color = 'default' }) => {
+  const colors = {
+    default: 'badge',
+    success: 'bg-green-100/80 text-green-700 border-green-200',
+    warning: 'bg-amber-100/80 text-amber-700 border-amber-200',
+    info: 'bg-blue-100/80 text-blue-700 border-blue-200',
+  };
+
   return (
     <span
       className={twMerge(
         clsx(
-          'px-2.5 py-1 rounded-full text-xs font-medium',
-          color || 'bg-pastel-yellow text-gray-700',
+          colors[color],
           className
         )
       )}

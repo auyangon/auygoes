@@ -75,8 +75,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           return;
         }
 
-        // Set student info
-        setStudentName(studentData.studentName || studentData.name || user.displayName || 'Student');
+        // Set student info - CRITICAL for welcome message
+        setStudentName(studentData.name || studentData.studentName || user.displayName || 'Student');
         setStudentId(studentData.studentId || '');
         setMajor(studentData.major || 'ISP Program');
 
@@ -95,7 +95,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           const course = courseInfo as any;
           console.log(`📖 Processing course ${courseId}:`, course);
 
-          // Only add courses that have valid data
           if (course.courseName) {
             courseList.push({
               id: courseId,
@@ -108,14 +107,12 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
               attendancePercentage: course.attendancePercentage || 0,
             });
 
-            // Calculate GPA
             if (course.grade) {
               const points = gradePoints[course.grade] || 0;
               totalGradePoints += points * (course.credits || 3);
               totalCreditsEarned += (course.credits || 3);
             }
 
-            // Calculate attendance
             if (course.attendancePercentage) {
               totalAttendance += course.attendancePercentage;
               attendanceCount++;
@@ -126,16 +123,13 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         console.log('✅ Final course list:', courseList);
         setCourses(courseList);
         
-        // Calculate GPA
         if (totalCreditsEarned > 0) {
           const calculatedGpa = totalGradePoints / totalCreditsEarned;
           setGpa(Number(calculatedGpa.toFixed(2)));
-          console.log('📊 Calculated GPA:', calculatedGpa);
         }
         
         setTotalCredits(totalCreditsEarned);
         
-        // Calculate average attendance
         if (attendanceCount > 0) {
           const avgAttendance = totalAttendance / attendanceCount;
           setAttendance(Math.round(avgAttendance));

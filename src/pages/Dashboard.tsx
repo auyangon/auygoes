@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
+import { Card, Badge, ProgressBar } from '../components/Common';
 import { 
   BookOpen, 
   Award, 
@@ -11,13 +12,7 @@ import {
   Users,
   Clock,
   ChevronRight,
-  Sparkles,
-  Star,
-  Heart,
-  Zap,
-  Sun,
-  Moon,
-  Coffee
+  Sparkles
 } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
@@ -27,7 +22,7 @@ export const Dashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#667eea] border-t-transparent"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
       </div>
     );
   }
@@ -35,35 +30,30 @@ export const Dashboard: React.FC = () => {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md">
-          <h2 className="text-2xl font-bold text-red-500 mb-4">Error</h2>
+        <Card className="p-8 max-w-md">
+          <h2 className="text-xl font-medium text-red-600 mb-4">Error</h2>
           <p className="text-gray-600">{error}</p>
-        </div>
+        </Card>
       </div>
     );
   }
 
+  // Get current time for greeting
   const hour = new Date().getHours();
   let greeting = "Good morning";
-  let GreetingIcon = Coffee;
-  if (hour >= 12 && hour < 17) { greeting = "Good afternoon"; GreetingIcon = Sun; }
-  if (hour >= 17) { greeting = "Good evening"; GreetingIcon = Moon; }
+  if (hour >= 12 && hour < 17) greeting = "Good afternoon";
+  if (hour >= 17) greeting = "Good evening";
 
+  // Get student name - PRIORITY: studentName from Firebase > user.displayName > 'Student'
   const displayName = studentName || user?.displayName || "Student";
   const firstName = displayName.split(' ')[0];
 
-  // Gradient colors for stat cards
+  // Stat card gradients
   const statGradients = [
-    'bg-gradient-to-br from-purple-500 via-purple-600 to-pink-500',
-    'bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500',
-    'bg-gradient-to-br from-orange-500 via-red-500 to-pink-500',
-    'bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500',
-  ];
-
-  // Course icon gradients
-  const courseGradients = [
-    'course-icon-1', 'course-icon-2', 'course-icon-3', 
-    'course-icon-4', 'course-icon-5', 'course-icon-6'
+    'from-primary to-primary-light',
+    'from-primary-light to-primary-soft',
+    'from-primary-soft to-primary-lighter',
+    'from-primary to-primary-soft'
   ];
 
   // Get grade color
@@ -72,286 +62,181 @@ export const Dashboard: React.FC = () => {
     if (grade.startsWith('A')) return 'bg-green-100 text-green-700';
     if (grade.startsWith('B')) return 'bg-blue-100 text-blue-700';
     if (grade.startsWith('C')) return 'bg-yellow-100 text-yellow-700';
-    if (grade.startsWith('D')) return 'bg-orange-100 text-orange-700';
-    return 'bg-red-100 text-red-700';
+    return 'bg-orange-100 text-orange-700';
   };
 
   return (
-    <div className="space-y-8">
-      {/* Header with Greeting */}
+    <div className="space-y-6">
+      {/* Header with Student Name - NO BOLD, smaller font */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="p-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl text-white shadow-xl">
-            <GreetingIcon size={28} />
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white">
+            <Sparkles size={20} />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
-              {greeting}, {firstName}!
-              <Sparkles className="text-yellow-500" size={24} />
+            <h1 className="text-2xl font-normal text-gray-800">
+              {greeting}, {firstName}
             </h1>
-            <p className="text-gray-500 text-sm mt-1">
+            <p className="text-sm text-gray-500 mt-0.5">
               {new Date().toLocaleDateString('en-US', { 
                 weekday: 'long', 
-                year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
               })}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm font-medium shadow-lg">
-            ID: {studentId || 'AUY-2025-001'}
-          </span>
-          <span className="px-4 py-2 bg-white shadow-md rounded-full text-sm font-medium text-gray-700">
-            {major || 'ISP Program'}
-          </span>
+        <div className="flex items-center gap-2">
+          <Badge variant="primary">ID: {studentId || 'AUY-2025-001'}</Badge>
+          <Badge>{major || 'ISP Program'}</Badge>
         </div>
       </div>
 
-      {/* Stats Cards - Colorful Gradients */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className={`${statGradients[0]} stat-card`}>
-          <div className="stat-icon">
-            <BookOpen size={28} />
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className={`stat-card bg-gradient-to-br ${statGradients[0]} text-white`}>
+          <div className="stat-icon bg-white/20">
+            <BookOpen size={24} />
           </div>
-          <div>
-            <div className="stat-value">{courses.length}</div>
-            <div className="stat-label">Enrolled Courses</div>
-          </div>
-          <div className="flex items-center gap-2 mt-2">
-            <Star size={16} className="text-yellow-300" />
-            <span className="text-sm opacity-90">Active semester</span>
-          </div>
+          <div className="stat-value">{courses.length}</div>
+          <div className="stat-label text-white/80">Enrolled Courses</div>
         </div>
 
-        <div className={`${statGradients[1]} stat-card`}>
-          <div className="stat-icon">
-            <Award size={28} />
+        <div className={`stat-card bg-gradient-to-br ${statGradients[1]} text-white`}>
+          <div className="stat-icon bg-white/20">
+            <Award size={24} />
           </div>
-          <div>
-            <div className="stat-value">{gpa?.toFixed(2) || '0.00'}</div>
-            <div className="stat-label">Current GPA</div>
-          </div>
-          <div className="flex items-center gap-2 mt-2">
-            <div className="progress-bar flex-1">
-              <div className="progress-fill" style={{ width: `${(gpa / 4) * 100}%` }} />
-            </div>
-            <span className="text-sm opacity-90">/4.0</span>
-          </div>
+          <div className="stat-value">{gpa?.toFixed(2) || '0.00'}</div>
+          <div className="stat-label text-white/80">Current GPA</div>
         </div>
 
-        <div className={`${statGradients[2]} stat-card`}>
-          <div className="stat-icon">
-            <GraduationCap size={28} />
+        <div className={`stat-card bg-gradient-to-br ${statGradients[2]} text-white`}>
+          <div className="stat-icon bg-white/20">
+            <GraduationCap size={24} />
           </div>
-          <div>
-            <div className="stat-value">{totalCredits}</div>
-            <div className="stat-label">Credits Earned</div>
-          </div>
-          <div className="flex items-center gap-2 mt-2">
-            <Zap size={16} className="text-yellow-300" />
-            <span className="text-sm opacity-90">{Math.round((totalCredits/120)*100)}% complete</span>
-          </div>
+          <div className="stat-value">{totalCredits}</div>
+          <div className="stat-label text-white/80">Credits Earned</div>
         </div>
 
-        <div className={`${statGradients[3]} stat-card`}>
-          <div className="stat-icon">
-            <Users size={28} />
+        <div className={`stat-card bg-gradient-to-br ${statGradients[3]} text-white`}>
+          <div className="stat-icon bg-white/20">
+            <Users size={24} />
           </div>
-          <div>
-            <div className="stat-value">{attendance}%</div>
-            <div className="stat-label">Attendance Rate</div>
-          </div>
-          <div className="flex items-center gap-2 mt-2">
-            <Heart size={16} className="text-pink-300" />
-            <span className="text-sm opacity-90">Great job!</span>
-          </div>
+          <div className="stat-value">{attendance}%</div>
+          <div className="stat-label text-white/80">Attendance</div>
         </div>
       </div>
 
-      {/* Main Content Grid */}
+      {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Current Courses */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg text-white">
-                <BookOpen size={20} />
-              </div>
-              <h2 className="text-xl font-bold text-gray-800">My Courses</h2>
-              <span className="ml-auto text-sm bg-gray-100 px-3 py-1 rounded-full text-gray-600">
-                {courses.length} total
-              </span>
+        {/* Current Courses */}
+        <div className="lg:col-span-2 space-y-4">
+          <Card>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-normal text-gray-800">My Courses</h2>
+              <span className="text-sm text-gray-500">{courses.length} total</span>
             </div>
 
             <div className="space-y-3">
               {courses.length > 0 ? (
                 courses.slice(0, 5).map((course, index) => (
-                  <div key={course.courseId} className="course-card">
-                    <div className="flex items-center gap-4">
-                      <div className={`course-icon ${courseGradients[index % courseGradients.length]}`}>
-                        {course.courseId.charAt(0)}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-800">{course.name}</h3>
-                        <p className="text-sm text-gray-500">
-                          {course.courseId} • {course.credits} Credits • {course.teacher}
-                        </p>
-                      </div>
-                      <div className={`grade-badge ${getGradeColor(course.grade)}`}>
-                        {course.grade || '—'}
-                      </div>
+                  <div key={course.courseId} className="course-item">
+                    <div className={`course-icon bg-gradient-to-br from-primary to-primary-light`}>
+                      {course.courseId.charAt(0)}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="course-name">{course.name}</h3>
+                      <p className="course-details">
+                        {course.courseId} • {course.credits} Credits
+                      </p>
+                    </div>
+                    <div className={`course-grade ${getGradeColor(course.grade)}`}>
+                      {course.grade || '—'}
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="text-center py-12">
-                  <BookOpen className="mx-auto text-gray-300 mb-4" size={48} />
+                <div className="text-center py-8">
+                  <BookOpen className="mx-auto text-gray-300 mb-3" size={40} />
                   <p className="text-gray-500">No courses enrolled yet</p>
                 </div>
               )}
 
               {courses.length > 5 && (
-                <button className="w-full mt-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                <button className="btn btn-secondary w-full mt-2">
                   View All Courses
-                  <ChevronRight size={18} />
+                  <ChevronRight size={16} className="ml-1" />
                 </button>
               )}
             </div>
-          </div>
-
-          {/* Upcoming Events */}
-          <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="p-2 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg text-white">
-                <Calendar size={20} />
-              </div>
-              <h2 className="text-xl font-bold text-gray-800">Upcoming Events</h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl border border-purple-100">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-purple-600">15</div>
-                    <div className="text-xs text-purple-500">MAR</div>
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800">Midterm Exams Begin</h4>
-                    <p className="text-xs text-gray-500">All courses • 8:00 AM</p>
-                  </div>
-                </div>
-                <span className="inline-block px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-xs font-medium">
-                  Academic
-                </span>
-              </div>
-
-              <div className="p-4 bg-gradient-to-br from-orange-50 to-red-50 rounded-xl border border-orange-100">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-orange-600">27</div>
-                    <div className="text-xs text-orange-500">MAR</div>
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800">Armed Forces Day</h4>
-                    <p className="text-xs text-gray-500">University closed</p>
-                  </div>
-                </div>
-                <span className="inline-block px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-medium">
-                  Holiday
-                </span>
-              </div>
-            </div>
-          </div>
+          </Card>
         </div>
 
-        {/* Right Column - Progress & Announcements */}
-        <div className="space-y-6">
+        {/* Right Column */}
+        <div className="space-y-4">
           {/* Academic Progress */}
-          <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="p-2 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg text-white">
-                <TrendingUp size={20} />
-              </div>
-              <h2 className="text-xl font-bold text-gray-800">Progress</h2>
-            </div>
-
-            <div className="space-y-6">
+          <Card>
+            <h2 className="text-lg font-normal text-gray-800 mb-4">Progress</h2>
+            <div className="space-y-4">
               <div>
-                <div className="flex justify-between text-sm mb-2">
+                <div className="flex justify-between text-sm mb-1">
                   <span className="text-gray-600">Degree Completion</span>
-                  <span className="font-semibold text-purple-600">{Math.round((totalCredits/120)*100)}%</span>
+                  <span className="font-normal text-primary">
+                    {Math.round((totalCredits/120)*100)}%
+                  </span>
                 </div>
-                <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500"
-                    style={{ width: `${Math.min(100, (totalCredits/120)*100)}%` }}
-                  />
-                </div>
-                <p className="text-xs text-gray-500 mt-2">{totalCredits} of 120 credits completed</p>
+                <ProgressBar value={(totalCredits/120)*100} />
+                <p className="text-xs text-gray-500 mt-1">{totalCredits}/120 credits</p>
               </div>
 
               <div>
-                <div className="flex justify-between text-sm mb-2">
+                <div className="flex justify-between text-sm mb-1">
                   <span className="text-gray-600">GPA Progress</span>
-                  <span className="font-semibold text-blue-600">{Math.round((gpa/4)*100)}%</span>
+                  <span className="font-normal text-primary">
+                    {Math.round((gpa/4)*100)}%
+                  </span>
                 </div>
-                <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-500"
-                    style={{ width: `${Math.min(100, (gpa/4)*100)}%` }}
-                  />
-                </div>
-                <p className="text-xs text-gray-500 mt-2">Current GPA: {gpa?.toFixed(2)} / 4.0</p>
-              </div>
-
-              <div className="pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg text-white">
-                    <Star size={18} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-gray-800">Academic Standing</p>
-                    <p className="text-xs text-gray-500">
-                      {gpa >= 3.5 ? 'Dean\'s List' : gpa >= 2.0 ? 'Good Standing' : 'Academic Probation'}
-                    </p>
-                  </div>
-                </div>
+                <ProgressBar value={(gpa/4)*100} />
+                <p className="text-xs text-gray-500 mt-1">{gpa?.toFixed(2)} / 4.0</p>
               </div>
             </div>
-          </div>
+          </Card>
 
-          {/* Announcements */}
-          <div className="bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-2xl p-6 shadow-xl">
-            <div className="flex items-center gap-2 mb-4">
-              <Bell size={20} className="text-white" />
-              <h2 className="text-xl font-bold text-white">Announcements</h2>
-            </div>
-
+          {/* Upcoming Events */}
+          <Card>
+            <h2 className="text-lg font-normal text-gray-800 mb-4">Upcoming</h2>
             <div className="space-y-3">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <Clock size={12} className="text-white/70" />
-                  <span className="text-xs text-white/70">2 hours ago</span>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex flex-col items-center justify-center">
+                  <span className="text-xs text-primary">MAR</span>
+                  <span className="text-sm font-medium text-primary">15</span>
                 </div>
-                <p className="text-sm font-medium text-white">Midterm Schedule Released</p>
-                <p className="text-xs text-white/70 mt-1">Check your course pages for details.</p>
+                <div>
+                  <p className="text-sm font-normal text-gray-800">Midterm Exams Begin</p>
+                  <p className="text-xs text-gray-500">All courses</p>
+                </div>
               </div>
-
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <Clock size={12} className="text-white/70" />
-                  <span className="text-xs text-white/70">Yesterday</span>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-orange-100 flex flex-col items-center justify-center">
+                  <span className="text-xs text-orange-600">MAR</span>
+                  <span className="text-sm font-medium text-orange-600">27</span>
                 </div>
-                <p className="text-sm font-medium text-white">Holiday Notice</p>
-                <p className="text-xs text-white/70 mt-1">University closed on March 27.</p>
+                <div>
+                  <p className="text-sm font-normal text-gray-800">Armed Forces Day</p>
+                  <p className="text-xs text-gray-500">University closed</p>
+                </div>
               </div>
             </div>
+          </Card>
 
-            <button className="w-full mt-4 py-2 bg-white/20 backdrop-blur-sm rounded-xl text-white text-sm font-medium hover:bg-white/30 transition-all">
-              View All Announcements
-            </button>
+          {/* Quick Announcement */}
+          <div className="bg-gradient-to-br from-primary to-primary-light rounded-xl p-4 text-white">
+            <div className="flex items-center gap-2 mb-2">
+              <Bell size={16} />
+              <span className="text-sm font-normal">Announcement</span>
+            </div>
+            <p className="text-sm text-white/90">Midterm schedule released. Check your courses.</p>
+            <p className="text-xs text-white/70 mt-2">2 hours ago</p>
           </div>
         </div>
       </div>

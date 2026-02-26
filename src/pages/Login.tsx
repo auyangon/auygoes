@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { GlassCard } from '../components/Common';
+import { Card } from '../components/Common';
 import { Mail, Lock, LogIn, Sparkles } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
@@ -28,7 +28,7 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center p-4">
-      <GlassCard className="p-8 max-w-md w-full">
+      <Card className="p-8 max-w-md w-full">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-3">
             <Sparkles className="text-seafoam-dark" size={40} />
@@ -103,3 +103,4 @@ export const LoginPage: React.FC = () => {
     </div>
   );
 };
+

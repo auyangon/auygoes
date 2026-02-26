@@ -59,23 +59,21 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         const emailKey = sanitizeEmail(user.email);
         console.log('🔍 Looking up student with key:', emailKey);
 
-        // 1. Fetch the student node directly – THIS IS THE FIXED LINE 63
-        const studentRef = ref(db, students/);
+        // ✅ FIXED LINE 63 – using backticks and template literal correctly
+        const studentRef = ref(db, `students/${emailKey}`);
         const snapshot = await get(studentRef);
         const studentData = snapshot.val();
 
         if (!studentData) {
-          setError(No student found with email: );
+          setError(`No student found with email: ${user.email}`);
           setLoading(false);
           return;
         }
 
-        // Set student info
         setStudentName(studentData.name || user.displayName || 'Student');
         setStudentId(studentData.studentId || '');
         setMajor(studentData.major || 'ISP program');
 
-        // 2. Build courses from enrollments
         const enrollments = studentData.enrollments || {};
         const courseList: Course[] = [];
         let totalGradePoints = 0;
@@ -115,7 +113,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setTotalCredits(totalCreditsEarned);
         setAttendance(attendanceCount > 0 ? Math.round(totalAttendance / attendanceCount) : 0);
 
-        // 3. Fetch announcements (separate node)
         const annRef = ref(db, 'announcements');
         const annSnap = await get(annRef);
         if (annSnap.exists()) {

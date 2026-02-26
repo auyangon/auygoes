@@ -1,27 +1,96 @@
 ﻿import React from 'react';
-import { GlassCard } from '../components/Common';
-import { FileText } from 'lucide-react';
+import { Card } from '../components/Common';
+import { FileText, Download, ExternalLink, BookOpen, Video, File } from 'lucide-react';
 
 export const Materials: React.FC = () => {
-  return (
-    <div className="space-y-8">
-      <header className="mb-10">
-        <h2 className="text-3xl font-normal text-jet mb-2">Course Materials</h2>
-        <p className="text-jet/70">Access your lecture notes and resources</p>
-      </header>
+  const materials = [
+    {
+      id: 1,
+      title: 'Introduction to Programming',
+      type: 'PDF',
+      course: 'CS101',
+      size: '2.4 MB',
+      icon: FileText,
+      color: 'from-red-500 to-pink-500'
+    },
+    {
+      id: 2,
+      title: 'Data Structures Lecture',
+      type: 'Video',
+      course: 'CS201',
+      duration: '45 min',
+      icon: Video,
+      color: 'from-blue-500 to-cyan-500'
+    },
+    {
+      id: 3,
+      title: 'Calculus Notes',
+      type: 'PDF',
+      course: 'MATH101',
+      size: '1.8 MB',
+      icon: BookOpen,
+      color: 'from-green-500 to-teal-500'
+    },
+    {
+      id: 4,
+      title: 'Assignment Template',
+      type: 'DOC',
+      course: 'ENG101',
+      size: '0.5 MB',
+      icon: File,
+      color: 'from-purple-500 to-pink-500'
+    },
+  ];
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <GlassCard className="p-6">
-          <div className="flex items-center gap-4">
-            <FileText className="text-jet" size={32} />
-            <div>
-              <h3 className="text-jet font-normal">Sample Material</h3>
-              <p className="text-jet/70 text-sm">Coming soon</p>
-            </div>
-          </div>
-        </GlassCard>
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-800">Course Materials</h1>
+          <p className="text-gray-500 text-sm mt-1">Access your lecture notes and resources</p>
+        </div>
       </div>
+
+      {/* Materials Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {materials.map((material) => {
+          const Icon = material.icon;
+          return (
+            <Card key={material.id} className="p-6 hover:shadow-xl transition-all hover:-translate-y-1">
+              <div className="flex items-start gap-4">
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${material.color} flex items-center justify-center text-white shadow-lg`}>
+                  <Icon size={24} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-800 mb-1">{material.title}</h3>
+                  <p className="text-sm text-gray-500 mb-2">{material.course}</p>
+                  <div className="flex items-center gap-3 text-xs text-gray-500">
+                    <span className="px-2 py-1 bg-gray-100 rounded-full">{material.type}</span>
+                    {material.size && <span>{material.size}</span>}
+                    {material.duration && <span>{material.duration}</span>}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-end gap-2">
+                <button className="p-2 text-gray-500 hover:text-purple-600 transition-colors">
+                  <Download size={18} />
+                </button>
+                <button className="p-2 text-gray-500 hover:text-purple-600 transition-colors">
+                  <ExternalLink size={18} />
+                </button>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+
+      {/* Coming Soon Placeholder */}
+      <Card className="p-12 text-center">
+        <FileText className="mx-auto text-gray-300 mb-4" size={48} />
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">More Materials Coming Soon</h3>
+        <p className="text-gray-500">Additional resources will be added throughout the semester.</p>
+      </Card>
     </div>
   );
 };
-

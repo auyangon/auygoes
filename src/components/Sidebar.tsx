@@ -69,6 +69,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
     if (onClose) onClose();
   };
 
+  const getClassName = (isActive: boolean) => {
+    const baseClasses = "flex items-center gap-3 px-4 py-3 rounded-lg transition-all w-full text-left";
+    return isActive 
+      ? baseClasses + " bg-pastel-blue text-white"
+      : baseClasses + " text-gray-600 hover:bg-pastel-pink hover:text-gray-700";
+  };
+
   return (
     <aside className="h-full w-64 bg-gradient-to-b from-white to-pastel-peach border-r border-pastel-peach flex flex-col">
       {/* Logo */}
@@ -111,9 +118,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
                 key={item.to}
                 to={item.to}
                 onClick={handleNavClick}
-                className={({ isActive }) => {
-                  return lex items-center gap-3 px-4 py-3 rounded-lg transition-all ;
-                }}
+                className={({ isActive }) => getClassName(isActive)}
               >
                 <Icon size={18} />
                 <div className="flex-1">
@@ -130,10 +135,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       <div className="p-4 border-t border-pastel-peach">
         <button
           onClick={logout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-pastel-rose hover:text-gray-700 transition-all"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-pastel-rose hover:text-gray-700 transition-all w-full text-left"
         >
           <LogOut size={18} />
-          <div className="flex-1 text-left">
+          <div className="flex-1">
             <span className="text-sm font-medium block">Logout</span>
             <span className="text-xs text-gray-500">End session</span>
           </div>

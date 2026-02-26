@@ -7,33 +7,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        seafoam: {
-          dark: '#0B4F3A',
-          medium: '#1E7B5C',
-          light: '#2A9D7A',
-          soft: '#D1F2E5',
-          pale: '#E8F6F0',
+        pastel: {
+          blue: '#a7c7e7',
+          pink: '#f9c9d3',
+          green: '#c1e1c1',
+          yellow: '#f9e4b7',
+          purple: '#d5b8ff',
+          peach: '#ffd8b1',
+          mint: '#b8e2d6',
+          lavender: '#e2d1ff',
+          rose: '#fadadd',
+          sky: '#b2d8fa',
         },
-        jet: '#1A1A1A',
       },
       fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
-      },
-      fontSize: {
-        'xs': '0.75rem',
-        'sm': '0.875rem',
-        'base': '1rem',
-        'lg': '1.125rem',
-        'xl': '1.25rem',
-        '2xl': '1.5rem',
-        '3xl': '1.875rem',
-        '4xl': '2.25rem',
-      },
-      fontWeight: {
-        normal: '400',
-        medium: '500',
-        semibold: '600',
-        bold: '700',
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
     },
   },

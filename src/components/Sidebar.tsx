@@ -111,9 +111,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
                 key={item.to}
                 to={item.to}
                 onClick={handleNavClick}
-                className={({ isActive }) =>
-                  lex items-center gap-3 px-4 py-3 rounded-lg transition-all 
-                }
+                className={({ isActive }) => {
+                  return lex items-center gap-3 px-4 py-3 rounded-lg transition-all ;
+                }}
               >
                 <Icon size={18} />
                 <div className="flex-1">

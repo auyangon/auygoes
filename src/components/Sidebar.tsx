@@ -1,35 +1,65 @@
 ﻿import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  BookOpen, 
-  GraduationCap, 
-  FileText, 
-  TrendingUp,
+import {
+  LayoutDashboard,
+  BookOpen,
   Calendar,
+  GraduationCap,
   Bell,
+  User,
   Settings,
   LogOut,
-  User,
   Award
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { cn } from '../utils/cn';
 
 interface SidebarProps {
   onClose?: () => void;
 }
 
 const navigation = [
-  { name: 'Dashboard', to: '/', icon: LayoutDashboard },
-  { name: 'My Courses', to: '/courses', icon: BookOpen },
-  { name: 'Grades', to: '/grades', icon: GraduationCap },
-  { name: 'Materials', to: '/materials', icon: FileText },
-  { name: 'Progress', to: '/progress', icon: TrendingUp },
-  { name: 'Calendar', to: '/calendar', icon: Calendar },
-  { name: 'Announcements', to: '/announcements', icon: Bell },
-  { name: 'Profile', to: '/profile', icon: User },
-  { name: 'Settings', to: '/settings', icon: Settings }
+  {
+    name: 'Academic Overview',
+    to: '/',
+    icon: LayoutDashboard,
+    description: 'Dashboard'
+  },
+  {
+    name: 'My Courses',
+    to: '/courses',
+    icon: BookOpen,
+    description: 'Attendance, courses & grades'
+  },
+  {
+    name: 'My Exams',
+    to: '/exams',
+    icon: Calendar,
+    description: 'Timetable and exams'
+  },
+  {
+    name: 'Grades',
+    to: '/grades',
+    icon: GraduationCap,
+    description: 'Academic performance'
+  },
+  {
+    name: 'Announcements',
+    to: '/announcements',
+    icon: Bell,
+    description: 'Latest updates'
+  },
+  {
+    name: 'Profile',
+    to: '/profile',
+    icon: User,
+    description: 'Your information'
+  },
+  {
+    name: 'Settings',
+    to: '/settings',
+    icon: Settings,
+    description: 'Preferences'
+  }
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
@@ -40,31 +70,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   };
 
   return (
-    <aside className="h-full w-56 glass-sidebar flex flex-col">
+    <aside className="h-full w-64 bg-gradient-to-b from-white to-pastel-peach border-r border-pastel-peach flex flex-col">
       {/* Logo */}
-      <div className="p-5 border-b border-seafoam-soft/20">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-lg glass-card flex items-center justify-center">
-            <Award className="text-jet" size={20} />
+      <div className="p-6 border-b border-pastel-peach">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-pastel-blue flex items-center justify-center">
+            <Award className="text-white" size={24} />
           </div>
           <div>
-            <h2 className="text-base font-normal text-jet">AUY Portal</h2>
-            <p className="text-xs text-jet/60">American University</p>
+            <h2 className="text-lg font-medium text-gray-700 leading-tight">AUY Portal</h2>
+            <p className="text-xs text-gray-500">American University</p>
           </div>
         </div>
       </div>
 
       {/* Student Info */}
-      <div className="p-4 border-b border-seafoam-soft/20 glass-card m-3 rounded-lg">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full glass-card flex items-center justify-center">
-            <User className="text-jet" size={16} />
+      <div className="p-4 border-b border-pastel-peach bg-pastel-yellow/20">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-pastel-purple flex items-center justify-center">
+            <User className="text-gray-700" size={20} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-normal text-jet truncate">
+            <p className="text-sm font-medium text-gray-700 truncate">
               {user?.displayName || 'Student'}
             </p>
-            <p className="text-xs text-jet/60 truncate">
+            <p className="text-xs text-gray-500 truncate">
               {user?.email || 'student@auy.edu.mm'}
             </p>
           </div>
@@ -72,8 +102,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-3 px-3">
-        <div className="space-y-0.5">
+      <nav className="flex-1 overflow-y-auto py-4 px-3">
+        <div className="space-y-1">
           {navigation.map((item) => {
             const Icon = item.icon;
             return (
@@ -82,16 +112,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
                 to={item.to}
                 onClick={handleNavClick}
                 className={({ isActive }) =>
-                  cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-sm',
-                    isActive
-                      ? 'glass-card text-jet'
-                      : 'text-jet/70 hover:glass-card hover:text-jet'
-                  )
+                  lex items-center gap-3 px-4 py-3 rounded-lg transition-all 
                 }
               >
-                <Icon size={16} />
-                <span className="font-normal">{item.name}</span>
+                <Icon size={18} />
+                <div className="flex-1">
+                  <span className="text-sm font-medium block">{item.name}</span>
+                  <span className="text-xs text-gray-500">{item.description}</span>
+                </div>
               </NavLink>
             );
           })}
@@ -99,13 +127,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       </nav>
 
       {/* Logout */}
-      <div className="p-4 border-t border-seafoam-soft/20">
+      <div className="p-4 border-t border-pastel-peach">
         <button
           onClick={logout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-jet/70 hover:glass-card hover:text-jet transition-all text-sm"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-pastel-rose hover:text-gray-700 transition-all"
         >
-          <LogOut size={16} />
-          <span className="font-normal">Logout</span>
+          <LogOut size={18} />
+          <div className="flex-1 text-left">
+            <span className="text-sm font-medium block">Logout</span>
+            <span className="text-xs text-gray-500">End session</span>
+          </div>
         </button>
       </div>
     </aside>

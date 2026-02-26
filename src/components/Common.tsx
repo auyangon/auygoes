@@ -12,7 +12,7 @@ export const GlassCard: React.FC<GlassCardProps> = ({ children, className, ...pr
     <div
       className={twMerge(
         clsx(
-          'glass-card rounded-xl p-5',
+          'bg-white rounded-xl shadow-md p-5 border border-pastel-peach hover:shadow-lg transition-shadow',
           className
         )
       )}
@@ -30,7 +30,7 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
   return (
     <h3 className={twMerge(
       clsx(
-        'text-lg font-normal text-jet',
+        'text-lg font-medium text-gray-700',
         className
       )
     )}>
@@ -42,14 +42,16 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
 interface GlassBadgeProps {
   children: React.ReactNode;
   className?: string;
+  color?: string;
 }
 
-export const GlassBadge: React.FC<GlassBadgeProps> = ({ children, className }) => {
+export const GlassBadge: React.FC<GlassBadgeProps> = ({ children, className, color }) => {
   return (
     <span
       className={twMerge(
         clsx(
-          'px-2.5 py-1 rounded-full text-xs font-normal glass-card text-jet',
+          'px-2.5 py-1 rounded-full text-xs font-medium',
+          color || 'bg-pastel-yellow text-gray-700',
           className
         )
       )}

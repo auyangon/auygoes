@@ -7,20 +7,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#0B4F3A',
-        'primary-light': '#1E7B5C',
-        'primary-soft': '#2A9D7A',
-        'primary-lighter': '#6BC9A8',
+        primary: '#667eea',
+        secondary: '#764ba2',
+        accent: '#f093fb',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
-      boxShadow: {
-        'sm': '0 2px 4px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.03)',
-        'md': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
-        'lg': '0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02)',
-        'xl': '0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02)',
+      animation: {
+        'gradient': 'gradient 3s ease infinite',
       },
+      keyframes: {
+        gradient: {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center'
+          }
+        }
+      }
     },
   },
   plugins: [],

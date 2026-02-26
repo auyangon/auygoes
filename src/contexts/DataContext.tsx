@@ -56,72 +56,93 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
+        console.log('🔍 Fetching data for email:', user.email);
+        
         const emailKey = sanitizeEmail(user.email);
-        console.log('🔍 Looking up student with key:', emailKey);
+        console.log('📧 Sanitized email key:', emailKey);
 
-        // ✅ FIXED LINE 63 – using backticks and template literal correctly
+        // Fetch the student node directly
         const studentRef = ref(db, `students/${emailKey}`);
         const snapshot = await get(studentRef);
         const studentData = snapshot.val();
 
+        console.log('📊 Student data from Firebase:', studentData);
+
         if (!studentData) {
+          console.error('❌ No student found with email:', user.email);
           setError(`No student found with email: ${user.email}`);
           setLoading(false);
           return;
         }
 
-        setStudentName(studentData.name || user.displayName || 'Student');
+        // Set student info
+        setStudentName(studentData.studentName || studentData.name || user.displayName || 'Student');
         setStudentId(studentData.studentId || '');
-        setMajor(studentData.major || 'ISP program');
+        setMajor(studentData.major || 'ISP Program');
 
-        const enrollments = studentData.enrollments || {};
+        // Get courses from the student data
+        const coursesData = studentData.courses || {};
+        console.log('📚 Courses data:', coursesData);
+
         const courseList: Course[] = [];
         let totalGradePoints = 0;
         let totalCreditsEarned = 0;
         let totalAttendance = 0;
         let attendanceCount = 0;
 
-        for (const [courseId, enrollment] of Object.entries(enrollments)) {
-          const e = enrollment as any;
-          const course = e.courseData || {};
+        // Loop through each course
+        for (const [courseId, courseInfo] of Object.entries(coursesData)) {
+          const course = courseInfo as any;
+          console.log(`📖 Processing course ${courseId}:`, course);
 
-          courseList.push({
-            id: courseId,
-            courseId,
-            name: course.name || courseId,
-            teacher: course.teacher || '',
-            credits: course.credits || 3,
-            googleClassroomLink: course.googleClassroomLink || '',
-            grade: e.grade || '',
-            attendancePercentage: e.attendancePercentage,
-          });
+          // Only add courses that have valid data
+          if (course.courseName) {
+            courseList.push({
+              id: courseId,
+              courseId: courseId,
+              name: course.courseName || courseId,
+              teacher: course.teacherName || '',
+              credits: course.credits || 3,
+              googleClassroomLink: course.googleClassroomLink || '',
+              grade: course.grade || '',
+              attendancePercentage: course.attendancePercentage || 0,
+            });
 
-          if (e.grade) {
-            const points = gradePoints[e.grade] || 0;
-            totalGradePoints += points * (course.credits || 3);
-            totalCreditsEarned += (course.credits || 3);
-          }
+            // Calculate GPA
+            if (course.grade) {
+              const points = gradePoints[course.grade] || 0;
+              totalGradePoints += points * (course.credits || 3);
+              totalCreditsEarned += (course.credits || 3);
+            }
 
-          if (e.attendancePercentage) {
-            totalAttendance += e.attendancePercentage;
-            attendanceCount++;
+            // Calculate attendance
+            if (course.attendancePercentage) {
+              totalAttendance += course.attendancePercentage;
+              attendanceCount++;
+            }
           }
         }
 
+        console.log('✅ Final course list:', courseList);
         setCourses(courseList);
-        setGpa(totalCreditsEarned > 0 ? Number((totalGradePoints / totalCreditsEarned).toFixed(2)) : 0);
+        
+        // Calculate GPA
+        if (totalCreditsEarned > 0) {
+          const calculatedGpa = totalGradePoints / totalCreditsEarned;
+          setGpa(Number(calculatedGpa.toFixed(2)));
+          console.log('📊 Calculated GPA:', calculatedGpa);
+        }
+        
         setTotalCredits(totalCreditsEarned);
-        setAttendance(attendanceCount > 0 ? Math.round(totalAttendance / attendanceCount) : 0);
-
-        const annRef = ref(db, 'announcements');
-        const annSnap = await get(annRef);
-        if (annSnap.exists()) {
-          const annData = annSnap.val();
-          setAnnouncements(Object.values(annData));
+        
+        // Calculate average attendance
+        if (attendanceCount > 0) {
+          const avgAttendance = totalAttendance / attendanceCount;
+          setAttendance(Math.round(avgAttendance));
         }
 
       } catch (err: any) {
-        console.error('❌ Error:', err);
+        console.error('❌ Error fetching data:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -142,7 +163,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       studentName,
       studentId,
       major,
-      announcements,
+      announcements: [],
     }}>
       {children}
     </DataContext.Provider>

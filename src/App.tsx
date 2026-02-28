@@ -2,7 +2,7 @@
 import { AuthProvider } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataContext';
 import Dashboard from './pages/Dashboard';
-import { Login } from './pages/Login';
+import Login from './pages/Login';  // Change this line - remove curly braces
 import { PublicQExams } from './pages/PublicQExams';
 import { AnnouncementsPage } from './pages/AnnouncementsPage';
 

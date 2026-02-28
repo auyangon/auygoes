@@ -1,7 +1,7 @@
 ﻿import React, { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
@@ -29,21 +29,26 @@ export default function Dashboard() {
         background: '#f5f5f5' 
       }}>
         <div style={{ textAlign: 'center' }}>
-          <style>{`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}</style>
-          <div style={{
-            width: '50px',
-            height: '50px',
-            border: '5px solid #f3f3f3',
-            borderTop: '5px solid #667eea',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 20px'
-          }}></div>
+          {/* Move styles to a proper style tag */}
+          <style>
+            {`
+              .loading-spinner {
+                width: 50px;
+                height: 50px;
+                border: 5px solid #f3f3f3;
+                border-top: 5px solid #667eea;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 20px;
+              }
+              
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}
+          </style>
+          <div className="loading-spinner"></div>
           <p>Loading your data...</p>
         </div>
       </div>
@@ -96,13 +101,28 @@ export default function Dashboard() {
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
-          <div>
-            <h1 style={{ margin: 0, color: '#333' }}>
-              Welcome, {studentName || user?.email}!
-            </h1>
-            <p style={{ margin: '5px 0 0', color: '#666' }}>
-              Student ID: {studentName ? 'S001' : 'Loading...'}
-            </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <div>
+              <h1 style={{ margin: 0, color: '#333' }}>
+                Welcome, {studentName || user?.email}!
+              </h1>
+              <p style={{ margin: '5px 0 0', color: '#666' }}>
+                Student ID: {studentName ? 'S001' : 'Loading...'}
+              </p>
+            </div>
+            <Link 
+              to="/exams"
+              style={{
+                padding: '8px 16px',
+                background: '#4f46e5',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '5px',
+                fontSize: '14px'
+              }}
+            >
+              📝 Go to Exams
+            </Link>
           </div>
           <button
             onClick={handleLogout}

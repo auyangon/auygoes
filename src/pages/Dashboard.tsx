@@ -2,7 +2,6 @@
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
 import { useNavigate } from 'react-router-dom';
-import { Announcements } from '../components/Announcements';
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
@@ -20,9 +19,6 @@ export default function Dashboard() {
     navigate('/login');
   };
 
-  // Get user course IDs for filtering announcements
-  const userCourseIds = courses.map(c => c.courseId);
-
   if (loading) {
     return (
       <div style={{ 
@@ -33,6 +29,12 @@ export default function Dashboard() {
         background: '#f5f5f5' 
       }}>
         <div style={{ textAlign: 'center' }}>
+          <style>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
           <div style={{
             width: '50px',
             height: '50px',
@@ -43,7 +45,6 @@ export default function Dashboard() {
             margin: '0 auto 20px'
           }}></div>
           <p>Loading your data...</p>
-          <style>{@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }}</style>
         </div>
       </div>
     );
@@ -119,95 +120,42 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Stats */}
       <div style={{ maxWidth: '1200px', margin: '30px auto', padding: '0 20px' }}>
-        {/* Two Column Layout */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 2fr',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           gap: '20px',
           marginBottom: '30px'
         }}>
-          {/* Announcements Column */}
-          <div>
-            <Announcements 
-              userEmail={user?.email} 
-              userCourses={userCourseIds}
-            />
-          </div>
-
-          {/* Stats Column */}
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '20px'
+            background: 'white',
+            padding: '20px',
+            borderRadius: '10px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
           }}>
-            <div style={{
-              background: 'white',
-              padding: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
-              <h3 style={{ margin: '0 0 10px', color: '#666' }}>GPA</h3>
-              <p style={{ fontSize: '32px', margin: 0, color: '#333' }}>{gpa.toFixed(2)}</p>
-            </div>
-            
-            <div style={{
-              background: 'white',
-              padding: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
-              <h3 style={{ margin: '0 0 10px', color: '#666' }}>Credits</h3>
-              <p style={{ fontSize: '32px', margin: 0, color: '#333' }}>{totalCredits}</p>
-            </div>
-            
-            <div style={{
-              background: 'white',
-              padding: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
-              <h3 style={{ margin: '0 0 10px', color: '#666' }}>Attendance</h3>
-              <p style={{ fontSize: '32px', margin: 0, color: '#333' }}>{attendance}%</p>
-            </div>
+            <h3 style={{ margin: '0 0 10px', color: '#666' }}>GPA</h3>
+            <p style={{ fontSize: '32px', margin: 0, color: '#333' }}>{gpa.toFixed(2)}</p>
           </div>
-        </div>
-
-        {/* Important Dates Section */}
-        <div style={{
-          background: 'white',
-          borderRadius: '10px',
-          padding: '20px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          marginBottom: '30px'
-        }}>
-          <h2 style={{ margin: '0 0 20px', color: '#333' }}>📅 Important Dates</h2>
+          
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '15px'
+            background: 'white',
+            padding: '20px',
+            borderRadius: '10px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
           }}>
-            <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
-              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea' }}>Mar 30</div>
-              <div style={{ fontWeight: '500' }}>Thingyan Holiday</div>
-              <div style={{ fontSize: '12px', color: '#666' }}>University closed</div>
-            </div>
-            <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
-              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea' }}>Apr 15</div>
-              <div style={{ fontWeight: '500' }}>Final Exam Schedule</div>
-              <div style={{ fontSize: '12px', color: '#666' }}>Published</div>
-            </div>
-            <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
-              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea' }}>May 1</div>
-              <div style={{ fontWeight: '500' }}>Library Hours</div>
-              <div style={{ fontSize: '12px', color: '#666' }}>Extended until 10 PM</div>
-            </div>
-            <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
-              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea' }}>May 15</div>
-              <div style={{ fontWeight: '500' }}>Last Day of Classes</div>
-              <div style={{ fontSize: '12px', color: '#666' }}>Spring 2026</div>
-            </div>
+            <h3 style={{ margin: '0 0 10px', color: '#666' }}>Credits</h3>
+            <p style={{ fontSize: '32px', margin: 0, color: '#333' }}>{totalCredits}</p>
+          </div>
+          
+          <div style={{
+            background: 'white',
+            padding: '20px',
+            borderRadius: '10px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          }}>
+            <h3 style={{ margin: '0 0 10px', color: '#666' }}>Attendance</h3>
+            <p style={{ fontSize: '32px', margin: 0, color: '#333' }}>{attendance}%</p>
           </div>
         </div>
 
@@ -235,7 +183,6 @@ export default function Dashboard() {
                     <th style={{ padding: '12px', textAlign: 'left' }}>Grade</th>
                     <th style={{ padding: '12px', textAlign: 'left' }}>Attendance</th>
                     <th style={{ padding: '12px', textAlign: 'left' }}>Teacher</th>
-                    <th style={{ padding: '12px', textAlign: 'left' }}>Classroom</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -269,7 +216,7 @@ export default function Dashboard() {
                             overflow: 'hidden'
                           }}>
                             <div style={{
-                              width: ${course.attendancePercentage || 0}%,
+                              width: `${course.attendancePercentage || 0}%`,
                               height: '100%',
                               background: course.attendancePercentage && course.attendancePercentage >= 80 ? '#28a745' :
                                          course.attendancePercentage && course.attendancePercentage >= 60 ? '#ffc107' :
@@ -279,26 +226,6 @@ export default function Dashboard() {
                         </div>
                       </td>
                       <td style={{ padding: '12px' }}>{course.teacher}</td>
-                      <td style={{ padding: '12px' }}>
-                        <a 
-                          href={course.googleClassroomLink || '#'} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '5px',
-                            padding: '5px 10px',
-                            background: '#f0f2f5',
-                            color: '#333',
-                            textDecoration: 'none',
-                            borderRadius: '5px',
-                            fontSize: '12px'
-                          }}
-                        >
-                          📚 Open
-                        </a>
-                      </td>
                     </tr>
                   ))}
                 </tbody>

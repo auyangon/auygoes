@@ -2,7 +2,6 @@
 import { useAuth } from './AuthContext';
 import { db } from '../firebase';
 import { ref, get } from 'firebase/database';
-import { sanitizeEmail } from '../utils/sanitizeEmail';
 
 export interface Course {
   id: string;
@@ -33,6 +32,8 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
+// IMPORTANT: Your Firebase uses EMAIL DIRECTLY as the key, not sanitized!
+// From your screenshot, the key is "aung.khant.phyo@student.au.edu.mm"
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
@@ -56,22 +57,25 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       setError(null);
       
       try {
-        const emailKey = sanitizeEmail(user.email);
-        console.log('📧 Fetching data for:', user.email);
-        console.log('🔑 Email key:', emailKey);
+        // FIXED: Use the email DIRECTLY as the key - no sanitization!
+        // Your Firebase screenshot shows emails stored with dots, not replaced
+        const emailKey = user.email; // Use raw email: "aung.khant.phyo@student.au.edu.mm"
         
-        // FIXED: Added quotes around "students/" - this was the build error!
+        console.log('📧 Fetching data for:', user.email);
+        console.log('🔑 Using email key:', emailKey);
+        
         const studentRef = ref(db, 'students/' + emailKey);
         const snapshot = await get(studentRef);
 
         if (!snapshot.exists()) {
-          setError('Student record not found');
+          console.error('❌ Student not found at path:', 'students/' + emailKey);
+          setError('Student record not found. Please check your email.');
           setLoading(false);
           return;
         }
 
         const studentData = snapshot.val();
-        console.log('✅ Student found:', studentData.studentName);
+        console.log('✅ Student found:', studentData);
         
         setStudentName(studentData.studentName || '');
         setStudentId(studentData.studentId || '');

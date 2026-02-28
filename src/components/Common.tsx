@@ -7,18 +7,24 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   hover?: boolean;
+  glass?: boolean;
 }
 
-export const Card: React.FC<CardProps> = ({ children, className, hover = true, ...props }) => {
+export const Card: React.FC<CardProps> = ({ children, className, hover = true, glass = true, ...props }) => {
   return (
     <div
       className={twMerge(
         clsx(
-          'uni-card',
-          hover && 'hover:shadow-md',
+          'rounded-xl transition-all',
+          glass && 'bg-white/80 backdrop-blur-sm border border-white/50 shadow-lg',
+          !glass && 'bg-white shadow-md',
+          hover && 'hover:shadow-xl hover:-translate-y-0.5 hover:bg-white/90',
           className
         )
       )}
+      style={{
+        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02)'
+      }}
       {...props}
     >
       {children}
@@ -31,14 +37,27 @@ interface StatCardProps {
   value: string | number;
   label: string;
   className?: string;
+  gradient?: string;
 }
 
-export const StatCard: React.FC<StatCardProps> = ({ icon, value, label, className }) => {
+export const StatCard: React.FC<StatCardProps> = ({ icon, value, label, className, gradient = 'from-pink-400 to-purple-400' }) => {
   return (
-    <div className={twMerge(clsx('uni-stat', className))}>
-      <div className="uni-stat-icon">{icon}</div>
-      <div className="uni-stat-value">{value}</div>
-      <div className="uni-stat-label">{label}</div>
+    <div className={twMerge(
+      clsx(
+        'rounded-xl p-6 transition-all bg-white/80 backdrop-blur-sm border border-white/50 shadow-lg',
+        'hover:shadow-xl hover:-translate-y-0.5 hover:bg-white/90',
+        className
+      )
+    )}>
+      <div className="flex items-center gap-4">
+        <div className={`p-3 rounded-xl bg-gradient-to-r ${gradient} text-white shadow-md`}>
+          {icon}
+        </div>
+        <div>
+          <div className="text-3xl font-bold text-gray-800 drop-shadow-sm">{value}</div>
+          <div className="text-sm font-medium text-gray-500">{label}</div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -49,9 +68,9 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
   icon
 }) => {
   return (
-    <div className="uni-card-header">
-      <h3 className={twMerge(clsx('uni-card-title', className))}>
-        {icon && <span className="uni-card-title-icon">{icon}</span>}
+    <div className="flex items-center gap-2 mb-4">
+      {icon && <span className="text-gray-500">{icon}</span>}
+      <h3 className={twMerge(clsx('text-lg font-semibold text-gray-700 drop-shadow-sm', className))}>
         {children}
       </h3>
     </div>
@@ -61,21 +80,23 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
 interface BadgeProps {
   children: React.ReactNode;
   className?: string;
-  variant?: 'default' | 'primary' | 'success' | 'warning';
+  variant?: 'default' | 'primary' | 'success' | 'warning' | 'pastel';
 }
 
 export const Badge: React.FC<BadgeProps> = ({ children, className, variant = 'default' }) => {
   const variants = {
-    default: 'uni-badge',
-    primary: 'uni-badge uni-badge-primary',
-    success: 'uni-badge bg-green-50 text-green-700 border-green-100',
-    warning: 'uni-badge bg-amber-50 text-amber-700 border-amber-100',
+    default: 'bg-gray-100 text-gray-600 border border-gray-200',
+    primary: 'bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700 border border-purple-200',
+    success: 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 border border-green-200',
+    warning: 'bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-700 border border-yellow-200',
+    pastel: 'bg-gradient-to-r from-pink-100 to-rose-100 text-pink-700 border border-pink-200',
   };
 
   return (
     <span
       className={twMerge(
         clsx(
+          'px-3 py-1 rounded-full text-sm font-medium shadow-sm',
           variants[variant],
           className
         )
@@ -86,50 +107,41 @@ export const Badge: React.FC<BadgeProps> = ({ children, className, variant = 'de
   );
 };
 
-interface CourseItemProps {
-  icon?: React.ReactNode;
-  name: string;
-  code: string;
-  credits: number;
-  grade?: string;
-  className?: string;
-}
-
-export const CourseItem: React.FC<CourseItemProps> = ({ icon, name, code, credits, grade, className }) => {
+export const ProgressBar: React.FC<{ value: number; className?: string; gradient?: string }> = ({ 
+  value, 
+  className,
+  gradient = 'from-pink-400 to-purple-400' 
+}) => {
   return (
-    <div className={twMerge(clsx('uni-course-item', className))}>
-      <div className="uni-course-icon">
-        {icon || <BookOpen size={20} />}
-      </div>
-      <div className="uni-course-info">
-        <h4>{name}</h4>
-        <p>{code}  {credits} Credits</p>
-      </div>
-      {grade && <div className="uni-course-grade">{grade}</div>}
+    <div className={twMerge(clsx('w-full h-2 bg-gray-100 rounded-full overflow-hidden shadow-inner', className))}>
+      <div 
+        className={`h-full bg-gradient-to-r ${gradient} rounded-full transition-all shadow-md`}
+        style={{ width: `${value}%` }}
+      />
     </div>
   );
 };
 
-export const ProgressBar: React.FC<{ value: number; className?: string }> = ({ value, className }) => {
-  return (
-    <div className={twMerge(clsx('uni-progress', className))}>
-      <div className="uni-progress-bar" style={{ width: `${value}%` }} />
-    </div>
-  );
-};
-
-export const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' }> = ({
+export const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { 
+  variant?: 'primary' | 'secondary' | 'pastel' 
+}> = ({
   children,
   className,
   variant = 'primary',
   ...props
 }) => {
+  const variants = {
+    primary: 'bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:shadow-lg hover:-translate-y-0.5',
+    secondary: 'bg-white/80 backdrop-blur-sm text-gray-600 border border-gray-200 hover:bg-white hover:shadow-md',
+    pastel: 'bg-gradient-to-r from-pink-100 to-purple-100 text-purple-700 hover:from-pink-200 hover:to-purple-200 hover:shadow-md',
+  };
+
   return (
     <button
       className={twMerge(
         clsx(
-          'uni-btn',
-          variant === 'primary' ? 'uni-btn-primary' : 'uni-btn-secondary',
+          'px-4 py-2 rounded-xl font-medium transition-all shadow-sm',
+          variants[variant],
           className
         )
       )}

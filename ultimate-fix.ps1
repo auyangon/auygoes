@@ -1,4 +1,15 @@
-﻿import React, { createContext, useContext, useEffect, useState } from 'react';
+# ============================================================================
+# 🔧 ULTIMATE FIX - ADD DETAILED ERROR LOGGING
+# ============================================================================
+
+Write-Host ""
+Write-Host "╔══════════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
+Write-Host "║     🔧 ULTIMATE FIX - DETAILED ERROR LOGGING                 ║" -ForegroundColor Cyan
+Write-Host "╚══════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host ""
+
+$ultimateFix = @'
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { db } from '../firebase';
 import { ref, get } from 'firebase/database';
@@ -23,7 +34,7 @@ interface DataContextType {
   studentName: string;
   studentId: string;
   major: string;
-  debugInfo: any;
+  debugInfo: any; // For debugging
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -243,3 +254,164 @@ export function useData() {
   if (!context) throw new Error('useData must be used within DataProvider');
   return context;
 }
+'@
+
+$ultimateFix | Out-File -FilePath "src/contexts/DataContext.tsx" -Encoding UTF8
+Write-Host "✅ Updated: src/contexts/DataContext.tsx with detailed error logging" -ForegroundColor Green
+
+# ============================================================================
+# CREATE DEBUG COMPONENT TO SHOW ERROR DETAILS
+# ============================================================================
+Write-Host ""
+Write-Host "📝 Creating error debug component..." -ForegroundColor Yellow
+
+$errorDebugger = @'
+// src/components/ErrorDebugger.tsx
+import React from 'react';
+import { useData } from '../contexts/DataContext';
+import { useAuth } from '../contexts/AuthContext';
+import { Card } from './Common';
+
+export const ErrorDebugger: React.FC = () => {
+  const { error, debugInfo, loading } = useData();
+  const { user } = useAuth();
+
+  if (!error && !debugInfo) return null;
+
+  return (
+    <Card className="p-6 m-4 bg-red-50 border-red-200">
+      <h2 className="text-xl font-bold text-red-700 mb-4">🔍 Error Debug Info</h2>
+      
+      <div className="space-y-4">
+        <div>
+          <p className="font-semibold">User:</p>
+          <p className="text-sm font-mono bg-white p-2 rounded">{user?.email || 'No user'}</p>
+        </div>
+        
+        <div>
+          <p className="font-semibold">Error:</p>
+          <p className="text-sm text-red-600 bg-white p-2 rounded">{error || 'No error'}</p>
+        </div>
+        
+        {debugInfo && (
+          <div>
+            <p className="font-semibold">Debug Info:</p>
+            <pre className="text-xs bg-white p-2 rounded overflow-auto max-h-96">
+              {JSON.stringify(debugInfo, null, 2)}
+            </pre>
+          </div>
+        )}
+        
+        <div className="mt-4">
+          <p className="font-semibold mb-2">Quick Check:</p>
+          <ol className="list-decimal list-inside text-sm space-y-1">
+            <li>Open browser console (F12)</li>
+            <li>Look for 🔍 DEBUG messages</li>
+            <li>Check which paths were tried</li>
+            <li>See if any path succeeded</li>
+            <li>Share the console output with support</li>
+          </ol>
+        </div>
+      </div>
+    </Card>
+  );
+};
+'@
+
+$errorDebugger | Out-File -FilePath "src/components/ErrorDebugger.tsx" -Encoding UTF8
+Write-Host "✅ Created: src/components/ErrorDebugger.tsx" -ForegroundColor Green
+
+# ============================================================================
+# UPDATE DASHBOARD TO SHOW ERROR DEBUGGER
+# ============================================================================
+Write-Host ""
+Write-Host "📝 Updating Dashboard to show error details..." -ForegroundColor Yellow
+
+$dashboardUpdate = @'
+// Add this import at the top of Dashboard.tsx
+import { ErrorDebugger } from '../components/ErrorDebugger';
+
+// Then add this right after the MainLayout opening tag, before your content:
+<ErrorDebugger />
+'@
+
+$dashboardUpdate | Out-File -FilePath "DASHBOARD-UPDATE.txt" -Encoding UTF8
+Write-Host "✅ Created: DASHBOARD-UPDATE.txt - Instructions to add ErrorDebugger" -ForegroundColor Green
+
+# ============================================================================
+# CREATE CONSOLE HELPER
+# ============================================================================
+Write-Host ""
+Write-Host "📝 Creating console helper..." -ForegroundColor Yellow
+
+$consoleHelper = @'
+// Copy and paste this into your browser console (F12)
+
+console.log('🔍 MANUAL FIREBASE CHECK');
+console.log('=======================');
+
+// Get the current user
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, get } from 'firebase/database';
+
+const auth = getAuth();
+const user = auth.currentUser;
+
+if (!user) {
+  console.log('❌ No user logged in');
+} else {
+  console.log('✅ User:', user.email);
+  
+  const db = getDatabase();
+  const paths = [
+    `students/${user.email}`,
+    `students/${user.email.replace(/\./g, ',,,')}`,
+    `students/${user.email.replace(/\./g, '_')}`,
+    'students'
+  ];
+  
+  paths.forEach(async (path) => {
+    try {
+      const snapshot = await get(ref(db, path));
+      console.log(`📁 ${path}:`, snapshot.exists() ? '✅ FOUND' : '❌ NOT FOUND');
+      if (snapshot.exists() && path === 'students') {
+        const data = snapshot.val();
+        console.log('   Available keys:', Object.keys(data).slice(0, 5));
+      }
+    } catch (e) {
+      console.log(`📁 ${path}: ❌ ERROR -`, e.message);
+    }
+  });
+}
+'@
+
+$consoleHelper | Out-File -FilePath "CONSOLE-HELPER.txt" -Encoding UTF8
+Write-Host "✅ Created: CONSOLE-HELPER.txt" -ForegroundColor Green
+
+# ============================================================================
+# COMPLETION
+# ============================================================================
+Write-Host ""
+Write-Host "╔══════════════════════════════════════════════════════════════╗" -ForegroundColor Green
+Write-Host "║     ✅ ULTIMATE FIX INSTALLED!                               ║" -ForegroundColor Green
+Write-Host "╚══════════════════════════════════════════════════════════════╝" -ForegroundColor Green
+Write-Host ""
+Write-Host "📋 NEXT STEPS:" -ForegroundColor Yellow
+Write-Host ""
+Write-Host "  1. Run your app: npm run dev" -ForegroundColor Cyan
+Write-Host "  2. Login with your email" -ForegroundColor Cyan
+Write-Host "  3. OPEN BROWSER CONSOLE (F12)" -ForegroundColor Magenta
+Write-Host "  4. Look for 🔍 DEBUG messages" -ForegroundColor Cyan
+Write-Host "  5. COPY THE ENTIRE CONSOLE OUTPUT" -ForegroundColor Yellow
+Write-Host "  6. PASTE IT HERE" -ForegroundColor Green
+Write-Host ""
+Write-Host "📋 The console will show:" -ForegroundColor White
+Write-Host "  • Which paths were tried" -ForegroundColor Gray
+Write-Host "  • Which paths succeeded/failed" -ForegroundColor Gray
+Write-Host "  • Available student keys in database" -ForegroundColor Gray
+Write-Host "  • Exact error messages" -ForegroundColor Gray
+Write-Host ""
+Write-Host "🚀 After getting the console output, run:" -ForegroundColor Yellow
+Write-Host "  git add ." -ForegroundColor White
+Write-Host "  git commit -m 'Add detailed error logging for debugging'" -ForegroundColor White
+Write-Host "  git push" -ForegroundColor White

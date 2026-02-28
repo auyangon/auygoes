@@ -18,7 +18,6 @@ export const ExamLockdown: React.FC<ExamLockdownProps> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
-    // Force fullscreen
     const enterFullscreen = async () => {
       try {
         if (document.documentElement.requestFullscreen) {
@@ -31,21 +30,18 @@ export const ExamLockdown: React.FC<ExamLockdownProps> = ({
     };
     enterFullscreen();
 
-    // Detect tab switching
     const handleVisibilityChange = () => {
       if (document.hidden) {
         setViolations(prev => prev + 1);
       }
     };
 
-    // Prevent copy/paste
     const preventCopy = (e: ClipboardEvent) => {
       e.preventDefault();
       setViolations(prev => prev + 1);
       return false;
     };
 
-    // Prevent right click
     const preventRightClick = (e: MouseEvent) => {
       e.preventDefault();
       setViolations(prev => prev + 1);

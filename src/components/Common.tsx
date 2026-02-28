@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { BookOpen } from 'lucide-react';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -102,7 +103,7 @@ export const CourseItem: React.FC<CourseItemProps> = ({ icon, name, code, credit
       </div>
       <div className="uni-course-info">
         <h4>{name}</h4>
-        <p>{code} • {credits} Credits</p>
+        <p>{code}  {credits} Credits</p>
       </div>
       {grade && <div className="uni-course-grade">{grade}</div>}
     </div>

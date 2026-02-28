@@ -30,7 +30,6 @@ export const Announcements: React.FC<AnnouncementsProps> = ({ userEmail, userCou
   const loadAnnouncements = () => {
     setLoading(true);
     
-    // Try to load from localStorage first (cached)
     const cached = localStorage.getItem('announcements');
     if (cached) {
       try {
@@ -42,13 +41,11 @@ export const Announcements: React.FC<AnnouncementsProps> = ({ userEmail, userCou
       }
     }
 
-    // Fetch from API
     fetchAnnouncements();
   };
 
   const fetchAnnouncements = async () => {
     try {
-      // Using your timetable data for announcements
       const sampleAnnouncements: Announcement[] = [
         {
           id: '1',
@@ -168,16 +165,15 @@ export const Announcements: React.FC<AnnouncementsProps> = ({ userEmail, userCou
     
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return ${diffDays} days ago;
+    if (diffDays < 7) return `${diffDays} days ago`;
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
-  // Filter announcements based on user courses and not dismissed
   const visibleAnnouncements = announcements
     .filter(a => !dismissed.includes(a.id))
     .filter(a => a.targetCourses === 'ALL' || 
            (userCourses && a.targetCourses?.split(',').some(c => userCourses.includes(c.trim()))))
-    .slice(0, 5); // Show only 5 most recent
+    .slice(0, 5);
 
   if (loading) {
     return (
@@ -203,7 +199,7 @@ export const Announcements: React.FC<AnnouncementsProps> = ({ userEmail, userCou
       <Card className="p-4">
         <div className="flex items-center gap-3 mb-4">
           <Megaphone className="text-purple-600" size={20} />
-          <h3 className="font-semibold text-gray-800">Latest Announcements</h3>
+          <h3 className="semibold text-gray-800">Latest Announcements</h3>
         </div>
         <div className="text-center py-6 text-gray-500 text-sm">
           <Bell className="mx-auto mb-2 text-gray-300" size={32} />
@@ -237,7 +233,7 @@ export const Announcements: React.FC<AnnouncementsProps> = ({ userEmail, userCou
         {visibleAnnouncements.map(ann => (
           <div 
             key={ann.id} 
-            className={p-3 rounded-lg relative group }
+            className={`p-3 rounded-lg relative group ${getPriorityColor(ann.priority)}`}
           >
             <button
               onClick={() => dismissAnnouncement(ann.id)}

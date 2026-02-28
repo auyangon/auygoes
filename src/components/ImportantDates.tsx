@@ -92,7 +92,7 @@ export const ImportantDates: React.FC = () => {
               <div className="font-medium text-gray-800">{date.title}</div>
               <div className="text-xs text-gray-500">{date.description}</div>
             </div>
-            <span className={	ext-xs px-2 py-1 rounded-full border }>
+            <span className={`text-xs px-2 py-1 rounded-full border ${getTypeColor(date.type)}`}>
               {date.type}
             </span>
           </div>

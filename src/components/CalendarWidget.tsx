@@ -57,7 +57,7 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
   };
 
   return (
-    <Card className={p-6 \}>
+    <Card className={`p-6 ${className || ''}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
@@ -100,7 +100,7 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
       <div className="grid grid-cols-7 gap-1">
         {/* Empty cells for days before month starts */}
         {[...Array(firstDayOfMonth)].map((_, i) => (
-          <div key={empty-\} className="aspect-square p-1"></div>
+          <div key={`empty-${i}`} className="aspect-square p-1"></div>
         ))}
         
         {/* Days of month */}
@@ -114,10 +114,12 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
           return (
             <div 
               key={day} 
-              className={spect-square p-1 rounded-lg transition-all cursor-pointer relative group \}
+              className={`aspect-square p-1 rounded-lg transition-all cursor-pointer relative group ${
+                today ? 'ring-2 ring-pastel-purple' : ''
+              }`}
             >
               <div className="h-full flex flex-col items-center justify-start p-1">
-                <span className={	ext-sm font-medium \}>
+                <span className="text-sm font-medium">
                   {day}
                 </span>
                 <div className="flex gap-0.5 mt-1">
@@ -167,4 +169,3 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
     </Card>
   );
 };
-

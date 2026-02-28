@@ -14,7 +14,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       {/* Mobile menu button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md text-gray-700"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md"
+        style={{ color: '#1a4f8b' }}
       >
         <Menu size={20} />
       </button>

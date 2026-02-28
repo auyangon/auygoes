@@ -38,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   ];
 
   return (
-    <div className="h-full w-64 bg-white shadow-xl border-r border-gray-100 flex flex-col">
+    <div className="h-full w-64 bg-white/70 backdrop-blur-xl shadow-2xl border-r border-white/30 flex flex-col">
       {/* Close button for mobile */}
       {onClose && (
         <button 
@@ -50,11 +50,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       )}
 
       {/* Logo */}
-      <div className="p-6 border-b border-gray-100">
+      <div className="p-6 border-b border-white/30">
         <h1 className="text-xl font-bold text-[#0B4F3A]">
           AUY Portal
         </h1>
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="text-xs text-gray-600/80 mt-1">
           American University of Yangon
         </p>
       </div>
@@ -68,10 +68,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
                 to={item.path}
                 onClick={onClose}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all backdrop-blur-sm ${
                     isActive 
-                      ? 'bg-[#0B4F3A] text-white shadow-md' 
-                      : 'text-gray-600 hover:bg-[#e0f2fe] hover:text-[#0B4F3A]'
+                      ? 'bg-[#0B4F3A]/90 text-white shadow-md' 
+                      : 'text-gray-700 hover:bg-white/50 hover:text-[#0B4F3A]'
                   }`
                 }
               >
@@ -84,10 +84,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       </nav>
 
       {/* Logout button */}
-      <div className="p-4 border-t border-gray-100">
+      <div className="p-4 border-t border-white/30">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-gray-600 hover:bg-[#e0f2fe] hover:text-[#0B4F3A] transition-all"
+          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-gray-700 hover:bg-white/50 hover:text-[#0B4F3A] transition-all backdrop-blur-sm"
         >
           <LogOut size={20} />
           <span className="font-medium">Logout</span>

@@ -3,17 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
-}
-
 @layer utilities {
   /* Fade animations */
   @keyframes fadeIn {
@@ -143,7 +132,41 @@
     }
   }
   
-  /* Utility classes */
+  /* Slide animations */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideRight {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Animation utility classes */
   .animate-fadeIn {
     animation: fadeIn 0.5s ease-out;
   }
@@ -199,6 +222,18 @@
     animation: bounce 2s ease-in-out infinite;
   }
   
+  .animate-slideDown {
+    animation: slideDown 0.5s ease-out;
+  }
+  
+  .animate-slideRight {
+    animation: slideRight 0.5s ease-out;
+  }
+  
+  .animate-slideUp {
+    animation: slideUp 0.5s ease-out;
+  }
+  
   /* Stagger children animations */
   .stagger-children > * {
     opacity: 0;
@@ -241,18 +276,25 @@
   
   /* Glass morphism */
   .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/30 shadow-xl;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
   }
   
   .glass-dark {
-    @apply bg-gray-900/70 backdrop-blur-xl border border-gray-800/30 shadow-xl;
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   }
   
   .glass-hover {
-    @apply transition-all duration-300;
+    transition: all 0.3s ease;
   }
   
   .glass-hover:hover {
-    @apply bg-white/80 shadow-2xl;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15);
   }
 }

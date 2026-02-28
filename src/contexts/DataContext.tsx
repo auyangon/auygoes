@@ -23,7 +23,6 @@ interface DataContextType {
   studentName: string;
   studentId: string;
   major: string;
-  debugInfo: any;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -31,6 +30,14 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 const gradePoints: Record<string, number> = {
   'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7,
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
+};
+
+// Map emails to student IDs (based on your Firebase structure)
+const emailToStudentId: Record<string, string> = {
+  'chanmyae.au.edu.mm@gmail.com': 'S001',
+  'aung.khant.phyo@student.au.edu.mm': 'S002',
+  'hsu.eain.htet@student.au.edu.mm': 'S003',
+  'htoo.yadanar.oo@student.au.edu.mm': 'S004',
 };
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
@@ -44,12 +51,10 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [studentName, setStudentName] = useState('');
   const [studentId, setStudentId] = useState('');
   const [major, setMajor] = useState('');
-  const [debugInfo, setDebugInfo] = useState<any>({});
 
   useEffect(() => {
     if (!user?.email) {
       setLoading(false);
-      setError('No user logged in');
       return;
     }
 
@@ -57,138 +62,58 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       setLoading(true);
       setError(null);
       
-      const debug: any = {
-        userEmail: user.email,
-        attempts: [],
-        timestamp: new Date().toISOString()
-      };
-
       try {
         console.log('========================================');
         console.log('🔍 DEBUG: Starting data fetch');
         console.log('📧 User email:', user.email);
         console.log('========================================');
         
-        // Try different possible paths
-        const paths = [
-          { name: 'Raw email', path: `students/${user.email}` },
-          { name: 'Sanitized (dots → commas)', path: `students/${user.email.replace(/\./g, ',,,')}` },
-          { name: 'Sanitized (dots → underscores)', path: `students/${user.email.replace(/\./g, '_')}` },
-          { name: 'URL encoded', path: `students/${encodeURIComponent(user.email)}` },
-          { name: 'Base students path', path: 'students' }
-        ];
+        // Get student ID from email mapping
+        const studentIdFromEmail = emailToStudentId[user.email];
         
-        let foundData = null;
-        let usedPath = '';
-        
-        for (const { name, path } of paths) {
-          console.log(`📁 Trying [${name}]: ${path}`);
-          
-          try {
-            const dataRef = ref(db, path);
-            const snapshot = await get(dataRef);
-            
-            debug.attempts.push({
-              name,
-              path,
-              exists: snapshot.exists(),
-              status: snapshot.exists() ? 'SUCCESS' : 'NOT FOUND'
-            });
-            
-            if (snapshot.exists()) {
-              console.log(`✅ SUCCESS! Found data at: ${path}`);
-              foundData = snapshot.val();
-              usedPath = path;
-              
-              // If we found all students, try to find this specific student
-              if (path === 'students' && foundData) {
-                console.log('🔍 Searching for student in all students...');
-                
-                // Try exact match
-                if (foundData[user.email]) {
-                  foundData = foundData[user.email];
-                  console.log('✅ Found exact email match');
-                  debug.matchMethod = 'exact email';
-                } 
-                // Try case-insensitive match
-                else {
-                  const emailLower = user.email.toLowerCase();
-                  const matchKey = Object.keys(foundData).find(
-                    key => key.toLowerCase() === emailLower
-                  );
-                  if (matchKey) {
-                    foundData = foundData[matchKey];
-                    console.log(`✅ Found case-insensitive match with key: ${matchKey}`);
-                    debug.matchMethod = 'case-insensitive';
-                  } 
-                  // Try partial match
-                  else {
-                    const localPart = user.email.split('@')[0];
-                    const matchKey = Object.keys(foundData).find(
-                      key => key.includes(localPart)
-                    );
-                    if (matchKey) {
-                      foundData = foundData[matchKey];
-                      console.log(`✅ Found partial match with key: ${matchKey}`);
-                      debug.matchMethod = 'partial';
-                    } else {
-                      console.log('❌ No matching student found in database');
-                      console.log('Available keys:', Object.keys(foundData).slice(0, 5));
-                      debug.availableKeys = Object.keys(foundData).slice(0, 10);
-                      foundData = null;
-                    }
-                  }
-                }
-              }
-              break;
-            } else {
-              console.log(`❌ No data at: ${path}`);
-            }
-          } catch (err) {
-            console.error(`❌ Error at ${path}:`, err.message);
-            debug.attempts.push({
-              name,
-              path,
-              error: err.message
-            });
-          }
-        }
-        
-        if (!foundData) {
-          console.error('❌ FATAL: No student data found after trying all paths');
-          setError('Student record not found. Please check your email or contact administration.');
-          setDebugInfo(debug);
+        if (!studentIdFromEmail) {
+          console.error('❌ No student ID mapping for email:', user.email);
+          console.log('📋 Available mappings:', Object.keys(emailToStudentId));
+          setError('Student record not found. Please contact administration.');
           setLoading(false);
           return;
         }
 
-        console.log('✅ Student data found:', foundData);
-        debug.foundData = foundData;
-        setDebugInfo(debug);
+        console.log('✅ Found student ID mapping:', studentIdFromEmail);
         
-        // Extract student info with fallbacks
-        setStudentName(foundData.studentName || foundData.name || foundData.displayName || '');
-        setStudentId(foundData.studentId || foundData.id || '');
-        setMajor(foundData.major || foundData.program || '');
+        // Use student ID to fetch data
+        const studentRef = ref(db, `students/${studentIdFromEmail}`);
+        const snapshot = await get(studentRef);
+        
+        if (!snapshot.exists()) {
+          console.error('❌ No data found for student ID:', studentIdFromEmail);
+          setError('Student data not found. Please contact administration.');
+          setLoading(false);
+          return;
+        }
 
-        // Get courses - try different possible structures
-        const coursesData = foundData.courses || foundData.enrollments || foundData.classes || {};
+        const studentData = snapshot.val();
+        console.log('✅ Student found:', studentData);
+        
+        setStudentName(studentData.studentName || studentData.name || '');
+        setStudentId(studentIdFromEmail);
+        setMajor(studentData.major || studentData.program || '');
+
+        // Get courses
+        const coursesData = studentData.courses || studentData.enrollments || {};
         const courseList: Course[] = [];
-
-        console.log('📚 Processing courses:', coursesData);
 
         for (const [courseId, courseInfo] of Object.entries(coursesData)) {
           const data = courseInfo as any;
-          const course: Course = {
+          courseList.push({
             id: courseId,
             courseId: courseId,
             name: data.courseName || data.name || courseId,
-            teacher: data.teacherName || data.teacher || data.instructor || '',
-            credits: data.credits || data.creditHours || 3,
-            grade: data.grade || data.finalGrade || '',
-            attendancePercentage: data.attendancePercentage || data.attendance || 0
-          };
-          courseList.push(course);
+            teacher: data.teacherName || data.teacher || '',
+            credits: data.credits || 3,
+            grade: data.grade || '',
+            attendancePercentage: data.attendancePercentage || 0
+          });
         }
 
         setCourses(courseList);
@@ -213,13 +138,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setTotalCredits(totalCreditsEarned);
         setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
         
-        console.log('✅ Data fetch complete!');
-        console.log('📊 GPA:', gpa, 'Credits:', totalCredits, 'Attendance:', attendance);
-        
       } catch (err) {
-        console.error('❌ CRITICAL ERROR:', err);
-        setError(`Failed to load data: ${err.message}`);
-        setDebugInfo({ ...debug, criticalError: err.message });
+        console.error('❌ Error:', err);
+        setError('Failed to load data. Please try again.');
       } finally {
         setLoading(false);
       }
@@ -230,8 +151,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <DataContext.Provider value={{
-      courses, loading, error, gpa, totalCredits, attendance, 
-      studentName, studentId, major, debugInfo
+      courses, loading, error, gpa, totalCredits, attendance, studentName, studentId, major
     }}>
       {children}
     </DataContext.Provider>

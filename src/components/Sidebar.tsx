@@ -38,26 +38,26 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   ];
 
   return (
-    <div className="h-full w-64 bg-white shadow-lg flex flex-col">
+    <div className="h-full w-64 backdrop-blur-xl bg-white/70 shadow-xl border-r border-white/20 flex flex-col">
       {/* Close button for mobile */}
       {onClose && (
         <button 
           onClick={onClose}
-          className="lg:hidden absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700"
+          className="lg:hidden absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700 z-10"
         >
           <X size={20} />
         </button>
       )}
 
       {/* Logo with gradient */}
-      <div className="p-6 border-b border-gray-100">
+      <div className="p-6 border-b border-white/20">
         <h1 className="text-xl font-bold" style={{ 
           background: 'linear-gradient(135deg, #0B4F3A 0%, #1a4f8b 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text'
         }}>AUY Portal</h1>
-        <p className="text-xs text-gray-500 mt-1">American University of Yangon</p>
+        <p className="text-xs text-gray-600/80 mt-1">American University of Yangon</p>
       </div>
 
       {/* Navigation */}
@@ -69,10 +69,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
                 to={item.path}
                 onClick={onClose}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
+                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all backdrop-blur-sm ${
                     isActive 
-                      ? 'bg-gradient-to-r from-[#0B4F3A] to-[#1a4f8b] text-white shadow-md' 
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-[#1a4f8b]'
+                      ? 'bg-gradient-to-r from-[#0B4F3A]/90 to-[#1a4f8b]/90 text-white shadow-lg' 
+                      : 'text-gray-600 hover:bg-white/50 hover:backdrop-blur-sm hover:text-[#1a4f8b]'
                   }`
                 }
               >
@@ -85,10 +85,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       </nav>
 
       {/* Logout button */}
-      <div className="p-4 border-t border-gray-100">
+      <div className="p-4 border-t border-white/20">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all"
+          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-gray-600 hover:bg-red-50/80 hover:backdrop-blur-sm hover:text-red-600 transition-all"
         >
           <LogOut size={20} />
           <span className="font-medium">Logout</span>

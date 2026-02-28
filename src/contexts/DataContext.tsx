@@ -32,8 +32,7 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
-// Map emails to student IDs (based on your Firebase structure)
-const emailToStudentId: Record<string, string> = {
+const EMAIL_TO_ID: Record<string, string> = {
   'chanmyae.au.edu.mm@gmail.com': 'S001',
   'aung.khant.phyo@student.au.edu.mm': 'S002',
   'hsu.eain.htet@student.au.edu.mm': 'S003',
@@ -63,44 +62,30 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       setError(null);
       
       try {
-        console.log('========================================');
-        console.log('🔍 DEBUG: Starting data fetch');
-        console.log('📧 User email:', user.email);
-        console.log('========================================');
-        
-        // Get student ID from email mapping
-        const studentIdFromEmail = emailToStudentId[user.email];
+        const studentIdFromEmail = EMAIL_TO_ID[user.email];
         
         if (!studentIdFromEmail) {
-          console.error('❌ No student ID mapping for email:', user.email);
-          console.log('📋 Available mappings:', Object.keys(emailToStudentId));
-          setError('Student record not found. Please contact administration.');
+          setError(`No student ID found for email: ${user.email}`);
           setLoading(false);
           return;
         }
 
-        console.log('✅ Found student ID mapping:', studentIdFromEmail);
-        
-        // Use student ID to fetch data
         const studentRef = ref(db, `students/${studentIdFromEmail}`);
         const snapshot = await get(studentRef);
-        
+
         if (!snapshot.exists()) {
-          console.error('❌ No data found for student ID:', studentIdFromEmail);
-          setError('Student data not found. Please contact administration.');
+          setError(`Student data not found for ID: ${studentIdFromEmail}`);
           setLoading(false);
           return;
         }
 
         const studentData = snapshot.val();
-        console.log('✅ Student found:', studentData);
         
         setStudentName(studentData.studentName || studentData.name || '');
         setStudentId(studentIdFromEmail);
         setMajor(studentData.major || studentData.program || '');
 
-        // Get courses
-        const coursesData = studentData.courses || studentData.enrollments || {};
+        const coursesData = studentData.courses || {};
         const courseList: Course[] = [];
 
         for (const [courseId, courseInfo] of Object.entries(coursesData)) {
@@ -117,9 +102,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         }
 
         setCourses(courseList);
-        console.log(`📚 Loaded ${courseList.length} courses`);
 
-        // Calculate GPA
         let totalPoints = 0;
         let totalCreditsEarned = 0;
         let totalAttendance = 0;
@@ -139,7 +122,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
         
       } catch (err) {
-        console.error('❌ Error:', err);
         setError('Failed to load data. Please try again.');
       } finally {
         setLoading(false);

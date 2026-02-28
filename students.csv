@@ -1,58 +1,58 @@
-﻿studentId,studentName,email,major,studyMode
-S001,Aung Khant Phyo,aung.khant.phyo@student.au.edu.mm,ISP program,OnCampus
-S002,Hsu Eain Htet,hsu.eain.htet@student.au.edu.mm,ISP program,OnCampus
-S003,Htoo Yadanar Oo,htoo.yadanar.oo@student.au.edu.mm,ISP program,OnCampus
-S004,Kaung Pyae Phyo Kyaw,kaung.pyae.phyo.kyaw@student.au.edu.mm,ISP program,OnCampus
-S005,Man Sian Hoih,man.sian.hoih@student.au.edu.mm,ISP program,OnCampus
-S006,Phone Pyae Han,phone.pyae.han@student.au.edu.mm,ISP program,OnCampus
-S007,Thin Zar Li Htay,thin.zar.li.htay@student.au.edu.mm,ISP program,OnCampus
-S008,Yoon Thiri Naing,yoon.thiri.naing@student.au.edu.mm,ISP program,OnCampus
-S009,Zau Myu Lat,zau.myu.lat@student.au.edu.mm,ISP program,OnCampus
-S010,En Sian Piang,en.sian.piang@student.au.edu.mm,ISP program,OnCampus
-S011,Hsu Kyal Sin Zaw,hsu.kyal.sin.zaw@student.au.edu.mm,ISP program,OnCampus
-S012,Kaung Khant Kyaw,kaung.khant.kyaw@student.au.edu.mm,ISP program,OnCampus
-S013,May Lin Phyu,may.lin.phyu@student.au.edu.mm,ISP program,OnCampus
-S014,Min Hein Kyaw,min.hein.kyaw@student.au.edu.mm,ISP program,OnCampus
-S015,Thint Myat Aung,thint.myat.aung@student.au.edu.mm,ISP program,OnCampus
-S016,Chan Htet Zan,chan.htet.zan@student.au.edu.mm,ISP program,OnCampus
-S017,Swan Sa Phyo,swan.sa.phyo@student.au.edu.mm,ISP program,OnCampus
-S018,Mya Hmue May Zaw,mya.hmue.may.zaw@student.au.edu.mm,ISP program,OnCampus
-S019,Kaung Nyan Lin,kaung.nyan.lin@student.au.edu.mm,ISP program,OnCampus
-S020,Thaw Thaw Zin,thaw.thaw.zin@student.au.edu.mm,ISP program,OnCampus
-S021,L Seng Rail,l.seng.rail@student.au.edu.mm,ISP program,OnCampus
-S022,Min Hein Khant,min.hein.khant@student.au.edu.mm,ISP program,OnCampus
-S023,Thawdar Shoon Lei,thawdar.shoon.lei@student.au.edu.mm,ISP program,OnCampus
-S024,Sian San Nuam,sian.san.nuam@student.au.edu.mm,ISP program,OnCampus
-S025,Zaw Seng Awng,zaw.seng.awng@student.au.edu.mm,ISP program,OnCampus
-S026,Thet Hayman Kyaw,thet.hayman.kyaw@student.au.edu.mm,ISP program,OnCampus
-S027,Aung Khant Zaw,aung.khant.zaw@student.au.edu.mm,ISP program,OnCampus
-S028,Aung Kyaw Min,aung.kyaw.min@student.au.edu.mm,ISP program,OnCampus
-S029,Aye Chan Myae Aung,aye.chan.myae.aung@student.au.edu.mm,ISP program,OnCampus
-S030,Eaint Myat Kyaw,eaint.myat.kyaw@student.au.edu.mm,ISP program,OnCampus
-S031,Hnin Wai Phyo,hnin.wai.phyo@student.au.edu.mm,ISP program,OnCampus
-S032,Hpa La Hpone Ram,hpa.la.hpone.ram@student.au.edu.mm,ISP program,OnCampus
-S033,Hsu Pyae La Min,hsu.pyae.la.min@student.au.edu.mm,ISP program,OnCampus
-S034,Indira,indira@student.au.edu.mm,ISP program,OnCampus
-S035,La Mye Gyung Naw,la.mye.gyung.naw@student.au.edu.mm,ISP program,OnCampus
-S036,La Pyae Chit,la.pyae.chit@student.au.edu.mm,ISP program,OnCampus
-S037,Lin Sandar Kyaw,lin.sandar.kyaw@student.au.edu.mm,ISP program,OnCampus
-S038,Min Thiha Kyaw,min.thiha.kyaw@student.au.edu.mm,ISP program,OnCampus
-S039,Nan Moe Nwe Oo,nan.moe.nwe.oo@student.au.edu.mm,ISP program,OnCampus
-S040,Nlang Seng Htoi Pan,nlang.seng.htoi.pan@student.au.edu.mm,ISP program,OnCampus
-S041,Nlang Seng Myo Myat,nlang.seng.myo.myat@student.au.edu.mm,ISP program,OnCampus
-S042,Shoon Lae Aung,shoon.lae.aung@student.au.edu.mm,ISP program,OnCampus
-S043,Su Pyae Than Dar,su.pyae.than.dar@student.au.edu.mm,ISP program,OnCampus
-S044,Thin Thin Aung,thin.thin.aung@student.au.edu.mm,ISP program,OnCampus
-S045,Thiri Thansin,thiri.thansin@student.au.edu.mm,ISP program,OnCampus
-S046,Yatanar Moe,yatanar.moe@student.au.edu.mm,ISP program,OnCampus
-S047,Htut Khaung Oo,htut.khaung.oo@student.au.edu.mm,ISP program,Remote
-S048,Mung Hkawng La,mung.hkawng.la@student.au.edu.mm,ISP program,Remote
-S049,Thet Mon Chit,thet.mon.chit@student.au.edu.mm,ISP program,Remote
-S050,Myat Thiri Kyaw,myat.thiri.kyaw@student.au.edu.mm,ISP program,Remote
-S051,Aye Chan Pyone,aye.chan.pyone@student.au.edu.mm,ISP program,Remote
-S052,Aung Min Khant,aung.min.khant@student.au.edu.mm,ISP program,Remote
-S053,Chan Myae Testing,chanmyae.au.edu.mm@gmail.com,ISP program,OnCampus
-S054,jbthaw,jbthaw@gmail.com,ISP program,OnCampus
-S055,Jino Chan,jinochan1991@gmail.com,ISP program,OnCampus
-S056,Hnin Yamone Oo,hninyamoneoo.au.edu@gmail.com,ISP program,OnCampus
-S338,Moh Moh,moh.au.edu@gmail.com,ISP program,
+﻿email,studentId,studentName,major,studyMode
+aung.khant.phyo@student.au.edu.mm,S001,Aung Khant Phyo,ISP program,OnCampus
+hsu.eain.htet@student.au.edu.mm,S002,Hsu Eain Htet,ISP program,OnCampus
+htoo.yadanar.oo@student.au.edu.mm,S003,Htoo Yadanar Oo,ISP program,OnCampus
+kaung.pyae.phyo.kyaw@student.au.edu.mm,S004,Kaung Pyae Phyo Kyaw,ISP program,OnCampus
+man.sian.hoih@student.au.edu.mm,S005,Man Sian Hoih,ISP program,OnCampus
+phone.pyae.han@student.au.edu.mm,S006,Phone Pyae Han,ISP program,OnCampus
+thin.zar.li.htay@student.au.edu.mm,S007,Thin Zar Li Htay,ISP program,OnCampus
+yoon.thiri.naing@student.au.edu.mm,S008,Yoon Thiri Naing,ISP program,OnCampus
+zau.myu.lat@student.au.edu.mm,S009,Zau Myu Lat,ISP program,OnCampus
+en.sian.piang@student.au.edu.mm,S010,En Sian Piang,ISP program,OnCampus
+hsu.kyal.sin.zaw@student.au.edu.mm,S011,Hsu Kyal Sin Zaw,ISP program,OnCampus
+kaung.khant.kyaw@student.au.edu.mm,S012,Kaung Khant Kyaw,ISP program,OnCampus
+may.lin.phyu@student.au.edu.mm,S013,May Lin Phyu,ISP program,OnCampus
+min.hein.kyaw@student.au.edu.mm,S014,Min Hein Kyaw,ISP program,OnCampus
+thint.myat.aung@student.au.edu.mm,S015,Thint Myat Aung,ISP program,OnCampus
+chan.htet.zan@student.au.edu.mm,S016,Chan Htet Zan,ISP program,OnCampus
+swan.sa.phyo@student.au.edu.mm,S017,Swan Sa Phyo,ISP program,OnCampus
+mya.hmue.may.zaw@student.au.edu.mm,S018,Mya Hmue May Zaw,ISP program,OnCampus
+kaung.nyan.lin@student.au.edu.mm,S019,Kaung Nyan Lin,ISP program,OnCampus
+thaw.thaw.zin@student.au.edu.mm,S020,Thaw Thaw Zin,ISP program,OnCampus
+l.seng.rail@student.au.edu.mm,S021,L Seng Rail,ISP program,OnCampus
+min.hein.khant@student.au.edu.mm,S022,Min Hein Khant,ISP program,OnCampus
+thawdar.shoon.lei@student.au.edu.mm,S023,Thawdar Shoon Lei,ISP program,OnCampus
+sian.san.nuam@student.au.edu.mm,S024,Sian San Nuam,ISP program,OnCampus
+zaw.seng.awng@student.au.edu.mm,S025,Zaw Seng Awng,ISP program,OnCampus
+thet.hayman.kyaw@student.au.edu.mm,S026,Thet Hayman Kyaw,ISP program,OnCampus
+aung.khant.zaw@student.au.edu.mm,S027,Aung Khant Zaw,ISP program,OnCampus
+aung.kyaw.min@student.au.edu.mm,S028,Aung Kyaw Min,ISP program,OnCampus
+aye.chan.myae.aung@student.au.edu.mm,S029,Aye Chan Myae Aung,ISP program,OnCampus
+eaint.myat.kyaw@student.au.edu.mm,S030,Eaint Myat Kyaw,ISP program,OnCampus
+hnin.wai.phyo@student.au.edu.mm,S031,Hnin Wai Phyo,ISP program,OnCampus
+hpa.la.hpone.ram@student.au.edu.mm,S032,Hpa La Hpone Ram,ISP program,OnCampus
+hsu.pyae.la.min@student.au.edu.mm,S033,Hsu Pyae La Min,ISP program,OnCampus
+indira@student.au.edu.mm,S034,Indira,ISP program,OnCampus
+la.mye.gyung.naw@student.au.edu.mm,S035,La Mye Gyung Naw,ISP program,OnCampus
+la.pyae.chit@student.au.edu.mm,S036,La Pyae Chit,ISP program,OnCampus
+lin.sandar.kyaw@student.au.edu.mm,S037,Lin Sandar Kyaw,ISP program,OnCampus
+min.thiha.kyaw@student.au.edu.mm,S038,Min Thiha Kyaw,ISP program,OnCampus
+nan.moe.nwe.oo@student.au.edu.mm,S039,Nan Moe Nwe Oo,ISP program,OnCampus
+nlang.seng.htoi.pan@student.au.edu.mm,S040,Nlang Seng Htoi Pan,ISP program,OnCampus
+nlang.seng.myo.myat@student.au.edu.mm,S041,Nlang Seng Myo Myat,ISP program,OnCampus
+shoon.lae.aung@student.au.edu.mm,S042,Shoon Lae Aung,ISP program,OnCampus
+su.pyae.than.dar@student.au.edu.mm,S043,Su Pyae Than Dar,ISP program,OnCampus
+thin.thin.aung@student.au.edu.mm,S044,Thin Thin Aung,ISP program,OnCampus
+thiri.thansin@student.au.edu.mm,S045,Thiri Thansin,ISP program,OnCampus
+yatanar.moe@student.au.edu.mm,S046,Yatanar Moe,ISP program,OnCampus
+htut.khaung.oo@student.au.edu.mm,S047,Htut Khaung Oo,ISP program,Remote
+mung.hkawng.la@student.au.edu.mm,S048,Mung Hkawng La,ISP program,Remote
+thet.mon.chit@student.au.edu.mm,S049,Thet Mon Chit,ISP program,Remote
+myat.thiri.kyaw@student.au.edu.mm,S050,Myat Thiri Kyaw,ISP program,Remote
+aye.chan.pyone@student.au.edu.mm,S051,Aye Chan Pyone,ISP program,Remote
+aung.min.khant@student.au.edu.mm,S052,Aung Min Khant,ISP program,Remote
+chanmyae.au.edu.mm@gmail.com,S053,Chan Myae Testing,ISP program,OnCampus
+jbthaw@gmail.com,S054,jbthaw,ISP program,OnCampus
+jinochan1991@gmail.com,S055,Jino Chan,ISP program,OnCampus
+hninyamoneoo.au.edu@gmail.com,S056,Hnin Yamone Oo,ISP program,OnCampus
+moh.au.edu@gmail.com,S338,Moh Moh,ISP program,

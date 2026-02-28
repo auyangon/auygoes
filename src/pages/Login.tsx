@@ -1,10 +1,8 @@
 ﻿import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Card } from '../components/Common';
-import { Mail, Lock, LogIn, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-export const LoginPage: React.FC = () => {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,92 +14,145 @@ export const LoginPage: React.FC = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    
     try {
-      await login(email, password);
-      navigate('/');
-    } catch (err: any) {
-      setError(err.message || 'Failed to login');
+      const success = await login(email, password);
+      if (success) {
+        navigate('/dashboard');
+      } else {
+        setError('Invalid email or password');
+      }
+    } catch (err) {
+      setError('Login failed');
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center p-4">
-      <Card className="p-8 max-w-md w-full">
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-3">
-            <Sparkles className="text-seafoam-dark" size={40} />
-          </div>
-          <h1 className="text-3xl font-normal text-jet mb-2">Welcome Back!</h1>
-          <p className="text-jet/70">Sign in to your student portal</p>
-        </div>
+  // Test accounts from your Firebase
+  const testAccounts = [
+    'aung.khant.phyo@student.au.edu.mm',
+    'hsu.eain.htet@student.au.edu.mm',
+    'htoo.yadanar.oo@student.au.edu.mm'
+  ];
 
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px'
+    }}>
+      <div style={{
+        background: 'white',
+        borderRadius: '20px',
+        padding: '40px',
+        width: '100%',
+        maxWidth: '400px',
+        boxShadow: '0 10px 40px rgba(0,0,0,0.1)'
+      }}>
+        <h1 style={{ textAlign: 'center', marginBottom: '30px', color: '#333' }}>
+          Student Portal
+        </h1>
+        
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+          <div style={{
+            background: '#fee',
+            color: '#c33',
+            padding: '10px',
+            borderRadius: '8px',
+            marginBottom: '20px',
+            textAlign: 'center'
+          }}>
             {error}
           </div>
         )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-jet/70 text-sm mb-1">Email</label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jet/40" size={18} />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white/50 border border-seafoam-soft/30 rounded-xl py-3 pl-10 pr-4 text-jet placeholder-jet/40 focus:outline-none focus:ring-2 focus:ring-seafoam-dark/20"
-                placeholder="student@au.edu.mm"
-                required
-              />
-            </div>
+        
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: '20px' }}>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                fontSize: '16px'
+              }}
+              required
+            />
           </div>
-
-          <div>
-            <label className="block text-jet/70 text-sm mb-1">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jet/40" size={18} />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-white/50 border border-seafoam-soft/30 rounded-xl py-3 pl-10 pr-4 text-jet placeholder-jet/40 focus:outline-none focus:ring-2 focus:ring-seafoam-dark/20"
-                placeholder="••••••••"
-                required
-              />
-            </div>
+          
+          <div style={{ marginBottom: '20px' }}>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                fontSize: '16px'
+              }}
+              required
+            />
           </div>
-
-          <div className="text-right">
-            <Link to="/forgot-password" className="text-sm text-jet/60 hover:text-jet transition">
-              Aiyo, forget password?
-            </Link>
-          </div>
-
+          
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-seafoam-dark hover:bg-seafoam-medium text-white font-normal py-3 px-6 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            style={{
+              width: '100%',
+              padding: '12px',
+              background: '#667eea',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '16px',
+              cursor: 'pointer',
+              opacity: loading ? 0.7 : 1
+            }}
           >
-            {loading ? (
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-            ) : (
-              <>
-                <LogIn size={20} />
-                Sign In
-              </>
-            )}
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-
-        <p className="text-center text-jet/50 text-sm mt-6">
-          Don't have an account? Contact your administrator.
-        </p>
-      </Card>
+        
+        <div style={{ marginTop: '30px' }}>
+          <p style={{ textAlign: 'center', color: '#666', marginBottom: '10px' }}>
+            Test with:
+          </p>
+          {testAccounts.map((acc) => (
+            <button
+              key={acc}
+              onClick={() => setEmail(acc)}
+              style={{
+                display: 'block',
+                width: '100%',
+                padding: '8px',
+                marginBottom: '5px',
+                background: '#f5f5f5',
+                border: '1px solid #ddd',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                color: '#333'
+              }}
+            >
+              {acc}
+            </button>
+          ))}
+          <p style={{ textAlign: 'center', color: '#666', marginTop: '10px', fontSize: '14px' }}>
+            Password: password123
+          </p>
+        </div>
+      </div>
     </div>
   );
-};
-
-
+}

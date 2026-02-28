@@ -1,245 +1,312 @@
-﻿import React from 'react';
+﻿import React, { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
-import { Card, Badge, ProgressBar } from '../components/Common';
-import { 
-  BookOpen, 
-  Award, 
-  GraduationCap, 
-  Calendar, 
-  Bell, 
-  TrendingUp,
-  Users,
-  Clock,
-  ChevronRight,
-  Sparkles
-} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Announcements } from '../components/Announcements';
 
-export const Dashboard: React.FC = () => {
-  const { user } = useAuth();
-  const { courses, gpa, totalCredits, attendance, studentName, studentId, major, loading, error } = useData();
+export default function Dashboard() {
+  const { user, logout } = useAuth();
+  const { courses, loading, error, gpa, totalCredits, attendance, studentName } = useData();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
+  // Get user course IDs for filtering announcements
+  const userCourseIds = courses.map(c => c.courseId);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+      <div style={{ 
+        minHeight: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        background: '#f5f5f5' 
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: '50px',
+            height: '50px',
+            border: '5px solid #f3f3f3',
+            borderTop: '5px solid #667eea',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 20px'
+          }}></div>
+          <p>Loading your data...</p>
+          <style>{@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }}</style>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card className="p-8 max-w-md">
-          <h2 className="text-xl font-medium text-red-600 mb-4">Error</h2>
-          <p className="text-gray-600">{error}</p>
-        </Card>
+      <div style={{ 
+        minHeight: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        background: '#f5f5f5' 
+      }}>
+        <div style={{ textAlign: 'center', background: 'white', padding: '40px', borderRadius: '10px' }}>
+          <h2 style={{ color: '#c33', marginBottom: '10px' }}>Error</h2>
+          <p>{error}</p>
+          <button
+            onClick={handleLogout}
+            style={{
+              marginTop: '20px',
+              padding: '10px 20px',
+              background: '#667eea',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            Go Back to Login
+          </button>
+        </div>
       </div>
     );
   }
 
-  // Get current time for greeting
-  const hour = new Date().getHours();
-  let greeting = "Good morning";
-  if (hour >= 12 && hour < 17) greeting = "Good afternoon";
-  if (hour >= 17) greeting = "Good evening";
-
-  // Get student name - PRIORITY: studentName from Firebase > user.displayName > 'Student'
-  const displayName = studentName || user?.displayName || "Student";
-  const firstName = displayName.split(' ')[0];
-
-  // Stat card gradients
-  const statGradients = [
-    'from-primary to-primary-light',
-    'from-primary-light to-primary-soft',
-    'from-primary-soft to-primary-lighter',
-    'from-primary to-primary-soft'
-  ];
-
-  // Get grade color
-  const getGradeColor = (grade: string) => {
-    if (!grade) return 'bg-gray-100 text-gray-600';
-    if (grade.startsWith('A')) return 'bg-green-100 text-green-700';
-    if (grade.startsWith('B')) return 'bg-blue-100 text-blue-700';
-    if (grade.startsWith('C')) return 'bg-yellow-100 text-yellow-700';
-    return 'bg-orange-100 text-orange-700';
-  };
-
   return (
-    <div className="space-y-6">
-      {/* Header with Student Name - NO BOLD, smaller font */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white">
-            <Sparkles size={20} />
-          </div>
+    <div style={{ minHeight: '100vh', background: '#f5f5f5' }}>
+      {/* Header */}
+      <div style={{
+        background: 'white',
+        padding: '20px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
           <div>
-            <h1 className="text-2xl font-normal text-gray-800">
-              {greeting}, {firstName}
+            <h1 style={{ margin: 0, color: '#333' }}>
+              Welcome, {studentName || user?.email}!
             </h1>
-            <p className="text-sm text-gray-500 mt-0.5">
-              {new Date().toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
+            <p style={{ margin: '5px 0 0', color: '#666' }}>
+              Student ID: {studentName ? 'S001' : 'Loading...'}
             </p>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Badge variant="primary">ID: {studentId || 'AUY-2025-001'}</Badge>
-          <Badge>{major || 'ISP Program'}</Badge>
-        </div>
-      </div>
-
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className={`stat-card bg-gradient-to-br ${statGradients[0]} text-white`}>
-          <div className="stat-icon bg-white/20">
-            <BookOpen size={24} />
-          </div>
-          <div className="stat-value">{courses.length}</div>
-          <div className="stat-label text-white/80">Enrolled Courses</div>
-        </div>
-
-        <div className={`stat-card bg-gradient-to-br ${statGradients[1]} text-white`}>
-          <div className="stat-icon bg-white/20">
-            <Award size={24} />
-          </div>
-          <div className="stat-value">{gpa?.toFixed(2) || '0.00'}</div>
-          <div className="stat-label text-white/80">Current GPA</div>
-        </div>
-
-        <div className={`stat-card bg-gradient-to-br ${statGradients[2]} text-white`}>
-          <div className="stat-icon bg-white/20">
-            <GraduationCap size={24} />
-          </div>
-          <div className="stat-value">{totalCredits}</div>
-          <div className="stat-label text-white/80">Credits Earned</div>
-        </div>
-
-        <div className={`stat-card bg-gradient-to-br ${statGradients[3]} text-white`}>
-          <div className="stat-icon bg-white/20">
-            <Users size={24} />
-          </div>
-          <div className="stat-value">{attendance}%</div>
-          <div className="stat-label text-white/80">Attendance</div>
+          <button
+            onClick={handleLogout}
+            style={{
+              padding: '10px 20px',
+              background: '#dc3545',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            Logout
+          </button>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Current Courses */}
-        <div className="lg:col-span-2 space-y-4">
-          <Card>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-normal text-gray-800">My Courses</h2>
-              <span className="text-sm text-gray-500">{courses.length} total</span>
-            </div>
+      <div style={{ maxWidth: '1200px', margin: '30px auto', padding: '0 20px' }}>
+        {/* Two Column Layout */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 2fr',
+          gap: '20px',
+          marginBottom: '30px'
+        }}>
+          {/* Announcements Column */}
+          <div>
+            <Announcements 
+              userEmail={user?.email} 
+              userCourses={userCourseIds}
+            />
+          </div>
 
-            <div className="space-y-3">
-              {courses.length > 0 ? (
-                courses.slice(0, 5).map((course, index) => (
-                  <div key={course.courseId} className="course-item">
-                    <div className={`course-icon bg-gradient-to-br from-primary to-primary-light`}>
-                      {course.courseId.charAt(0)}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="course-name">{course.name}</h3>
-                      <p className="course-details">
-                        {course.courseId} • {course.credits} Credits
-                      </p>
-                    </div>
-                    <div className={`course-grade ${getGradeColor(course.grade)}`}>
-                      {course.grade || '—'}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-center py-8">
-                  <BookOpen className="mx-auto text-gray-300 mb-3" size={40} />
-                  <p className="text-gray-500">No courses enrolled yet</p>
-                </div>
-              )}
-
-              {courses.length > 5 && (
-                <button className="btn btn-secondary w-full mt-2">
-                  View All Courses
-                  <ChevronRight size={16} className="ml-1" />
-                </button>
-              )}
+          {/* Stats Column */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '20px'
+          }}>
+            <div style={{
+              background: 'white',
+              padding: '20px',
+              borderRadius: '10px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}>
+              <h3 style={{ margin: '0 0 10px', color: '#666' }}>GPA</h3>
+              <p style={{ fontSize: '32px', margin: 0, color: '#333' }}>{gpa.toFixed(2)}</p>
             </div>
-          </Card>
+            
+            <div style={{
+              background: 'white',
+              padding: '20px',
+              borderRadius: '10px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}>
+              <h3 style={{ margin: '0 0 10px', color: '#666' }}>Credits</h3>
+              <p style={{ fontSize: '32px', margin: 0, color: '#333' }}>{totalCredits}</p>
+            </div>
+            
+            <div style={{
+              background: 'white',
+              padding: '20px',
+              borderRadius: '10px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}>
+              <h3 style={{ margin: '0 0 10px', color: '#666' }}>Attendance</h3>
+              <p style={{ fontSize: '32px', margin: 0, color: '#333' }}>{attendance}%</p>
+            </div>
+          </div>
         </div>
 
-        {/* Right Column */}
-        <div className="space-y-4">
-          {/* Academic Progress */}
-          <Card>
-            <h2 className="text-lg font-normal text-gray-800 mb-4">Progress</h2>
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-600">Degree Completion</span>
-                  <span className="font-normal text-primary">
-                    {Math.round((totalCredits/120)*100)}%
-                  </span>
-                </div>
-                <ProgressBar value={(totalCredits/120)*100} />
-                <p className="text-xs text-gray-500 mt-1">{totalCredits}/120 credits</p>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-600">GPA Progress</span>
-                  <span className="font-normal text-primary">
-                    {Math.round((gpa/4)*100)}%
-                  </span>
-                </div>
-                <ProgressBar value={(gpa/4)*100} />
-                <p className="text-xs text-gray-500 mt-1">{gpa?.toFixed(2)} / 4.0</p>
-              </div>
+        {/* Important Dates Section */}
+        <div style={{
+          background: 'white',
+          borderRadius: '10px',
+          padding: '20px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          marginBottom: '30px'
+        }}>
+          <h2 style={{ margin: '0 0 20px', color: '#333' }}>📅 Important Dates</h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '15px'
+          }}>
+            <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea' }}>Mar 30</div>
+              <div style={{ fontWeight: '500' }}>Thingyan Holiday</div>
+              <div style={{ fontSize: '12px', color: '#666' }}>University closed</div>
             </div>
-          </Card>
-
-          {/* Upcoming Events */}
-          <Card>
-            <h2 className="text-lg font-normal text-gray-800 mb-4">Upcoming</h2>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex flex-col items-center justify-center">
-                  <span className="text-xs text-primary">MAR</span>
-                  <span className="text-sm font-medium text-primary">15</span>
-                </div>
-                <div>
-                  <p className="text-sm font-normal text-gray-800">Midterm Exams Begin</p>
-                  <p className="text-xs text-gray-500">All courses</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-orange-100 flex flex-col items-center justify-center">
-                  <span className="text-xs text-orange-600">MAR</span>
-                  <span className="text-sm font-medium text-orange-600">27</span>
-                </div>
-                <div>
-                  <p className="text-sm font-normal text-gray-800">Armed Forces Day</p>
-                  <p className="text-xs text-gray-500">University closed</p>
-                </div>
-              </div>
+            <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea' }}>Apr 15</div>
+              <div style={{ fontWeight: '500' }}>Final Exam Schedule</div>
+              <div style={{ fontSize: '12px', color: '#666' }}>Published</div>
             </div>
-          </Card>
-
-          {/* Quick Announcement */}
-          <div className="bg-gradient-to-br from-primary to-primary-light rounded-xl p-4 text-white">
-            <div className="flex items-center gap-2 mb-2">
-              <Bell size={16} />
-              <span className="text-sm font-normal">Announcement</span>
+            <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea' }}>May 1</div>
+              <div style={{ fontWeight: '500' }}>Library Hours</div>
+              <div style={{ fontSize: '12px', color: '#666' }}>Extended until 10 PM</div>
             </div>
-            <p className="text-sm text-white/90">Midterm schedule released. Check your courses.</p>
-            <p className="text-xs text-white/70 mt-2">2 hours ago</p>
+            <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea' }}>May 15</div>
+              <div style={{ fontWeight: '500' }}>Last Day of Classes</div>
+              <div style={{ fontSize: '12px', color: '#666' }}>Spring 2026</div>
+            </div>
           </div>
+        </div>
+
+        {/* Courses */}
+        <div style={{
+          background: 'white',
+          borderRadius: '10px',
+          padding: '20px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        }}>
+          <h2 style={{ margin: '0 0 20px', color: '#333' }}>My Courses</h2>
+          
+          {courses.length === 0 ? (
+            <p style={{ textAlign: 'center', color: '#666', padding: '40px' }}>
+              No courses found.
+            </p>
+          ) : (
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <th style={{ padding: '12px', textAlign: 'left' }}>Course</th>
+                    <th style={{ padding: '12px', textAlign: 'left' }}>Code</th>
+                    <th style={{ padding: '12px', textAlign: 'left' }}>Credits</th>
+                    <th style={{ padding: '12px', textAlign: 'left' }}>Grade</th>
+                    <th style={{ padding: '12px', textAlign: 'left' }}>Attendance</th>
+                    <th style={{ padding: '12px', textAlign: 'left' }}>Teacher</th>
+                    <th style={{ padding: '12px', textAlign: 'left' }}>Classroom</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {courses.map((course) => (
+                    <tr key={course.id} style={{ borderBottom: '1px solid #dee2e6' }}>
+                      <td style={{ padding: '12px' }}>{course.name}</td>
+                      <td style={{ padding: '12px' }}>{course.courseId}</td>
+                      <td style={{ padding: '12px' }}>{course.credits}</td>
+                      <td style={{ padding: '12px' }}>
+                        <span style={{
+                          padding: '4px 8px',
+                          borderRadius: '4px',
+                          background: course.grade?.startsWith('A') ? '#d4edda' :
+                                      course.grade?.startsWith('B') ? '#cce5ff' :
+                                      '#fff3cd',
+                          color: course.grade?.startsWith('A') ? '#155724' :
+                                 course.grade?.startsWith('B') ? '#004085' :
+                                 '#856404'
+                        }}>
+                          {course.grade || '-'}
+                        </span>
+                      </td>
+                      <td style={{ padding: '12px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <span>{course.attendancePercentage || 0}%</span>
+                          <div style={{
+                            width: '60px',
+                            height: '6px',
+                            background: '#e9ecef',
+                            borderRadius: '3px',
+                            overflow: 'hidden'
+                          }}>
+                            <div style={{
+                              width: ${course.attendancePercentage || 0}%,
+                              height: '100%',
+                              background: course.attendancePercentage && course.attendancePercentage >= 80 ? '#28a745' :
+                                         course.attendancePercentage && course.attendancePercentage >= 60 ? '#ffc107' :
+                                         '#dc3545'
+                            }} />
+                          </div>
+                        </div>
+                      </td>
+                      <td style={{ padding: '12px' }}>{course.teacher}</td>
+                      <td style={{ padding: '12px' }}>
+                        <a 
+                          href={course.googleClassroomLink || '#'} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            padding: '5px 10px',
+                            background: '#f0f2f5',
+                            color: '#333',
+                            textDecoration: 'none',
+                            borderRadius: '5px',
+                            fontSize: '12px'
+                          }}
+                        >
+                          📚 Open
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
-};
+}

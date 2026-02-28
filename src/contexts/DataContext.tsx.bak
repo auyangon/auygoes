@@ -28,11 +28,6 @@ interface DataContextType {
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
-const gradePoints: Record<string, number> = {
-  'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7,
-  'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
-};
-
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
@@ -54,55 +49,35 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-      
       try {
         const emailKey = sanitizeEmail(user.email);
-        console.log('📧 Fetching data for:', user.email);
-        console.log('🔑 Email key:', emailKey);
-        
-        // FIXED: Added quotes around "students/" - this was the build error!
-        const studentRef = ref(db, 'students/' + emailKey);
+        const studentRef = ref(db, students/);
         const snapshot = await get(studentRef);
 
         if (!snapshot.exists()) {
-          setError('Student record not found');
+          setError('Student not found');
           setLoading(false);
           return;
         }
 
         const studentData = snapshot.val();
-        console.log('✅ Student found:', studentData.studentName);
-        
         setStudentName(studentData.studentName || '');
         setStudentId(studentData.studentId || '');
         setMajor(studentData.major || '');
 
-        // Get courses from the courses sub-object
-        const coursesData = studentData.courses || {};
-        const courseList: Course[] = [];
-
-        for (const [courseId, courseInfo] of Object.entries(coursesData)) {
-          const data = courseInfo as any;
-          courseList.push({
-            id: courseId,
-            courseId: courseId,
-            name: data.courseName || courseId,
-            teacher: data.teacherName || '',
-            credits: data.credits || 3,
-            grade: data.grade || '',
-            attendancePercentage: data.attendancePercentage || 0
-          });
-        }
-
+        const courseList = studentData.courses || [];
         setCourses(courseList);
-        console.log(`📚 Loaded ${courseList.length} courses`);
 
-        // Calculate GPA
+        const gradePoints: Record<string, number> = {
+          'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7,
+          'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
+        };
+
         let totalPoints = 0;
         let totalCreditsEarned = 0;
         let totalAttendance = 0;
 
-        courseList.forEach((course) => {
+        courseList.forEach((course: any) => {
           if (course.grade && gradePoints[course.grade] !== undefined) {
             totalPoints += gradePoints[course.grade] * course.credits;
             totalCreditsEarned += course.credits;
@@ -115,10 +90,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setGpa(totalCreditsEarned > 0 ? Number((totalPoints / totalCreditsEarned).toFixed(2)) : 0);
         setTotalCredits(totalCreditsEarned);
         setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
-        
       } catch (err) {
-        console.error('❌ Error:', err);
         setError('Failed to load data. Please try again.');
+        console.error(err);
       } finally {
         setLoading(false);
       }

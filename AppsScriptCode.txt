@@ -1,0 +1,284 @@
+﻿// ============================================
+// GOOGLE APPS SCRIPT – portal_data CONTROLLER
+// ============================================
+
+const CONFIG = {
+  FIREBASE_FUNCTIONS_URL: 'https://us-central1-auy-portal-v2.cloudfunctions.net',
+  SHEET_NAME: 'portal_data'
+};
+
+// Add custom menu
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('🔥 Firebase Sync')
+    .addItem('🔄 Load from Firebase', 'loadFromFirebase')
+    .addItem('📤 Sync Selected Row to Firebase', 'syncSelectedRow')
+    .addItem('📤 Sync All to Firebase', 'syncAllToFirebase')
+    .addSeparator()
+    .addItem('📊 Show Stats', 'showStats')
+    .addItem('❓ Help', 'showHelp')
+    .addToUi();
+}
+
+// ============================================
+// 1. LOAD DATA FROM FIREBASE
+// ============================================
+function loadFromFirebase() {
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.alert(
+    '⚠️ Load from Firebase',
+    'This will REPLACE all data in portal_data with Firebase data. Continue?',
+    ui.ButtonSet.YES_NO
+  );
+  
+  if (response !== ui.Button.YES) return;
+  
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEET_NAME);
+  if (!sheet) {
+    ui.alert('Sheet "portal_data" not found!');
+    return;
+  }
+  
+  try {
+    // Call Firebase Function
+    const url = CONFIG.FIREBASE_FUNCTIONS_URL + '/initialSyncToSheets';
+    const response = UrlFetchApp.fetch(url, {
+      method: 'GET',
+      muteHttpExceptions: true
+    });
+    
+    const result = JSON.parse(response.getContentText());
+    
+    if (result.success) {
+      // Clear existing sheet
+      sheet.clear();
+      
+      // Write headers
+      sheet.getRange(1, 1, 1, result.headers.length).setValues([result.headers]);
+      
+      // Write data in batches (to avoid timeout)
+      const data = result.data;
+      const batchSize = 100;
+      
+      for (let i = 1; i < data.length; i += batchSize) {
+        const batch = data.slice(i, Math.min(i + batchSize, data.length));
+        sheet.getRange(i + 1, 1, batch.length, result.headers.length).setValues(batch);
+        SpreadsheetApp.flush();
+      }
+      
+      ui.alert(`✅ Loaded ${result.count} enrollment records from Firebase!`);
+    } else {
+      ui.alert('❌ Error: ' + JSON.stringify(result));
+    }
+    
+  } catch (error) {
+    ui.alert('Error: ' + error.toString());
+  }
+}
+
+// ============================================
+// 2. SYNC SELECTED ROW
+// ============================================
+function syncSelectedRow() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEET_NAME);
+  const range = sheet.getActiveRange();
+  const row = range.getRow();
+  
+  if (row < 2) {
+    SpreadsheetApp.getUi().alert('Please select a data row (not header)');
+    return;
+  }
+  
+  const rowData = sheet.getRange(row, 1, 1, 12).getValues()[0];
+  const email = rowData[2]; // Column C
+  
+  if (!email) {
+    SpreadsheetApp.getUi().alert('Invalid row - missing email');
+    return;
+  }
+  
+  // Show loading
+  sheet.getRange(row, 13).setValue('⏳ Syncing...');
+  
+  try {
+    const url = CONFIG.FIREBASE_FUNCTIONS_URL + '/syncSheetsToFirebase';
+    const response = UrlFetchApp.fetch(url, {
+      method: 'POST',
+      contentType: 'application/json',
+      payload: JSON.stringify({
+        action: 'BULK_UPDATE',
+        rowData: rowData
+      }),
+      muteHttpExceptions: true
+    });
+    
+    const result = JSON.parse(response.getContentText());
+    
+    if (result.success) {
+      sheet.getRange(row, 13).setValue('✅ Synced');
+      sheet.getRange(row, 14).setValue(new Date().toLocaleString());
+    } else {
+      sheet.getRange(row, 13).setValue('❌ Failed');
+    }
+    
+  } catch (error) {
+    sheet.getRange(row, 13).setValue('❌ Error');
+  }
+}
+
+// ============================================
+// 3. SYNC ALL ROWS
+// ============================================
+function syncAllToFirebase() {
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.alert(
+    '⚠️ Sync All to Firebase',
+    'This will sync ALL rows to Firebase. Continue?',
+    ui.ButtonSet.YES_NO
+  );
+  
+  if (response !== ui.Button.YES) return;
+  
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEET_NAME);
+  const data = sheet.getDataRange().getValues();
+  
+  // Add status columns if needed
+  if (sheet.getLastColumn() < 13) {
+    sheet.getRange(1, 13).setValue('Sync Status');
+    sheet.getRange(1, 14).setValue('Last Sync');
+  }
+  
+  let success = 0;
+  let failed = 0;
+  
+  for (let i = 1; i < data.length; i++) {
+    const row = i + 1;
+    const rowData = data[i];
+    const email = rowData[2];
+    
+    if (!email) continue;
+    
+    sheet.getRange(row, 13).setValue('⏳');
+    SpreadsheetApp.flush();
+    
+    try {
+      const url = CONFIG.FIREBASE_FUNCTIONS_URL + '/syncSheetsToFirebase';
+      const response = UrlFetchApp.fetch(url, {
+        method: 'POST',
+        contentType: 'application/json',
+        payload: JSON.stringify({
+          action: 'BULK_UPDATE',
+          rowData: rowData
+        }),
+        muteHttpExceptions: true
+      });
+      
+      const result = JSON.parse(response.getContentText());
+      
+      if (result.success) {
+        sheet.getRange(row, 13).setValue('✅');
+        sheet.getRange(row, 14).setValue(new Date().toLocaleString());
+        success++;
+      } else {
+        sheet.getRange(row, 13).setValue('❌');
+        failed++;
+      }
+      
+    } catch (error) {
+      sheet.getRange(row, 13).setValue('❌');
+      failed++;
+    }
+  }
+  
+  ui.alert(`✅ Sync Complete\n\nSuccess: ${success}\nFailed: ${failed}`);
+}
+
+// ============================================
+// 4. SHOW STATISTICS
+// ============================================
+function showStats() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEET_NAME);
+  const data = sheet.getDataRange().getValues();
+  
+  const stats = {
+    totalRows: data.length - 1,
+    students: new Set(),
+    courses: new Set(),
+    grades: {}
+  };
+  
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    stats.students.add(row[2]); // email
+    stats.courses.add(row[5]); // courseId
+    
+    const grade = row[9]; // grade
+    if (grade) {
+      stats.grades[grade] = (stats.grades[grade] || 0) + 1;
+    }
+  }
+  
+  let message = '📊 PORTAL DATA STATS\n\n';
+  message += `Total Records: ${stats.totalRows}\n`;
+  message += `Unique Students: ${stats.students.size}\n`;
+  message += `Unique Courses: ${stats.courses.size}\n\n`;
+  message += 'Grade Distribution:\n';
+  
+  for (const [grade, count] of Object.entries(stats.grades)) {
+    message += `  ${grade}: ${count}\n`;
+  }
+  
+  SpreadsheetApp.getUi().alert(message);
+}
+
+// ============================================
+// 5. HELP
+// ============================================
+function showHelp() {
+  const help = `
+🔥 FIREBASE SYNC HELP 🔥
+
+📋 COLUMNS:
+  A: studentId     B: studentName    C: email
+  D: major         E: studyMode      F: courseId
+  G: courseName    H: teacherName    I: credits
+  J: grade         K: attendance      L: lastUpdated
+  M: Sync Status   N: Last Sync
+
+🔄 MENU OPTIONS:
+  • Load from Firebase – Replace sheet with Firebase data
+  • Sync Selected Row – Send one row to Firebase
+  • Sync All – Send all rows to Firebase
+  • Show Stats – View summary statistics
+
+📝 NOTES:
+  • Email (col C) is used to match students
+  • Grade (col J) and attendance (col K) auto-sync
+  • Status columns show last sync time
+  `;
+  
+  SpreadsheetApp.getUi().alert(help);
+}
+
+// Auto-detect edits to grades/attendance
+function onEdit(e) {
+  const range = e.range;
+  const sheet = range.getSheet();
+  
+  if (sheet.getName() !== CONFIG.SHEET_NAME) return;
+  if (range.getRow() < 2) return;
+  
+  // If grade or attendance column edited
+  const col = range.getColumn();
+  if (col === 10 || col === 11) {
+    // Auto-sync after 2 seconds
+    const row = range.getRow();
+    PropertiesService.getScriptProperties().setProperty('pendingSync', row.toString());
+    
+    Utilities.sleep(2000);
+    const pending = PropertiesService.getScriptProperties().getProperty('pendingSync');
+    if (pending === row.toString()) {
+      syncSelectedRow();
+    }
+  }
+}

@@ -19,9 +19,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Menu size={20} />
       </button>
 
-      {/* Sidebar overlay for mobile */}
+      {/* Sidebar overlay */}
       <div
-        className={`fixed inset-0 bg-black/20 z-40 transition-opacity lg:hidden ${
+        className={`fixed inset-0 bg-black bg-opacity-20 z-40 transition-opacity lg:hidden ${
           sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setSidebarOpen(false)}
@@ -38,7 +38,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
       {/* Main content */}
       <main className="lg:pl-64 min-h-screen">
-        <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {children}
         </div>
       </main>

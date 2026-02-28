@@ -3,16 +3,15 @@ import { AuthProvider } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataContext';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import { Profile } from './pages/Profile';
 import { AnnouncementsPage } from './pages/AnnouncementsPage';
 import { Courses } from './pages/Courses';
 import { Materials } from './pages/Materials';
 import { Progress } from './pages/Progress';
 import { Grades } from './pages/Grades';
 import { AUYExams } from './pages/AUYExams';
-import OneAdmin from './pages/OneAdmin';
 import { MainLayout } from './components/MainLayout';
 
-// Wrapper component to apply MainLayout to protected pages
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => (
   <MainLayout>{children}</MainLayout>
 );
@@ -26,10 +25,14 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Navigate to="/dashboard" />} />
             
-            {/* Protected routes with MainLayout */}
             <Route path="/dashboard" element={
               <ProtectedLayout>
                 <Dashboard />
+              </ProtectedLayout>
+            } />
+            <Route path="/profile" element={
+              <ProtectedLayout>
+                <Profile />
               </ProtectedLayout>
             } />
             <Route path="/exams" element={
@@ -60,11 +63,6 @@ function App() {
             <Route path="/grades" element={
               <ProtectedLayout>
                 <Grades />
-              </ProtectedLayout>
-            } />
-            <Route path="/admin" element={
-              <ProtectedLayout>
-                <OneAdmin />
               </ProtectedLayout>
             } />
           </Routes>

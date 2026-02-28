@@ -3,14 +3,14 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
-  Calendar, 
   BookOpen, 
   FileText, 
   Award, 
   LogOut,
   Bell,
   GraduationCap,
-  X
+  X,
+  Users
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -29,12 +29,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
 
   const navItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { path: '/exams', icon: GraduationCap, label: 'Exams' },
+    { path: '/exams', icon: GraduationCap, label: 'Exam Portal' },
     { path: '/announcements', icon: Bell, label: 'Announcements' },
-    { path: '/calendar', icon: Calendar, label: 'Calendar' },
-    { path: '/courses', icon: BookOpen, label: 'Courses' },
+    { path: '/courses', icon: BookOpen, label: 'My Courses' },
     { path: '/materials', icon: FileText, label: 'Materials' },
     { path: '/progress', icon: Award, label: 'Progress' },
+    { path: '/admin', icon: Users, label: 'Admin' },
   ];
 
   return (

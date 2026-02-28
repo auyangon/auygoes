@@ -3,12 +3,18 @@ import { AuthProvider } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataContext';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
-import { PublicQExams } from './pages/PublicQExams';
 import { AnnouncementsPage } from './pages/AnnouncementsPage';
+import { Courses } from './pages/Courses';
+import { Materials } from './pages/Materials';
+import { Progress } from './pages/Progress';
+import { Grades } from './pages/Grades';
+import { Exams } from './pages/Exams';
+import { AUYExams } from './pages/AUYExams';
+import OneAdmin from './pages/OneAdmin';
 import { MainLayout } from './components/MainLayout';
 
-// Wrapper component to apply MainLayout to pages
-const WithLayout = ({ children }: { children: React.ReactNode }) => (
+// Wrapper component to apply MainLayout to protected pages
+const ProtectedLayout = ({ children }: { children: React.ReactNode }) => (
   <MainLayout>{children}</MainLayout>
 );
 
@@ -19,18 +25,49 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Navigate to="/dashboard" />} />
+            
+            {/* Protected routes with MainLayout */}
+            <Route path="/dashboard" element={
+              <ProtectedLayout>
+                <Dashboard />
+              </ProtectedLayout>
+            } />
             <Route path="/exams" element={
-              <WithLayout>
-                <PublicQExams />
-              </WithLayout>
+              <ProtectedLayout>
+                <AUYExams />
+              </ProtectedLayout>
             } />
             <Route path="/announcements" element={
-              <WithLayout>
+              <ProtectedLayout>
                 <AnnouncementsPage />
-              </WithLayout>
+              </ProtectedLayout>
             } />
-            <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route path="/courses" element={
+              <ProtectedLayout>
+                <Courses />
+              </ProtectedLayout>
+            } />
+            <Route path="/materials" element={
+              <ProtectedLayout>
+                <Materials />
+              </ProtectedLayout>
+            } />
+            <Route path="/progress" element={
+              <ProtectedLayout>
+                <Progress />
+              </ProtectedLayout>
+            } />
+            <Route path="/grades" element={
+              <ProtectedLayout>
+                <Grades />
+              </ProtectedLayout>
+            } />
+            <Route path="/admin" element={
+              <ProtectedLayout>
+                <OneAdmin />
+              </ProtectedLayout>
+            } />
           </Routes>
         </BrowserRouter>
       </DataProvider>

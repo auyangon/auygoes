@@ -8,7 +8,6 @@ import { Courses } from './pages/Courses';
 import { Materials } from './pages/Materials';
 import { Progress } from './pages/Progress';
 import { Grades } from './pages/Grades';
-import { Exams } from './pages/Exams';
 import { AUYExams } from './pages/AUYExams';
 import OneAdmin from './pages/OneAdmin';
 import { MainLayout } from './components/MainLayout';

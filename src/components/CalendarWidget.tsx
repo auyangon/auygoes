@@ -56,24 +56,32 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
     });
   };
 
+  // Sample events if none provided
+  const displayEvents = events.length > 0 ? events : [
+    { date: new Date(2026, 2, 30), title: 'Thingyan Holiday', type: 'holiday' as const },
+    { date: new Date(2026, 3, 15), title: 'Final Exam Schedule Published', type: 'academic' as const },
+    { date: new Date(2026, 4, 1), title: 'Library Hours Extended', type: 'academic' as const },
+    { date: new Date(2026, 4, 15), title: 'Last Day of Classes', type: 'academic' as const },
+  ];
+
   return (
     <Card className={`p-6 ${className || ''}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <Calendar className="text-white" size={20} />
-          <h3 className="text-base font-medium text-white">Academic Calendar</h3>
+          <Calendar className="text-indigo-600" size={20} />
+          <h3 className="text-base font-semibold text-gray-800 drop-shadow-sm">Academic Calendar</h3>
         </div>
         <div className="flex gap-2">
           <button 
             onClick={prevMonth}
-            className="p-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all text-white"
+            className="p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all text-gray-600 hover:text-indigo-600"
           >
             <ChevronLeft size={16} />
           </button>
           <button 
             onClick={nextMonth}
-            className="p-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all text-white"
+            className="p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all text-gray-600 hover:text-indigo-600"
           >
             <ChevronRight size={16} />
           </button>
@@ -82,7 +90,7 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
 
       {/* Month and Year */}
       <div className="text-center mb-4">
-        <h3 className="text-lg font-medium text-white">
+        <h3 className="text-lg font-semibold text-gray-800 drop-shadow-sm">
           {monthNames[month]} {year}
         </h3>
       </div>
@@ -90,7 +98,7 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
       {/* Day Headers */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {dayNames.map(day => (
-          <div key={day} className="text-center text-xs font-medium text-white/70 py-2">
+          <div key={day} className="text-center text-xs font-medium text-gray-500 py-2">
             {day}
           </div>
         ))}
@@ -115,29 +123,31 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
             <div 
               key={day} 
               className={`aspect-square p-1 rounded-lg transition-all cursor-pointer relative group ${
-                today ? 'ring-2 ring-white' : ''
+                today ? 'ring-2 ring-indigo-400 ring-offset-2' : ''
               }`}
             >
-              <div className="h-full flex flex-col items-center justify-start p-1 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-all">
-                <span className="text-sm font-medium text-white">
+              <div className="h-full flex flex-col items-center justify-start p-1 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all">
+                <span className={`text-sm font-medium ${
+                  today ? 'text-indigo-600 font-bold' : 'text-gray-700'
+                } drop-shadow-sm`}>
                   {day}
                 </span>
                 <div className="flex gap-0.5 mt-1">
                   {hasAcademic && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-300"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
                   )}
                   {hasHoliday && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-300"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
                   )}
                 </div>
                 
                 {/* Tooltip on hover */}
                 {dayEvents.length > 0 && (
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-10">
-                    <div className="bg-white/90 backdrop-blur-xl text-gray-800 text-xs rounded-lg py-2 px-3 whitespace-nowrap shadow-lg">
+                    <div className="bg-white shadow-xl rounded-lg py-2 px-3 whitespace-nowrap border border-gray-100">
                       {dayEvents.map((event, idx) => (
-                        <div key={idx} className={idx > 0 ? 'mt-1 pt-1 border-t border-gray-200' : ''}>
-                          <span className="font-medium">{event.title}</span>
+                        <div key={idx} className={idx > 0 ? 'mt-1 pt-1 border-t border-gray-100' : ''}>
+                          <span className="font-medium text-gray-800">{event.title}</span>
                         </div>
                       ))}
                     </div>
@@ -150,19 +160,19 @@ export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
       </div>
 
       {/* Legend */}
-      <div className="mt-6 pt-4 border-t border-white/20">
+      <div className="mt-6 pt-4 border-t border-gray-200">
         <div className="flex flex-wrap gap-4 text-xs">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-blue-300"></div>
-            <span className="text-white/80">Academic Event</span>
+            <div className="w-3 h-3 rounded-full bg-indigo-400 shadow-sm"></div>
+            <span className="text-gray-600 font-medium">Academic Event</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-amber-300"></div>
-            <span className="text-white/80">Public Holiday</span>
+            <div className="w-3 h-3 rounded-full bg-amber-400 shadow-sm"></div>
+            <span className="text-gray-600 font-medium">Holiday</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-white ring-2 ring-white/50"></div>
-            <span className="text-white/80">Today</span>
+            <div className="w-3 h-3 rounded-full bg-white border-2 border-indigo-400 ring-2 ring-indigo-100"></div>
+            <span className="text-gray-600 font-medium">Today</span>
           </div>
         </div>
       </div>

@@ -22,7 +22,6 @@ export const Profile: React.FC = () => {
   const { user } = useAuth();
   const { courses, gpa, totalCredits, attendance, studentName } = useData();
 
-  // Sample student data (in a real app, this would come from your backend)
   const studentInfo = {
     fullName: studentName || user?.email?.split('@')[0] || 'Student Name',
     email: user?.email || 'student@au.edu.mm',
@@ -41,7 +40,6 @@ export const Profile: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Cover Photo and Profile Header */}
       <div className="relative rounded-2xl overflow-hidden shadow-xl animate-fadeInDown">
         <div className="h-48 bg-gradient-to-r from-[#0B4F3A] to-[#1a6b4f] relative overflow-hidden">
           <img 
@@ -52,7 +50,6 @@ export const Profile: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         </div>
         
-        {/* Profile Picture */}
         <div className="absolute -bottom-16 left-8">
           <div className="relative group">
             <div className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl overflow-hidden bg-white">
@@ -68,7 +65,6 @@ export const Profile: React.FC = () => {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="absolute bottom-4 right-4 flex gap-2">
           <button className="p-2 bg-white/90 backdrop-blur-sm rounded-lg text-gray-700 hover:bg-white transition-all shadow-lg hover:-translate-y-1">
             <Download size={18} />
@@ -76,15 +72,13 @@ export const Profile: React.FC = () => {
           <button className="p-2 bg-white/90 backdrop-blur-sm rounded-lg text-gray-700 hover:bg-white transition-all shadow-lg hover:-translate-y-1">
             <Share2 size={18} />
           </button>
-          <Button variant="primary" size="sm" className="shadow-lg">
+          <Button variant="primary" className="shadow-lg">
             Edit Profile
           </Button>
         </div>
       </div>
 
-      {/* Profile Info and Stats Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-20">
-        {/* Left Column - Personal Info */}
         <div className="space-y-6 animate-fadeInLeft">
           <Card className="p-6">
             <div className="text-center mb-6">
@@ -168,9 +162,7 @@ export const Profile: React.FC = () => {
           </Card>
         </div>
 
-        {/* Right Column - Stats and Courses */}
         <div className="lg:col-span-2 space-y-6 animate-fadeInRight">
-          {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card className="p-4 text-center hover:shadow-xl transition-all group">
               <div className="inline-block p-3 bg-[#0B4F3A] text-white rounded-xl mb-3 group-hover:rotate-12 transition-transform">
@@ -197,7 +189,6 @@ export const Profile: React.FC = () => {
             </Card>
           </div>
 
-          {/* Current Courses */}
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <SectionTitle icon={<BookOpen size={20} className="text-[#0B4F3A]" />}>
@@ -211,7 +202,7 @@ export const Profile: React.FC = () => {
                 <div 
                   key={course.id} 
                   className="flex items-center justify-between p-3 rounded-lg bg-[#e0f2fe] hover:bg-[#d1e9fd] transition-all group"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  style={ { animationDelay: `${index * 0.1}s` } }
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-[#0B4F3A] text-white rounded-lg group-hover:rotate-6 transition-transform">
@@ -219,7 +210,7 @@ export const Profile: React.FC = () => {
                     </div>
                     <div>
                       <p className="font-medium text-gray-800">{course.name}</p>
-                      <p className="text-xs text-gray-500">{course.courseId} • {course.teacher}</p>
+                      <p className="text-xs text-gray-500">{course.courseId} â€¢ {course.teacher}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -241,7 +232,6 @@ export const Profile: React.FC = () => {
             </div>
           </Card>
 
-          {/* Achievements */}
           <Card className="p-6 bg-gradient-to-r from-[#0B4F3A] to-[#1a6b4f] text-white">
             <div className="flex items-center gap-3 mb-4">
               <Sparkles size={24} />

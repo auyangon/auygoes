@@ -13,7 +13,6 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // Educational quotes array
   const quotes = [
     {
       text: "Education is the most powerful weapon which you can use to change the world.",
@@ -46,18 +45,9 @@ export default function Login() {
     {
       text: "The purpose of education is to replace an empty mind with an open one.",
       author: "Malcolm Forbes"
-    },
-    {
-      text: "Learning is not attained by chance, it must be sought for with ardor and attended to with diligence.",
-      author: "Abigail Adams"
-    },
-    {
-      text: "The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice.",
-      author: "Brian Herbert"
     }
   ];
 
-  // Rotate quotes every 8 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % quotes.length);
@@ -85,17 +75,14 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex" style={{ backgroundColor: '#faf7f2' }}>
+    <div className="min-h-screen flex" style={ { backgroundColor: '#faf7f2' } }>
       {/* Left Side - Quote & Branding */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-[#0B4F3A] to-[#1a6b4f] text-white p-12 flex-col justify-between">
-        {/* Animated background elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white rounded-full blur-3xl opacity-20"></div>
         </div>
 
-        {/* Logo and Brand */}
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-white/20 backdrop-blur-sm rounded-2xl">
@@ -107,7 +94,6 @@ export default function Login() {
             </div>
           </div>
 
-          {/* Quote Display */}
           <div className="mt-16 relative">
             <Quote className="absolute -top-6 -left-6 text-white/20" size={48} />
             <div className="relative z-10">
@@ -115,11 +101,10 @@ export default function Login() {
                 "{quotes[currentQuote].text}"
               </p>
               <p className="text-white/80 text-lg">
-                — {quotes[currentQuote].author}
+                â€” {quotes[currentQuote].author}
               </p>
             </div>
             
-            {/* Quote dots indicator */}
             <div className="flex gap-2 mt-8">
               {quotes.map((_, index) => (
                 <button
@@ -136,16 +121,14 @@ export default function Login() {
           </div>
         </div>
 
-        {/* Footer */}
         <div className="relative z-10 text-white/60 text-sm">
-          <p>© 2026 American University of Yangon. All rights reserved.</p>
+          <p>Â© 2026 American University of Yangon. All rights reserved.</p>
         </div>
       </div>
 
       {/* Right Side - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
-          {/* Mobile Logo (visible only on mobile) */}
           <div className="lg:hidden text-center mb-8">
             <div className="inline-block p-4 bg-gradient-to-br from-[#0B4F3A] to-[#1a6b4f] rounded-2xl mb-4">
               <GraduationCap size={40} className="text-white" />
@@ -188,7 +171,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B4F3A]/20 focus:border-[#0B4F3A] transition-all"
-                  placeholder="••••••••"
+                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                   required
                 />
               </div>
@@ -225,7 +208,6 @@ export default function Login() {
               </button>
             </form>
 
-            {/* Decorative elements */}
             <div className="mt-8 pt-6 border-t border-gray-100">
               <div className="flex items-center justify-center gap-4 text-sm text-gray-400">
                 <BookOpen size={16} />
@@ -235,11 +217,10 @@ export default function Login() {
             </div>
           </div>
 
-          {/* Mobile Quote (visible only on mobile) */}
           <div className="lg:hidden mt-8 p-6 bg-gradient-to-br from-[#0B4F3A] to-[#1a6b4f] rounded-2xl text-white">
             <Quote size={24} className="text-white/50 mb-2" />
             <p className="text-sm font-light mb-3">"{quotes[currentQuote].text}"</p>
-            <p className="text-xs text-white/80">— {quotes[currentQuote].author}</p>
+            <p className="text-xs text-white/80">â€” {quotes[currentQuote].author}</p>
           </div>
         </div>
       </div>

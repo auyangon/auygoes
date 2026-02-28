@@ -2,20 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
-import { Card, SectionTitle, Badge, Button } from '../components/Common';
+import { Card, Badge, Button } from '../components/Common';
 import { publicqService } from '../services/publicq.service';
 import { 
   GraduationCap, 
   Clock, 
   Calendar, 
   PlayCircle,
-  AlertCircle,
   CheckCircle,
-  Lock,
   BookOpen,
-  TrendingUp,
   Award,
-  ExternalLink,
   Sparkles
 } from 'lucide-react';
 
@@ -38,7 +34,6 @@ export const AUYExams: React.FC = () => {
   const [exams, setExams] = useState<Exam[]>([]);
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedExam, setSelectedExam] = useState<Exam | null>(null);
   const [activeTab, setActiveTab] = useState<'available' | 'completed'>('available');
 
   useEffect(() => {
@@ -48,17 +43,12 @@ export const AUYExams: React.FC = () => {
   const loadExamsAndResults = async () => {
     setLoading(true);
     try {
-      // Get student's course IDs
       const courseIds = courses.map(c => c.courseId);
-      
-      // Fetch exams from PublicQ
       const availableExams = await publicqService.getAvailableExams(
         user?.email || '',
         courseIds
       );
       setExams(availableExams);
-
-      // Fetch results from PublicQ
       const studentResults = await publicqService.getStudentResults(user?.email || '');
       setResults(studentResults);
     } catch (error) {
@@ -74,7 +64,7 @@ export const AUYExams: React.FC = () => {
       user?.email || '',
       user?.displayName || 'Student'
     );
-    window.open(examUrl, '_blank');
+    window.open(examUrl, '_blank', 'noopener,noreferrer');
   };
 
   const formatDate = (dateStr: string) => {
@@ -104,14 +94,8 @@ export const AUYExams: React.FC = () => {
     }
   };
 
-  const availableExams = exams.filter(exam => {
-    const result = results.find(r => r.examId === exam.id);
-    return !result;
-  });
-
-  const completedExams = exams.filter(exam => {
-    return results.find(r => r.examId === exam.id);
-  });
+  const availableExams = exams.filter(exam => !results.find(r => r.examId === exam.id));
+  const completedExams = exams.filter(exam => results.find(r => r.examId === exam.id));
 
   if (loading) {
     return (
@@ -126,7 +110,6 @@ export const AUYExams: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header with PublicQ branding */}
       <div className="mb-8 animate-fadeInDown">
         <div className="flex items-center justify-between">
           <div>
@@ -142,7 +125,6 @@ export const AUYExams: React.FC = () => {
         </div>
       </div>
 
-      {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 stagger-children">
         <Card className="p-4 flex items-center gap-4">
           <div className="p-3 bg-[#0B4F3A] text-white rounded-xl">
@@ -179,7 +161,6 @@ export const AUYExams: React.FC = () => {
         </Card>
       </div>
 
-      {/* Tabs */}
       <div className="flex gap-2 border-b border-gray-200 mb-6">
         <button
           onClick={() => setActiveTab('available')}
@@ -219,7 +200,6 @@ export const AUYExams: React.FC = () => {
         </button>
       </div>
 
-      {/* Exam Grid */}
       {activeTab === 'available' && (
         <>
           {availableExams.length === 0 ? (
@@ -234,7 +214,7 @@ export const AUYExams: React.FC = () => {
                 <Card 
                   key={exam.id} 
                   className="p-6 hover:shadow-2xl transition-all group animate-fadeInUp"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  style={ { animationDelay: `${index * 0.1}s` } }
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div>
@@ -242,7 +222,7 @@ export const AUYExams: React.FC = () => {
                         {exam.title}
                       </h3>
                       <p className="text-sm font-medium text-[#0B4F3A] mt-1">
-                        {exam.courseName} • {exam.courseId}
+                        {exam.courseName} â€¢ {exam.courseId}
                       </p>
                     </div>
                     {getStatusBadge(exam)}
@@ -278,7 +258,6 @@ export const AUYExams: React.FC = () => {
                     Start Exam
                   </Button>
 
-                  {/* PublicQ Badge */}
                   <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-end gap-1">
                     <span className="text-xs text-gray-400">Powered by</span>
                     <span className="text-xs font-semibold text-[#0B4F3A]">PublicQ</span>
@@ -293,7 +272,6 @@ export const AUYExams: React.FC = () => {
         </>
       )}
 
-      {/* Completed Exams Tab */}
       {activeTab === 'completed' && (
         <>
           {completedExams.length === 0 ? (
@@ -310,7 +288,7 @@ export const AUYExams: React.FC = () => {
                   <Card 
                     key={exam.id} 
                     className="p-6 hover:shadow-lg transition-all animate-fadeInUp"
-                    style={{ animationDelay: `${index * 0.1}s` }}
+                    style={ { animationDelay: `${index * 0.1}s` } }
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
@@ -349,7 +327,6 @@ export const AUYExams: React.FC = () => {
         </>
       )}
 
-      {/* AI Monkey Tip */}
       <Card className="p-4 bg-gradient-to-r from-[#e0f2fe] to-[#d1e9fd] border-none">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-[#0B4F3A] text-white rounded-full animate-bounce">

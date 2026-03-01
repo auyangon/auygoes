@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import { Profile } from './pages/Profile';
 import { AnnouncementsPage } from './pages/AnnouncementsPage';
 import { Courses } from './pages/Courses';
+import { CourseDetail } from './pages/CourseDetail';
 import { Materials } from './pages/Materials';
 import { Progress } from './pages/Progress';
 import { Grades } from './pages/Grades';
@@ -48,6 +49,11 @@ function App() {
             <Route path="/courses" element={
               <ProtectedLayout>
                 <Courses />
+              </ProtectedLayout>
+            } />
+            <Route path="/course/:courseId" element={
+              <ProtectedLayout>
+                <CourseDetail />
               </ProtectedLayout>
             } />
             <Route path="/materials" element={

@@ -1,11 +1,9 @@
-﻿import React, { createContext, useContext, useEffect, useState } from 'react';
-import { 
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  User
-} from 'firebase/auth';
-import { auth } from '../firebase';
+﻿import React, { createContext, useContext, useState, useEffect } from 'react';
+
+interface User {
+  email: string;
+  name?: string;
+}
 
 interface AuthContextType {
   user: User | null;
@@ -21,29 +19,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
-    return unsubscribe;
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+    setLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      return true;
-    } catch (error) {
-      console.error('Login error:', error);
+    // Valid emails from our Firebase
+    const validEmails = [
+      'aung.khant.phyo@student.au.edu.mm',
+      'hsu.eain.htet@student.au.edu.mm',
+      'htoo.yadanar.oo@student.au.edu.mm',
+      'chanmyae.au.edu.mm@gmail.com'
+    ];
+    
+    if (!validEmails.includes(email)) {
       return false;
     }
+    
+    const user = { email };
+    localStorage.setItem('user', JSON.stringify(user));
+    setUser(user);
+    return true;
   };
 
   const logout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
+    localStorage.removeItem('user');
+    setUser(null);
   };
 
   return (

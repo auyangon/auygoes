@@ -1,17 +1,31 @@
 ﻿import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { AuthProvider } from './contexts/AuthContext';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { DataProvider } from './contexts/DataContext';
+import { CourseAttendance } from './pages/CourseAttendance';
 import Dashboard from './pages/Dashboard';
+import { CourseAttendance } from './pages/CourseAttendance';
 import Login from './pages/Login';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { Profile } from './pages/Profile';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { AnnouncementsPage } from './pages/AnnouncementsPage';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { Courses } from './pages/Courses';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { CourseDetail } from './pages/CourseDetail';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { Materials } from './pages/Materials';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { Progress } from './pages/Progress';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { Grades } from './pages/Grades';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { AUYExams } from './pages/AUYExams';
+import { CourseAttendance } from './pages/CourseAttendance';
 import { MainLayout } from './components/MainLayout';
+import { CourseAttendance } from './pages/CourseAttendance';
 
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => (
   <MainLayout>{children}</MainLayout>
@@ -79,3 +93,4 @@ function App() {
 }
 
 export default App;
+

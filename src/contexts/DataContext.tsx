@@ -1,7 +1,7 @@
 ﻿import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { db } from '../firebase';
-import { ref, onValue } from 'firebase/database';
+import { ref, get } from 'firebase/database';
 
 export interface Course {
   id: string;
@@ -11,29 +11,18 @@ export interface Course {
   credits: number;
   grade?: string;
   attendancePercentage?: number;
-  attendanceRecords?: AttendanceRecord[];
-}
-
-export interface AttendanceRecord {
-  id: string;
-  date: string;
-  status: 'present' | 'absent' | 'late';
-  notes?: string;
 }
 
 interface DataContextType {
   courses: Course[];
-  announcements: any[];
-  attendanceRecords: AttendanceRecord[];
   loading: boolean;
   error: string | null;
   gpa: number;
   totalCredits: number;
   attendance: number;
   studentName: string;
-  studentId: string;
+  studentEmail: string;
   major: string;
-  lastUpdated: Date | null;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -43,28 +32,21 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
-const EMAIL_TO_ID: Record<string, string> = {
-  'aung.khant.phyo@student.au.edu.mm': 'S001',
-  'hsu.eain.htet@student.au.edu.mm': 'S002',
-  'htoo.yadanar.oo@student.au.edu.mm': 'S003',
-  'chanmyae.au.edu.mm@gmail.com': 'S004',
-  'kaung.pyae.phyo.kyaw@gmail.com': 'S005',
+const encodeEmailForFirebase = (email: string): string => {
+  return email.replace(/\./g, ',');
 };
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
-  const [announcements, setAnnouncements] = useState<any[]>([]);
-  const [attendanceRecords, setAttendanceRecords] = useState<AttendanceRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [gpa, setGpa] = useState(0);
   const [totalCredits, setTotalCredits] = useState(0);
   const [attendance, setAttendance] = useState(0);
   const [studentName, setStudentName] = useState('');
-  const [studentId, setStudentId] = useState('');
+  const [studentEmail, setStudentEmail] = useState('');
   const [major, setMajor] = useState('');
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
     if (!user?.email) {
@@ -72,140 +54,85 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const studentIdFromEmail = EMAIL_TO_ID[user.email];
-    if (!studentIdFromEmail) {
-      setError('Student record not found');
-      setLoading(false);
-      return;
-    }
-
-    setStudentId(studentIdFromEmail);
-
-    // REAL-TIME LISTENERS - Update instantly when Firebase changes
-
-    // 1. Listen to student data
-    const studentRef = ref(db, `students/${studentIdFromEmail}`);
-    const unsubscribeStudent = onValue(studentRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        setStudentName(data.studentName || '');
-        setMajor(data.major || 'ISP');
-      }
-      setLastUpdated(new Date());
-    });
-
-    // 2. Listen to enrollments
-    const enrollmentsRef = ref(db, 'enrollments');
-    const unsubscribeEnrollments = onValue(enrollmentsRef, (snapshot) => {
-      const data = snapshot.val();
-      const courseList: Course[] = [];
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
       
-      if (data) {
-        Object.values(data).forEach((enroll: any) => {
-          if (enroll.studentId === studentIdFromEmail) {
-            courseList.push({
-              id: enroll.courseId,
-              courseId: enroll.courseId,
-              name: enroll.courseName || enroll.courseId,
-              teacher: enroll.teacherName || '',
-              credits: parseInt(enroll.credits) || 3,
-              grade: enroll.grade || '',
-              attendancePercentage: parseInt(enroll.attendancePercentage) || 0,
-              attendanceRecords: []
-            });
-          }
-        });
-      }
-      
-      setCourses(courseList);
-      
-      // Calculate GPA
-      let totalPoints = 0;
-      let totalCreditsEarned = 0;
-      
-      courseList.forEach((course) => {
-        if (course.grade && gradePoints[course.grade]) {
-          totalPoints += gradePoints[course.grade] * course.credits;
-          totalCreditsEarned += course.credits;
+      try {
+        const email = user.email;
+        setStudentEmail(email);
+        
+        const encodedEmail = encodeEmailForFirebase(email);
+        
+        console.log('========================================');
+        console.log('🔍 Fetching data for email:', email);
+        console.log('📁 Path:', `students/${encodedEmail}`);
+        console.log('========================================');
+        
+        const studentRef = ref(db, `students/${encodedEmail}`);
+        const studentSnap = await get(studentRef);
+
+        if (!studentSnap.exists()) {
+          console.error('❌ No student found for email:', email);
+          setError('Student record not found');
+          setLoading(false);
+          return;
         }
-      });
-      
-      setGpa(totalCreditsEarned ? Number((totalPoints / totalCreditsEarned).toFixed(2)) : 0);
-      setTotalCredits(totalCreditsEarned);
-      setLastUpdated(new Date());
-    });
 
-    // 3. Listen to announcements
-    const announcementsRef = ref(db, 'announcements');
-    const unsubscribeAnnouncements = onValue(announcementsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const annList = Object.keys(data).map(key => ({
-          id: key,
-          ...data[key]
-        }));
-        annList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        setAnnouncements(annList);
-      }
-      setLastUpdated(new Date());
-    });
+        const studentData = studentSnap.val();
+        console.log('✅ Student found:', studentData);
+        
+        setStudentName(studentData.studentName || '');
+        setMajor(studentData.major || 'ISP');
 
-    // 4. Listen to attendance for this student
-    const attendanceRef = ref(db, 'attendance');
-    const unsubscribeAttendance = onValue(attendanceRef, (snapshot) => {
-      const data = snapshot.val();
-      const records: AttendanceRecord[] = [];
-      let totalAttendance = 0;
-      
-      if (data) {
-        Object.values(data).forEach((record: any) => {
-          if (record.studentId === studentIdFromEmail) {
-            records.push({
-              id: record.id,
-              date: record.date,
-              status: record.status,
-              notes: record.notes
-            });
-            
-            // Count for attendance percentage
-            if (record.status === 'present' || record.status === 'late') {
-              totalAttendance++;
-            }
+        const coursesData = studentData.courses || {};
+        const courseList: Course[] = [];
+
+        for (const [courseId, courseInfo] of Object.entries(coursesData)) {
+          const data = courseInfo as any;
+          courseList.push({
+            id: courseId,
+            courseId: courseId,
+            name: data.courseName || courseId,
+            teacher: data.teacherName || '',
+            credits: data.credits || 3,
+            grade: data.grade || '',
+            attendancePercentage: data.attendancePercentage || 0
+          });
+        }
+
+        setCourses(courseList);
+
+        let totalPoints = 0;
+        let totalCreditsEarned = 0;
+        let totalAttendance = 0;
+
+        courseList.forEach((course) => {
+          if (course.grade && gradePoints[course.grade]) {
+            totalPoints += gradePoints[course.grade] * course.credits;
+            totalCreditsEarned += course.credits;
           }
+          totalAttendance += course.attendancePercentage || 0;
         });
-      }
-      
-      setAttendanceRecords(records);
-      
-      // Update attendance percentage in courses
-      setCourses(prev => prev.map(course => {
-        const courseRecords = records.filter(r => r.courseId === course.courseId);
-        const present = courseRecords.filter(r => r.status === 'present' || r.status === 'late').length;
-        const percentage = courseRecords.length ? Math.round((present / courseRecords.length) * 100) : 0;
-        return { ...course, attendancePercentage: percentage, attendanceRecords: courseRecords };
-      }));
-      
-      // Calculate overall attendance
-      const totalClasses = records.length;
-      const presentCount = records.filter(r => r.status === 'present' || r.status === 'late').length;
-      setAttendance(totalClasses ? Math.round((presentCount / totalClasses) * 100) : 0);
-      
-      setLastUpdated(new Date());
-      setLoading(false);
-    });
 
-    return () => {
-      unsubscribeStudent();
-      unsubscribeEnrollments();
-      unsubscribeAnnouncements();
-      unsubscribeAttendance();
+        setGpa(totalCreditsEarned ? Number((totalPoints / totalCreditsEarned).toFixed(2)) : 0);
+        setTotalCredits(totalCreditsEarned);
+        setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
+        
+      } catch (err) {
+        console.error('❌ Error:', err);
+        setError('Failed to load data');
+      } finally {
+        setLoading(false);
+      }
     };
+
+    fetchData();
   }, [user]);
 
   return (
     <DataContext.Provider value={{
-      courses, announcements, attendanceRecords, loading, error, 
-      gpa, totalCredits, attendance, studentName, studentId, major, lastUpdated
+      courses, loading, error, gpa, totalCredits, attendance, attendanceRecords, studentName, studentEmail, major
     }}>
       {children}
     </DataContext.Provider>
@@ -217,3 +144,4 @@ export function useData() {
   if (!context) throw new Error('useData must be used within DataProvider');
   return context;
 }
+

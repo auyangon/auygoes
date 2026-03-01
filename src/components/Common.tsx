@@ -70,13 +70,14 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({ children, icon, clas
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'default' | 'success' | 'warning';
+  variant?: 'default' | 'success' | 'warning' | 'primary';
   className?: string;
 }
 
 export const Badge: React.FC<BadgeProps> = ({ children, variant = 'default', className }) => {
   const variants = {
     default: 'bg-gray-100 text-gray-700',
+    primary: 'bg-[#0B4F3A] text-white',
     success: 'bg-green-100 text-green-700',
     warning: 'bg-yellow-100 text-yellow-700',
   };
@@ -104,5 +105,48 @@ export const ProgressBar: React.FC<{ value: number; className?: string }> = ({ v
         style={{ width: `${value}%` }}
       />
     </div>
+  );
+};
+
+// ADD THE MISSING BUTTON COMPONENT
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  children: React.ReactNode;
+}
+
+export const Button: React.FC<ButtonProps> = ({ 
+  children, 
+  variant = 'primary', 
+  size = 'md', 
+  className, 
+  ...props 
+}) => {
+  const variants = {
+    primary: 'bg-[#0B4F3A] text-white hover:bg-[#0d5f45]',
+    secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200',
+    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50',
+  };
+
+  const sizes = {
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-4 py-2 text-base',
+    lg: 'px-6 py-3 text-lg',
+  };
+
+  return (
+    <button
+      className={twMerge(
+        clsx(
+          'rounded-lg font-normal transition-colors',
+          variants[variant],
+          sizes[size],
+          className
+        )
+      )}
+      {...props}
+    >
+      {children}
+    </button>
   );
 };

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+﻿import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { db } from '../firebase';
 import { ref, onValue } from 'firebase/database';
@@ -22,15 +22,27 @@ export interface Course {
 export interface AttendanceRecord {
   id: string;
   studentEmail: string;
+  studentName?: string;
   courseId: string;
+  courseName?: string;
   date: string;
   status: 'present' | 'late' | 'absent';
   notes?: string;
 }
 
+export interface Announcement {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  author: string;
+  priority?: string;
+  category?: string;
+}
+
 interface DataContextType {
   courses: Course[];
-  announcements: any[];
+  announcements: Announcement[];
   attendanceRecords: AttendanceRecord[];
   loading: boolean;
   error: string | null;
@@ -41,6 +53,7 @@ interface DataContextType {
   studentEmail: string;
   major: string;
   lastUpdated: Date | null;
+  refreshData: () => void;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -50,15 +63,15 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
-// Firebase doesn't allow dots in paths, so encode email
+// Encode email for Firebase (replace dots with commas)
 const encodeEmail = (email: string): string => {
-  return email.replace(/\./g, ','); // Replace dots with commas
+  return email.replace(/\./g, ',');
 };
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
-  const [announcements, setAnnouncements] = useState<any[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [attendanceRecords, setAttendanceRecords] = useState<AttendanceRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,6 +82,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [studentEmail, setStudentEmail] = useState('');
   const [major, setMajor] = useState('');
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const refreshData = () => setRefreshTrigger(prev => prev + 1);
 
   useEffect(() => {
     if (!user?.email) {
@@ -78,16 +94,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
     const email = user.email;
     setStudentEmail(email);
-    
-    // Encode email for Firebase path (dots -> commas)
     const encodedEmail = encodeEmail(email);
-    
-    console.log('========================================');
-    console.log('?? Fetching data for email:', email);
-    console.log('?? Firebase path:', `students/${encodedEmail}`);
-    console.log('========================================`)');
 
-    // REAL-TIME STUDENT DATA - Direct lookup by email!
+    console.log('========================================');
+    console.log('🔍 Fetching data for email:', email);
+    console.log('📁 Firebase path:', `students/${encodedEmail}`);
+    console.log('========================================');
+
+    // REAL-TIME STUDENT DATA
     const studentRef = ref(db, `students/${encodedEmail}`);
     const unsubscribeStudent = onValue(studentRef, (snapshot) => {
       const data = snapshot.val();
@@ -106,16 +120,22 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
               teacher: courseData.teacherName || 'Staff',
               credits: courseData.credits || 3,
               grade: courseData.grade || '',
-              attendancePercentage: courseData.attendancePercentage || 0
+              attendancePercentage: courseData.attendancePercentage || 0,
+              attendanceSummary: courseData.attendance
             });
           });
           setCourses(courseList);
         }
+      } else {
+        console.log('⚠️ No student data found in Firebase');
       }
       setLastUpdated(new Date());
+    }, (error) => {
+      console.error('❌ Error fetching student:', error);
+      setError('Failed to load student data');
     });
 
-    // REAL-TIME ATTENDANCE RECORDS - Filter by student email
+    // REAL-TIME ATTENDANCE RECORDS
     const attendanceRef = ref(db, 'attendance');
     const unsubscribeAttendance = onValue(attendanceRef, (snapshot) => {
       const data = snapshot.val();
@@ -126,13 +146,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       let totalClasses = 0;
       
       if (data) {
-        Object.values(data).forEach((record: any) => {
-          // Match by email (your Firebase uses email as reference)
+        Object.entries(data).forEach(([id, record]: [string, any]) => {
           if (record.studentEmail === email) {
             records.push({
-              id: record.id,
+              id: id,
               studentEmail: record.studentEmail,
+              studentName: record.studentName,
               courseId: record.courseId,
+              courseName: record.courseName,
               date: record.date,
               status: record.status,
               notes: record.notes
@@ -171,12 +192,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
               attendanceSummary: stats
             };
           }
-          return { ...course, attendancePercentage: 0 };
+          return course;
         })
       );
       
       setAttendance(totalClasses ? Math.round((totalPresent / totalClasses) * 100) : 0);
       setLastUpdated(new Date());
+    }, (error) => {
+      console.error('❌ Error fetching attendance:', error);
     });
 
     // REAL-TIME ANNOUNCEMENTS
@@ -184,10 +207,21 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const unsubscribeAnnouncements = onValue(announcementsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const list = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+        const list = Object.entries(data).map(([id, item]: [string, any]) => ({
+          id,
+          title: item.title || '',
+          content: item.content || '',
+          date: item.date || '',
+          author: item.author || 'Admin',
+          priority: item.priority || 'medium',
+          category: item.category || 'General'
+        }));
         list.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setAnnouncements(list);
       }
+      setLastUpdated(new Date());
+    }, (error) => {
+      console.error('❌ Error fetching announcements:', error);
     });
 
     setLoading(false);
@@ -197,9 +231,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       unsubscribeAttendance();
       unsubscribeAnnouncements();
     };
-  }, [user]);
+  }, [user, refreshTrigger]);
 
-  // Calculate GPA
+  // Calculate GPA whenever courses change
   useEffect(() => {
     let totalPoints = 0;
     let totalCreditsEarned = 0;
@@ -228,7 +262,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       studentName,
       studentEmail,
       major,
-      lastUpdated
+      lastUpdated,
+      refreshData
     }}>
       {children}
     </DataContext.Provider>
@@ -240,4 +275,3 @@ export function useData() {
   if (!context) throw new Error('useData must be used within DataProvider');
   return context;
 }
-

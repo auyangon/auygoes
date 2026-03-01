@@ -1,0 +1,137 @@
+﻿{
+  "rules": {
+    // Allow reads to everyone (for the portal)
+    ".read": true,
+    
+    // Allow writes only with valid auth (for Google Apps Script)
+    ".write": "auth !== null",
+    
+    // Students node - keyed by email (with dots replaced by commas)
+    "students": {
+      ".indexOn": ["email", "studentName"],
+      
+      // Each student is keyed by their encoded email
+      "$emailKey": {
+        ".read": true,
+        ".write": "auth !== null",
+        
+        // Allow all fields but ensure required ones exist
+        ".validate": "newData.hasChildren(['studentName', 'email'])",
+        
+        "studentName": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().matches(/^[^@]+@[^@]+\\.[^@]+$/)"
+        },
+        "major": {
+          ".validate": "newData.isString()"
+        },
+        "studyMode": {
+          ".validate": "newData.isString()"
+        },
+        "status": {
+          ".validate": "newData.isString()"
+        },
+        
+        // Courses under each student
+        "courses": {
+          "$courseId": {
+            ".validate": "newData.hasChildren(['courseName', 'credits'])",
+            "courseName": { ".validate": "newData.isString()" },
+            "teacherName": { ".validate": "newData.isString()" },
+            "credits": { ".validate": "newData.isNumber() && newData.val() > 0" },
+            "grade": { ".validate": "newData.isString()" },
+            "attendancePercentage": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+            
+            // Attendance summary
+            "attendance": {
+              "present": { ".validate": "newData.isNumber()" },
+              "late": { ".validate": "newData.isNumber()" },
+              "absent": { ".validate": "newData.isNumber()" },
+              "total": { ".validate": "newData.isNumber()" },
+              "percentage": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+              "lastUpdated": { ".validate": "newData.isString()" }
+            }
+          }
+        },
+        
+        // Allow other fields but ensure they're strings
+        "$other": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    
+    // Attendance records - searchable by student email
+    "attendance": {
+      ".indexOn": ["studentEmail", "courseId", "date"],
+      
+      "$attendanceId": {
+        ".read": true,
+        ".write": "auth !== null",
+        ".validate": "newData.hasChildren(['studentEmail', 'courseId', 'date', 'status'])",
+        
+        "studentEmail": {
+          ".validate": "newData.isString() && newData.val().matches(/^[^@]+@[^@]+\\.[^@]+$/)"
+        },
+        "studentName": { ".validate": "newData.isString()" },
+        "courseId": { ".validate": "newData.isString()" },
+        "courseName": { ".validate": "newData.isString()" },
+        "date": { ".validate": "newData.isString()" },
+        "status": {
+          ".validate": "newData.isString() && (newData.val() === 'present' || newData.val() === 'late' || newData.val() === 'absent')"
+        },
+        "notes": { ".validate": "newData.isString()" },
+        "lastUpdated": { ".validate": "newData.isString()" }
+      }
+    },
+    
+    // Courses master list
+    "courses": {
+      ".indexOn": ["courseId", "courseName"],
+      "$courseId": {
+        ".read": true,
+        ".write": "auth !== null",
+        ".validate": "newData.hasChildren(['courseName'])",
+        "courseName": { ".validate": "newData.isString()" },
+        "credits": { ".validate": "newData.isNumber() && newData.val() > 0" },
+        "teacher": { ".validate": "newData.isString()" },
+        "googleClassroomLink": { ".validate": "newData.isString()" }
+      }
+    },
+    
+    // Announcements
+    "announcements": {
+      ".indexOn": ["date"],
+      "$announcementId": {
+        ".read": true,
+        ".write": "auth !== null",
+        ".validate": "newData.hasChildren(['title', 'content'])",
+        "title": { ".validate": "newData.isString()" },
+        "content": { ".validate": "newData.isString()" },
+        "date": { ".validate": "newData.isString()" },
+        "author": { ".validate": "newData.isString()" },
+        "priority": { ".validate": "newData.isString()" },
+        "category": { ".validate": "newData.isString()" }
+      }
+    },
+    
+    // Enrollments (if you keep them)
+    "enrollments": {
+      ".indexOn": ["studentEmail", "courseId"],
+      "$enrollmentId": {
+        ".read": true,
+        ".write": "auth !== null",
+        "studentEmail": { ".validate": "newData.isString()" },
+        "studentName": { ".validate": "newData.isString()" },
+        "courseId": { ".validate": "newData.isString()" },
+        "courseName": { ".validate": "newData.isString()" },
+        "teacherName": { ".validate": "newData.isString()" },
+        "credits": { ".validate": "newData.isNumber()" },
+        "grade": { ".validate": "newData.isString()" },
+        "attendance": { ".validate": "newData.isNumber()" }
+      }
+    }
+  }
+}

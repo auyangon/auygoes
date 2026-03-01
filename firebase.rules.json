@@ -2,8 +2,112 @@
   "rules": {
     ".read": true,
     ".write": "auth !== null",
-    "students": { ".indexOn": ["studentId", "email"] },
-    "enrollments": { ".indexOn": ["studentId"] },
-    "announcements": { ".read": true, ".write": "auth !== null" }
+    "students": {
+      ".indexOn": ["email", "studentId", "studentName"],
+      "$encodedEmail": {
+        ".read": true,
+        ".write": "auth !== null",
+        ".validate": "newData.hasChildren(['studentName', 'email'])",
+        "studentId": { ".validate": "newData.isString()" },
+        "studentName": { ".validate": "newData.isString() && newData.val().length > 0" },
+        "email": { ".validate": "newData.isString() && newData.val().matches(/^[^@]+@[^@]+\\.[^@]+$/)" },
+        "major": { ".validate": "newData.isString()" },
+        "studyMode": { ".validate": "newData.isString()" },
+        "status": { ".validate": "newData.isString()" },
+        "gpa": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 4.0" },
+        "totalCredits": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "courses": {
+          "$courseId": {
+            ".validate": "newData.hasChildren(['courseName', 'credits'])",
+            "courseId": { ".validate": "newData.isString()" },
+            "courseName": { ".validate": "newData.isString()" },
+            "teacherName": { ".validate": "newData.isString()" },
+            "credits": { ".validate": "newData.isNumber() && newData.val() > 0" },
+            "grade": { ".validate": "newData.isString()" },
+            "attendancePercentage": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+            "attendance": {
+              "present": { ".validate": "newData.isNumber()" },
+              "late": { ".validate": "newData.isNumber()" },
+              "absent": { ".validate": "newData.isNumber()" },
+              "excused": { ".validate": "newData.isNumber()" },
+              "total": { ".validate": "newData.isNumber()" },
+              "percentage": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+              "lastUpdated": { ".validate": "newData.isString()" }
+            }
+          }
+        },
+        "$other": { ".validate": "newData.isString()" }
+      }
+    },
+    "attendance": {
+      ".indexOn": ["studentEmail", "courseId", "date"],
+      "$attendanceId": {
+        ".read": true,
+        ".write": "auth !== null",
+        ".validate": "newData.hasChildren(['studentEmail', 'courseId', 'date', 'status'])",
+        "id": { ".validate": "newData.isString()" },
+        "studentEmail": { ".validate": "newData.isString() && newData.val().matches(/^[^@]+@[^@]+\\.[^@]+$/)" },
+        "studentName": { ".validate": "newData.isString()" },
+        "courseId": { ".validate": "newData.isString()" },
+        "date": { ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/)" },
+        "status": { ".validate": "newData.isString() && (newData.val() === 'present' || newData.val() === 'late' || newData.val() === 'absent' || newData.val() === 'excused')" },
+        "notes": { ".validate": "newData.isString()" },
+        "timestamp": { ".validate": "newData.isString()" },
+        "source": { ".validate": "newData.isString()" }
+      }
+    },
+    "courses": {
+      ".indexOn": ["courseId", "courseName"],
+      "$courseId": {
+        ".read": true,
+        ".write": "auth !== null",
+        ".validate": "newData.hasChildren(['courseName'])",
+        "courseId": { ".validate": "newData.isString()" },
+        "courseName": { ".validate": "newData.isString()" },
+        "credits": { ".validate": "newData.isNumber() && newData.val() > 0" },
+        "teacher": { ".validate": "newData.isString()" },
+        "googleClassroomLink": { ".validate": "newData.isString()" },
+        "department": { ".validate": "newData.isString()" }
+      }
+    },
+    "announcements": {
+      ".indexOn": ["date"],
+      "$announcementId": {
+        ".read": true,
+        ".write": "auth !== null",
+        ".validate": "newData.hasChildren(['title', 'content'])",
+        "id": { ".validate": "newData.isString()" },
+        "title": { ".validate": "newData.isString()" },
+        "content": { ".validate": "newData.isString()" },
+        "date": { ".validate": "newData.isString()" },
+        "author": { ".validate": "newData.isString()" },
+        "priority": { ".validate": "newData.isString()" },
+        "category": { ".validate": "newData.isString()" },
+        "targetCourses": { ".validate": "newData.isString()" }
+      }
+    },
+    "enrollments": {
+      ".indexOn": ["studentEmail", "courseId"],
+      "$enrollmentId": {
+        ".read": true,
+        ".write": "auth !== null",
+        "enrollmentId": { ".validate": "newData.isString()" },
+        "studentId": { ".validate": "newData.isString()" },
+        "studentName": { ".validate": "newData.isString()" },
+        "studentEmail": { ".validate": "newData.isString()" },
+        "courseId": { ".validate": "newData.isString()" },
+        "courseName": { ".validate": "newData.isString()" },
+        "teacherName": { ".validate": "newData.isString()" },
+        "credits": { ".validate": "newData.isNumber()" },
+        "grade": { ".validate": "newData.isString()" },
+        "semester": { ".validate": "newData.isString()" }
+      }
+    },
+    "metadata": {
+      ".read": true,
+      ".write": "auth !== null",
+      "lastSync": { ".validate": "newData.isString()" },
+      "version": { ".validate": "newData.isString()" }
+    }
   }
 }

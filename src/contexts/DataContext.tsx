@@ -32,12 +32,13 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
-// Email to student ID mapping
+// COMPLETE EMAIL TO STUDENT ID MAPPING - ALL 5 STUDENTS
 const EMAIL_TO_ID: Record<string, string> = {
   'aung.khant.phyo@student.au.edu.mm': 'S001',
   'hsu.eain.htet@student.au.edu.mm': 'S002',
   'htoo.yadanar.oo@student.au.edu.mm': 'S003',
   'chanmyae.au.edu.mm@gmail.com': 'S004',
+  'kaung.pyae.phyo.kyaw@gmail.com': 'S005',
 };
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
@@ -66,7 +67,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         console.log('========================================');
         console.log('🔍 Fetching data for:', user.email);
         
-        // Get student ID from email
         const studentIdFromEmail = EMAIL_TO_ID[user.email];
         
         if (!studentIdFromEmail) {
@@ -87,7 +87,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           setMajor(studentData.major || 'ISP');
         }
 
-        // Get enrollments for this student
+        // Get enrollments
         const enrollmentsRef = ref(db, 'enrollments');
         const enrollmentsSnap = await get(enrollmentsRef);
         
@@ -115,19 +115,19 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
         // Calculate GPA
         let totalPoints = 0;
-        let totalCredits = 0;
+        let totalCreditsEarned = 0;
         let totalAttendance = 0;
 
         courseList.forEach((course) => {
           if (course.grade && gradePoints[course.grade]) {
             totalPoints += gradePoints[course.grade] * course.credits;
-            totalCredits += course.credits;
+            totalCreditsEarned += course.credits;
           }
           totalAttendance += course.attendancePercentage || 0;
         });
 
-        setGpa(totalCredits ? Number((totalPoints / totalCredits).toFixed(2)) : 0);
-        setTotalCredits(totalCredits);
+        setGpa(totalCreditsEarned ? Number((totalPoints / totalCreditsEarned).toFixed(2)) : 0);
+        setTotalCredits(totalCreditsEarned);
         setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
         
       } catch (err) {

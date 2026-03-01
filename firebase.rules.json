@@ -1,0 +1,9 @@
+﻿{
+  "rules": {
+    ".read": true,
+    ".write": "auth !== null",
+    "students": { ".indexOn": ["studentId", "email"] },
+    "enrollments": { ".indexOn": ["studentId"] },
+    "announcements": { ".read": true, ".write": "auth !== null" }
+  }
+}

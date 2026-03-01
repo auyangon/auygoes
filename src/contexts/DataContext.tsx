@@ -89,8 +89,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
             courseList.push({
               id: courseId,
               courseId: courseId,
-              name: courseData.courseName || courseId,
-              teacher: courseData.teacherName || 'Staff',
+              name: courseData.courseName,
+              teacher: courseData.teacherName,
               credits: courseData.credits || 3,
               grade: courseData.grade || '',
               attendancePercentage: courseData.attendancePercentage || 0
@@ -172,4 +172,5 @@ export function useData() {
   if (!context) throw new Error('useData must be used within DataProvider');
   return context;
 }
+
 

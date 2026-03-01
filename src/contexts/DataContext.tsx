@@ -32,8 +32,11 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
-// Encode email for Firebase (replace dots with commas)
-const encodeEmail = (email: string): string => {
+// CRITICAL: Encode email for Firebase (replace dots with commas)
+// Firebase paths CANNOT contain dots (.)
+const encodeEmailForFirebase = (email: string): string => {
+  if (!email) return '';
+  // Replace all dots with commas
   return email.replace(/\./g, ',');
 };
 
@@ -58,20 +61,21 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const email = user.email;
     setStudentEmail(email);
     
-    // Encode the email for Firebase lookup
-    const encodedEmail = encodeEmail(email);
+    // IMPORTANT: Encode the email for Firebase path
+    const encodedEmail = encodeEmailForFirebase(email);
 
     console.log('========================================');
-    console.log('🔍 Fetching data for email:', email);
-    console.log('🔑 Encoded key:', encodedEmail);
-    console.log('📁 Path:', `students/${encodedEmail}`);
+    console.log('🔍 Original email:', email);
+    console.log('🔑 Encoded for Firebase:', encodedEmail);
+    console.log('📁 Firebase path:', `students/${encodedEmail}`);
     console.log('========================================');
 
-    // DIRECT LOOKUP - using encoded email as key
+    // USE THE ENCODED EMAIL FOR THE FIREBASE PATH!
     const studentRef = ref(db, `students/${encodedEmail}`);
+    
     const unsubscribeStudent = onValue(studentRef, (snapshot) => {
       const data = snapshot.val();
-      console.log('📊 Student data:', data);
+      console.log('📊 Student data from Firebase:', data);
       
       if (data) {
         setStudentName(data.studentName || '');
@@ -81,7 +85,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           let totalAttendance = 0;
           
           Object.entries(data.courses).forEach(([courseId, courseData]: [string, any]) => {
-            console.log(`📚 Course: ${courseId}`, courseData);
             courseList.push({
               id: courseId,
               courseId: courseId,
@@ -112,17 +115,20 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
           
           console.log(`✅ Loaded ${courseList.length} courses`);
-          console.log(`📊 GPA: ${gpa}, Credits: ${totalCredits}, Attendance: ${attendance}%`);
         }
         setError(null);
       } else {
-        console.log('❌ No student data found for encoded key:', encodedEmail);
-        setError('Student data not found');
+        console.log('❌ No data found for encoded path:', `students/${encodedEmail}`);
+        setError('Student data not found. Please check with administration.');
       }
+      setLoading(false);
+    }, (error) => {
+      console.error('❌ Firebase error:', error);
+      setError('Failed to load student data');
       setLoading(false);
     });
 
-    // Get announcements
+    // Get announcements (no encoding needed)
     const announcementsRef = ref(db, 'announcements');
     const unsubscribeAnnouncements = onValue(announcementsRef, (snapshot) => {
       const data = snapshot.val();
@@ -133,7 +139,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         }));
         list.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setAnnouncements(list);
-        console.log(`✅ Loaded ${list.length} announcements`);
       }
     });
 

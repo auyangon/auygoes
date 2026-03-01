@@ -32,7 +32,7 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
-// SIMPLE EMAIL ENCODING - Replace dots with commas
+// Encode email for Firebase (replace dots with commas)
 const encodeEmail = (email: string): string => {
   if (!email) return '';
   return email.replace(/\./g, ',');
@@ -59,13 +59,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const email = user.email;
     setStudentEmail(email);
     
-    // ENCODE THE EMAIL - THIS IS THE KEY FIX!
+    // ENCODE THE EMAIL FOR FIREBASE PATH
     const encodedEmail = encodeEmail(email);
-    
-    // Show what's happening
-    console.log('🔍 ORIGINAL EMAIL:', email);
-    console.log('🔑 ENCODED EMAIL:', encodedEmail);
-    console.log('📁 FIREBASE PATH:', `students/${encodedEmail}`);
+
+    console.log('========================================');
+    console.log('📧 Original email:', email);
+    console.log('🔑 Encoded email:', encodedEmail);
+    console.log('📁 Firebase path:', `students/${encodedEmail}`);
+    console.log('========================================');
 
     // USE ENCODED EMAIL FOR FIREBASE PATH
     const studentRef = ref(db, `students/${encodedEmail}`);
@@ -73,7 +74,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const unsubscribeStudent = onValue(studentRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
-        console.log('✅ STUDENT FOUND:', data);
+        console.log('✅ Student data found:', data);
         
         setStudentName(data.studentName || '');
         
@@ -113,35 +114,13 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         }
         setError(null);
       } else {
-        console.log('❌ NO DATA AT PATH:', `students/${encodedEmail}`);
-        
-        // Try to list all students to see what's available
-        const allStudentsRef = ref(db, 'students');
-        onValue(allStudentsRef, (allSnapshot) => {
-          if (allSnapshot.exists()) {
-            const keys = Object.keys(allSnapshot.val());
-            console.log('📋 AVAILABLE STUDENT KEYS:', keys);
-            
-            // Check if any key contains part of the email
-            const emailPart = email.split('@')[0].replace(/\./g, ',');
-            const possibleMatch = keys.find(key => key.includes(emailPart));
-            if (possibleMatch) {
-              console.log('💡 POSSIBLE MATCH:', possibleMatch);
-              console.log('💡 TRY LOGGING IN WITH THIS EMAIL INSTEAD');
-            }
-          }
-        }, { onlyOnce: true });
-        
+        console.log('❌ No data found for path:', `students/${encodedEmail}`);
         setError('Student data not found');
       }
       setLoading(false);
-    }, (error) => {
-      console.error('❌ FIREBASE ERROR:', error);
-      setError('Failed to load student data');
-      setLoading(false);
     });
 
-    // Get announcements (no encoding needed)
+    // Get announcements
     const announcementsRef = ref(db, 'announcements');
     const unsubscribeAnnouncements = onValue(announcementsRef, (snapshot) => {
       if (snapshot.exists()) {

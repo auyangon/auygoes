@@ -2,7 +2,6 @@
 
 interface User {
   email: string;
-  name?: string;
 }
 
 interface AuthContextType {
@@ -13,6 +12,21 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// Valid student emails from your database
+const VALID_EMAILS = [
+  'aung.khant.phyo@student.au.edu.mm',
+  'hsu.eain.htet@student.au.edu.mm',
+  'htoo.yadanar.oo@student.au.edu.mm',
+  'chanmyae.au.edu.mm@gmail.com',
+  'kaung.pyae.phyo.kyaw@student.au.edu.mm',
+  'man.sian.hoih@student.au.edu.mm',
+  'phone.pyae.han@student.au.edu.mm',
+  'thin.zar.li.htay@student.au.edu.mm',
+  'yoon.thiri.naing@student.au.edu.mm',
+  'zau.myu.lat@student.au.edu.mm',
+  'en.sian.piang@student.au.edu.mm',
+];
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -27,21 +41,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Valid emails from our Firebase
-    const validEmails = [
-      'aung.khant.phyo@student.au.edu.mm',
-      'hsu.eain.htet@student.au.edu.mm',
-      'htoo.yadanar.oo@student.au.edu.mm',
-      'chanmyae.au.edu.mm@gmail.com'
-    ];
-    
-    if (!validEmails.includes(email)) {
+    // Check if email is in our valid list
+    if (!VALID_EMAILS.includes(email)) {
+      console.log('❌ Invalid email:', email);
       return false;
     }
     
     const user = { email };
     localStorage.setItem('user', JSON.stringify(user));
     setUser(user);
+    console.log('✅ Logged in:', email);
     return true;
   };
 

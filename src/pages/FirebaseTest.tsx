@@ -19,22 +19,22 @@ export const FirebaseTest: React.FC = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div className="p-6">Loading...</div>;
-
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold text-[#0B4F3A] mb-4">Firebase Data Test</h1>
+      <h1 className="text-2xl font-bold text-[#0B4F3A] mb-4">Firebase Data</h1>
       
       <Card className="p-4">
         <h2 className="font-semibold mb-2">Student Keys in Firebase</h2>
-        {students ? (
+        {loading ? (
+          <p>Loading...</p>
+        ) : students ? (
           <div>
             <p className="mb-2">Found {Object.keys(students).length} students</p>
-            <div className="bg-gray-100 p-4 rounded">
+            <div className="bg-gray-100 p-4 rounded overflow-auto max-h-96">
               {Object.keys(students).map(key => (
-                <div key={key} className="mb-2 p-2 bg-white rounded">
-                  <code className="text-sm">{key}</code>
-                  <pre className="text-xs mt-1 text-gray-600">
+                <div key={key} className="mb-3 p-3 bg-white rounded shadow-sm">
+                  <div className="font-mono text-sm text-[#0B4F3A] mb-2">{key}</div>
+                  <pre className="text-xs text-gray-600 overflow-auto">
                     {JSON.stringify(students[key], null, 2)}
                   </pre>
                 </div>

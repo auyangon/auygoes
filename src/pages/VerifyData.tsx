@@ -8,7 +8,6 @@ export const VerifyData: React.FC = () => {
   const { user } = useAuth();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [allStudents, setAllStudents] = useState<any>(null);
 
   const encodeEmail = (email: string) => {
     return email.replace(/\./g, ',');
@@ -19,22 +18,12 @@ export const VerifyData: React.FC = () => {
 
     const fetchData = async () => {
       const encodedEmail = encodeEmail(user.email);
-      console.log('🔍 Verify - Original:', user.email);
-      console.log('🔑 Verify - Encoded:', encodedEmail);
+      console.log('Verify - Original:', user.email);
+      console.log('Verify - Encoded:', encodedEmail);
       
-      // Get specific student
       const studentRef = ref(db, `students/${encodedEmail}`);
       const snapshot = await get(studentRef);
       setData(snapshot.val());
-      
-      // Get all students to see keys
-      const allRef = ref(db, 'students');
-      const allSnap = await get(allRef);
-      if (allSnap.exists()) {
-        setAllStudents(allSnap.val());
-        console.log('📋 Available student keys:', Object.keys(allSnap.val()));
-      }
-      
       setLoading(false);
     };
 
@@ -49,11 +38,11 @@ export const VerifyData: React.FC = () => {
       
       <Card className="p-4 mb-4">
         <h2 className="font-semibold mb-2">Current User</h2>
-        <p><strong>Original Email:</strong> {user.email}</p>
-        <p><strong>Encoded for Firebase:</strong> {encodeEmail(user.email)}</p>
+        <p><strong>Email:</strong> {user.email}</p>
+        <p><strong>Encoded:</strong> {encodeEmail(user.email)}</p>
       </Card>
 
-      <Card className="p-4 mb-4">
+      <Card className="p-4">
         <h2 className="font-semibold mb-2">Your Data</h2>
         {loading ? (
           <p>Loading...</p>
@@ -65,19 +54,6 @@ export const VerifyData: React.FC = () => {
           <p className="text-red-500">No data found for your email</p>
         )}
       </Card>
-
-      {allStudents && (
-        <Card className="p-4">
-          <h2 className="font-semibold mb-2">All Student Keys in Firebase</h2>
-          <div className="bg-gray-100 p-4 rounded">
-            {Object.keys(allStudents).map(key => (
-              <div key={key} className="mb-1 font-mono text-sm">
-                {key}
-              </div>
-            ))}
-          </div>
-        </Card>
-      )}
     </div>
   );
 };

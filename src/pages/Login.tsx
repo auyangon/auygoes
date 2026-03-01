@@ -99,8 +99,7 @@ export default function Login() {
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-500">
-          <p>Use any student email to login</p>
-          <p className="text-xs mt-2">Password: any (demo mode)</p>
+          <p>Use your student email to login</p>
         </div>
       </div>
     </div>

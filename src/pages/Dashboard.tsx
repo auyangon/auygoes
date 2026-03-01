@@ -11,7 +11,6 @@ import {
   Bell,
   GraduationCap,
   Sparkles,
-  User,
   Calendar
 } from 'lucide-react';
 
@@ -46,10 +45,10 @@ export default function Dashboard() {
         <Card className="p-8 max-w-md text-center">
           <p className="text-red-600 mb-4">{error}</p>
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/verify')}
             className="px-4 py-2 bg-[#0B4F3A] text-white rounded-lg"
           >
-            Go to Login
+            Check Data
           </button>
         </Card>
       </div>
@@ -148,7 +147,11 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {courses.map((course) => (
-          <div key={course.id} className="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+          <div 
+            key={course.id} 
+            className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer"
+            onClick={() => navigate(`/course/${course.courseId}`)}
+          >
             <div className="flex justify-between items-start mb-3">
               <h3 className="font-semibold text-gray-800">{course.name}</h3>
               <span className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600">

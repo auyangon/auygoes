@@ -1,4 +1,5 @@
-﻿import React, { createContext, useContext, useState, useEffect } from 'react';
+﻿// src/contexts/AuthContext.tsx
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface User {
   email: string;
@@ -13,7 +14,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Valid student emails from your database
+// List of valid student emails from your database
 const VALID_EMAILS = [
   'aung.khant.phyo@student.au.edu.mm',
   'hsu.eain.htet@student.au.edu.mm',
@@ -41,7 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Check if email is in our valid list
+    // Simple validation - check if email is in list
     if (!VALID_EMAILS.includes(email)) {
       console.log('❌ Invalid email:', email);
       return false;

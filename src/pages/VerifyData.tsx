@@ -1,23 +1,22 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿// src/pages/VerifyData.tsx
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebase';
 import { ref, get } from 'firebase/database';
+import { MainLayout } from '../components/MainLayout';
 import { Card } from '../components/Common';
+import { encodeEmailForFirebase } from '../utils/emailUtils';
 
 export const VerifyData: React.FC = () => {
   const { user } = useAuth();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  const encodeEmail = (email: string) => {
-    return email.replace(/\./g, ',');
-  };
-
   useEffect(() => {
     if (!user?.email) return;
 
     const fetchData = async () => {
-      const encodedEmail = encodeEmail(user.email);
+      const encodedEmail = encodeEmailForFirebase(user.email);
       console.log('Verify - Original:', user.email);
       console.log('Verify - Encoded:', encodedEmail);
       
@@ -30,16 +29,16 @@ export const VerifyData: React.FC = () => {
     fetchData();
   }, [user]);
 
-  if (!user) return <div className="p-6">Please login first</div>;
+  if (!user) return <MainLayout><div>Please login</div></MainLayout>;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <MainLayout>
       <h1 className="text-2xl font-bold text-[#0B4F3A] mb-4">Data Verification</h1>
       
       <Card className="p-4 mb-4">
         <h2 className="font-semibold mb-2">Current User</h2>
         <p><strong>Email:</strong> {user.email}</p>
-        <p><strong>Encoded:</strong> {encodeEmail(user.email)}</p>
+        <p><strong>Encoded:</strong> {encodeEmailForFirebase(user.email)}</p>
       </Card>
 
       <Card className="p-4">
@@ -54,6 +53,6 @@ export const VerifyData: React.FC = () => {
           <p className="text-red-500">No data found for your email</p>
         )}
       </Card>
-    </div>
+    </MainLayout>
   );
 };

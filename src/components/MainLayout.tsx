@@ -1,63 +1,47 @@
-﻿import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { GraduationCap, Home, User, BookOpen, Calendar, LogOut } from 'lucide-react';
+﻿// src/components/MainLayout.tsx
+import React, { useState } from 'react';
+import { Sidebar } from './Sidebar';
+import { Menu } from 'lucide-react';
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    navigate('/login');
-  };
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#faf7f2]">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <GraduationCap className="text-[#0B4F3A]" size={28} />
-              <span className="text-xl font-semibold text-[#0B4F3A]">AUY Portal</span>
-            </div>
-            
-            <nav className="flex items-center gap-4">
-              <button
-                onClick={() => navigate('/dashboard')}
-                className="p-2 text-gray-600 hover:text-[#0B4F3A] rounded-lg hover:bg-gray-50"
-              >
-                <Home size={20} />
-              </button>
-              <button
-                onClick={() => navigate('/profile')}
-                className="p-2 text-gray-600 hover:text-[#0B4F3A] rounded-lg hover:bg-gray-50"
-              >
-                <User size={20} />
-              </button>
-              <button
-                onClick={() => navigate('/courses')}
-                className="p-2 text-gray-600 hover:text-[#0B4F3A] rounded-lg hover:bg-gray-50"
-              >
-                <BookOpen size={20} />
-              </button>
-              <button
-                onClick={handleLogout}
-                className="p-2 text-gray-600 hover:text-red-600 rounded-lg hover:bg-gray-50"
-              >
-                <LogOut size={20} />
-              </button>
-            </nav>
-          </div>
-        </div>
-      </header>
+      {/* Mobile menu button */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md text-gray-600"
+      >
+        <Menu size={20} />
+      </button>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {children}
+      {/* Overlay */}
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-20 z-40 transition-opacity lg:hidden ${
+          sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full z-50 transition-transform duration-300 lg:translate-x-0 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <Sidebar onClose={() => setSidebarOpen(false)} />
+      </div>
+
+      {/* Main content */}
+      <main className="lg:pl-64 min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {children}
+        </div>
       </main>
     </div>
   );

@@ -1,9 +1,10 @@
-﻿import React from 'react';
+﻿// src/components/Common.tsx
+import React from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 // ============================================
-// CARD COMPONENT
+// CARD
 // ============================================
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -27,7 +28,7 @@ export const Card: React.FC<CardProps> = ({ children, className, ...props }) => 
 };
 
 // ============================================
-// STAT CARD COMPONENT
+// STAT CARD
 // ============================================
 interface StatCardProps {
   icon: React.ReactNode;
@@ -45,7 +46,7 @@ export const StatCard: React.FC<StatCardProps> = ({ icon, value, label, classNam
       )
     )}>
       <div className="flex items-center gap-4">
-        <div className="p-3 bg-[#0B4F3A] bg-opacity-10 rounded-lg">
+        <div className="p-3 bg-[#0B4F3A] bg-opacity-10 rounded-lg text-[#0B4F3A]">
           {icon}
         </div>
         <div>
@@ -58,7 +59,7 @@ export const StatCard: React.FC<StatCardProps> = ({ icon, value, label, classNam
 };
 
 // ============================================
-// SECTION TITLE COMPONENT
+// SECTION TITLE
 // ============================================
 interface SectionTitleProps {
   children: React.ReactNode;
@@ -78,7 +79,7 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({ children, icon, clas
 };
 
 // ============================================
-// BADGE COMPONENT
+// BADGE
 // ============================================
 interface BadgeProps {
   children: React.ReactNode;
@@ -111,7 +112,7 @@ export const Badge: React.FC<BadgeProps> = ({ children, variant = 'default', cla
 };
 
 // ============================================
-// PROGRESS BAR COMPONENT (FIXES THE CURRENT ERROR)
+// PROGRESS BAR
 // ============================================
 interface ProgressBarProps {
   value: number;
@@ -139,7 +140,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 };
 
 // ============================================
-// BUTTON COMPONENT
+// BUTTON
 // ============================================
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'danger';
@@ -186,131 +187,12 @@ export const Button: React.FC<ButtonProps> = ({
 };
 
 // ============================================
-// INPUT COMPONENT
-// ============================================
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  error?: string;
-}
-
-export const Input: React.FC<InputProps> = ({ label, error, className, ...props }) => {
-  return (
-    <div className="space-y-1">
-      {label && (
-        <label className="block text-sm font-medium text-gray-700">
-          {label}
-        </label>
-      )}
-      <input
-        className={twMerge(
-          clsx(
-            'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0B4F3A] focus:border-transparent',
-            error && 'border-red-500',
-            className
-          )
-        )}
-        {...props}
-      />
-      {error && (
-        <p className="text-sm text-red-600">{error}</p>
-      )}
-    </div>
-  );
-};
-
-// ============================================
-// SELECT COMPONENT
-// ============================================
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  label?: string;
-  options: { value: string; label: string }[];
-}
-
-export const Select: React.FC<SelectProps> = ({ label, options, className, ...props }) => {
-  return (
-    <div className="space-y-1">
-      {label && (
-        <label className="block text-sm font-medium text-gray-700">
-          {label}
-        </label>
-      )}
-      <select
-        className={twMerge(
-          clsx(
-            'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0B4F3A] focus:border-transparent',
-            className
-          )
-        )}
-        {...props}
-      >
-        {options.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
-
-// ============================================
-// MODAL COMPONENT
-// ============================================
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title?: string;
-  children: React.ReactNode;
-}
-
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex items-center justify-center min-h-screen px-4">
-        <div className="fixed inset-0 bg-black opacity-30" onClick={onClose} />
-        <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-          {title && (
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
-              {title}
-            </h3>
-          )}
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ============================================
 // LOADING SPINNER
 // ============================================
 export const LoadingSpinner: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={twMerge(clsx('flex justify-center items-center', className))}>
       <div className="w-8 h-8 border-3 border-[#0B4F3A] border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
-};
-
-// ============================================
-// EMPTY STATE
-// ============================================
-interface EmptyStateProps {
-  icon?: React.ReactNode;
-  title: string;
-  description?: string;
-}
-
-export const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description }) => {
-  return (
-    <div className="text-center py-12">
-      {icon && <div className="mx-auto mb-4 text-gray-300">{icon}</div>}
-      <h3 className="text-lg font-medium text-gray-900 mb-1">{title}</h3>
-      {description && (
-        <p className="text-sm text-gray-500">{description}</p>
-      )}
     </div>
   );
 };

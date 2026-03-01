@@ -1,6 +1,8 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿// src/pages/FirebaseTest.tsx
+import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { ref, get } from 'firebase/database';
+import { MainLayout } from '../components/MainLayout';
 import { Card } from '../components/Common';
 
 export const FirebaseTest: React.FC = () => {
@@ -20,7 +22,7 @@ export const FirebaseTest: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <MainLayout>
       <h1 className="text-2xl font-bold text-[#0B4F3A] mb-4">Firebase Data</h1>
       
       <Card className="p-4">
@@ -45,6 +47,6 @@ export const FirebaseTest: React.FC = () => {
           <p className="text-red-500">No students found in Firebase</p>
         )}
       </Card>
-    </div>
+    </MainLayout>
   );
 };

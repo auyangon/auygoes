@@ -1,9 +1,11 @@
-﻿import React, { createContext, useContext, useEffect, useState } from 'react';
+﻿// src/contexts/DataContext.tsx
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { db } from '../firebase';
 import { ref, onValue } from 'firebase/database';
+import { encodeEmailForFirebase } from '../utils/emailUtils';
 
-interface Course {
+export interface Course {
   id: string;
   courseId: string;
   name: string;
@@ -13,9 +15,17 @@ interface Course {
   attendancePercentage?: number;
 }
 
+export interface Announcement {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  author: string;
+}
+
 interface DataContextType {
   courses: Course[];
-  announcements: any[];
+  announcements: Announcement[];
   loading: boolean;
   error: string | null;
   gpa: number;
@@ -32,16 +42,10 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
-// Encode email for Firebase (replace dots with commas)
-const encodeEmail = (email: string): string => {
-  if (!email) return '';
-  return email.replace(/\./g, ',');
-};
-
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
-  const [announcements, setAnnouncements] = useState<any[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [gpa, setGpa] = useState(0);
@@ -59,8 +63,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const email = user.email;
     setStudentEmail(email);
     
-    // ENCODE THE EMAIL FOR FIREBASE PATH
-    const encodedEmail = encodeEmail(email);
+    // Encode email for Firebase path
+    const encodedEmail = encodeEmailForFirebase(email);
 
     console.log('========================================');
     console.log('📧 Original email:', email);
@@ -68,9 +72,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     console.log('📁 Firebase path:', `students/${encodedEmail}`);
     console.log('========================================');
 
-    // USE ENCODED EMAIL FOR FIREBASE PATH
+    // Fetch student data
     const studentRef = ref(db, `students/${encodedEmail}`);
-    
     const unsubscribeStudent = onValue(studentRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -80,7 +83,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         
         if (data.courses) {
           const courseList: Course[] = [];
-          let totalAttendance = 0;
+          let totalAttendanceSum = 0;
           
           Object.entries(data.courses).forEach(([courseId, courseData]: [string, any]) => {
             courseList.push({
@@ -92,42 +95,49 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
               grade: courseData.grade || '',
               attendancePercentage: courseData.attendancePercentage || 0
             });
-            totalAttendance += courseData.attendancePercentage || 0;
+            totalAttendanceSum += courseData.attendancePercentage || 0;
           });
           
           setCourses(courseList);
           
           // Calculate GPA
           let totalPoints = 0;
-          let totalCredits = 0;
+          let totalCreditsEarned = 0;
           
           courseList.forEach(course => {
             if (course.grade && gradePoints[course.grade]) {
               totalPoints += gradePoints[course.grade] * course.credits;
-              totalCredits += course.credits;
+              totalCreditsEarned += course.credits;
             }
           });
           
-          setGpa(totalCredits ? Number((totalPoints / totalCredits).toFixed(2)) : 0);
-          setTotalCredits(totalCredits);
-          setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
+          setGpa(totalCreditsEarned ? Number((totalPoints / totalCreditsEarned).toFixed(2)) : 0);
+          setTotalCredits(totalCreditsEarned);
+          setAttendance(courseList.length ? Math.round(totalAttendanceSum / courseList.length) : 0);
         }
         setError(null);
       } else {
-        console.log('❌ No data found for path:', `students/${encodedEmail}`);
-        setError('Student data not found');
+        console.log('❌ No data found for encoded path:', `students/${encodedEmail}`);
+        setError('Student data not found. Please contact administration.');
       }
+      setLoading(false);
+    }, (error) => {
+      console.error('❌ Firebase error:', error);
+      setError('Failed to load student data');
       setLoading(false);
     });
 
-    // Get announcements
+    // Fetch announcements (no encoding needed)
     const announcementsRef = ref(db, 'announcements');
     const unsubscribeAnnouncements = onValue(announcementsRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         const list = Object.entries(data).map(([id, item]: [string, any]) => ({
           id,
-          ...item
+          title: item.title || '',
+          content: item.content || '',
+          date: item.date || '',
+          author: item.author || 'Admin'
         }));
         list.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setAnnouncements(list);

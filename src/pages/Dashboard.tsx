@@ -1,9 +1,10 @@
-﻿import React, { useEffect } from 'react';
+﻿// src/pages/Dashboard.tsx
+import React, { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { MainLayout } from '../components/MainLayout';
-import { Card } from '../components/Common';
+import { Card, StatCard, SectionTitle, Badge, ProgressBar } from '../components/Common';
 import { 
   TrendingUp, 
   BookOpen, 
@@ -11,7 +12,7 @@ import {
   Bell,
   GraduationCap,
   Sparkles,
-  Calendar
+  ChevronRight
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -74,110 +75,72 @@ export default function Dashboard() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-[#0B4F3A] bg-opacity-10 rounded-lg">
-              <TrendingUp className="text-[#0B4F3A]" size={24} />
-            </div>
-            <div>
-              <p className="text-2xl font-semibold text-gray-800">{gpa.toFixed(2)}</p>
-              <p className="text-sm text-gray-500">GPA</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-[#0B4F3A] bg-opacity-10 rounded-lg">
-              <BookOpen className="text-[#0B4F3A]" size={24} />
-            </div>
-            <div>
-              <p className="text-2xl font-semibold text-gray-800">{totalCredits}</p>
-              <p className="text-sm text-gray-500">Credits</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-[#0B4F3A] bg-opacity-10 rounded-lg">
-              <GraduationCap className="text-[#0B4F3A]" size={24} />
-            </div>
-            <div>
-              <p className="text-2xl font-semibold text-gray-800">{courses.length}</p>
-              <p className="text-sm text-gray-500">Courses</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-[#0B4F3A] bg-opacity-10 rounded-lg">
-              <Award className="text-[#0B4F3A]" size={24} />
-            </div>
-            <div>
-              <p className="text-2xl font-semibold text-gray-800">{attendance}%</p>
-              <p className="text-sm text-gray-500">Attendance</p>
-            </div>
-          </div>
-        </div>
+        <StatCard icon={<TrendingUp size={24} />} value={gpa.toFixed(2)} label="GPA" />
+        <StatCard icon={<BookOpen size={24} />} value={totalCredits} label="Credits" />
+        <StatCard icon={<GraduationCap size={24} />} value={courses.length} label="Courses" />
+        <StatCard icon={<Award size={24} />} value={`${attendance}%`} label="Attendance" />
       </div>
 
       {/* Announcements */}
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
-        <Bell size={20} className="text-[#0B4F3A]" />
+      <SectionTitle icon={<Bell size={20} className="text-[#0B4F3A]" />}>
         Latest Announcements
-      </h2>
+      </SectionTitle>
       
       <div className="space-y-4 mb-8">
-        {announcements.map((ann) => (
-          <div key={ann.id} className="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+        {announcements.slice(0, 3).map((ann) => (
+          <Card key={ann.id} className="p-5 hover:shadow-md transition-shadow">
             <h3 className="font-semibold text-gray-800 mb-2">{ann.title}</h3>
             <p className="text-gray-600 text-sm mb-2">{ann.content}</p>
             <p className="text-xs text-gray-400">{ann.date} · {ann.author}</p>
-          </div>
+          </Card>
         ))}
+        {announcements.length > 3 && (
+          <div className="text-right">
+            <Link to="/announcements" className="text-sm text-[#0B4F3A] hover:underline">
+              View all announcements →
+            </Link>
+          </div>
+        )}
       </div>
 
-      {/* Courses */}
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
-        <BookOpen size={20} className="text-[#0B4F3A]" />
+      {/* Courses Preview */}
+      <SectionTitle icon={<BookOpen size={20} className="text-[#0B4F3A]" />}>
         My Courses
-      </h2>
+      </SectionTitle>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {courses.map((course) => (
-          <div 
+        {courses.slice(0, 3).map((course) => (
+          <Card 
             key={course.id} 
-            className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer"
+            className="p-5 hover:shadow-md transition-shadow cursor-pointer"
             onClick={() => navigate(`/course/${course.courseId}`)}
           >
             <div className="flex justify-between items-start mb-3">
               <h3 className="font-semibold text-gray-800">{course.name}</h3>
-              <span className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600">
-                {course.courseId}
-              </span>
+              <Badge variant="primary" className="text-xs">{course.courseId}</Badge>
             </div>
             <p className="text-sm text-gray-600 mb-2">{course.teacher}</p>
-            <div className="flex justify-between items-center text-sm">
+            <div className="flex justify-between items-center text-sm mb-3">
               <span className="text-gray-500">Credits: {course.credits}</span>
               <span className="font-medium text-[#0B4F3A]">Grade: {course.grade || '-'}</span>
             </div>
-            <div className="mt-3 pt-3 border-t border-gray-100">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">Attendance</span>
-                <span className="text-sm font-medium text-[#0B4F3A]">{course.attendancePercentage}%</span>
+            <div className="pt-3 border-t border-gray-100">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-xs text-gray-500">Attendance</span>
+                <span className="text-xs font-medium text-[#0B4F3A]">{course.attendancePercentage}%</span>
               </div>
-              <div className="w-full h-1.5 bg-gray-100 rounded-full mt-1">
-                <div 
-                  className="h-full bg-[#0B4F3A] rounded-full"
-                  style={{ width: `${course.attendancePercentage}%` }}
-                />
-              </div>
+              <ProgressBar value={course.attendancePercentage || 0} />
             </div>
-          </div>
+          </Card>
         ))}
       </div>
+      {courses.length > 3 && (
+        <div className="text-right mt-4">
+          <Link to="/courses" className="text-sm text-[#0B4F3A] hover:underline">
+            View all courses →
+          </Link>
+        </div>
+      )}
     </MainLayout>
   );
 }

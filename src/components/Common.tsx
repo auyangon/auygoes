@@ -2,16 +2,16 @@
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-// Seafoam green gradient
-const seafoamGradient = 'bg-gradient-to-br from-[#2E8B57] via-[#3CB371] to-[#66CDAA]';
+// Seafoam green gradient (lighter version)
+const seafoamGradient = 'bg-gradient-to-br from-[#2E8B57] to-[#66CDAA]';
 const seafoamLight = 'bg-gradient-to-br from-[#98FB98] to-[#90EE90]';
 
-// Premium glass effect
-const glassBase = 'backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl';
-const glassHover = 'hover:bg-white/20 hover:border-white/30 hover:shadow-3xl transition-all duration-300';
+// Light glass effect for better contrast
+const glassBase = 'backdrop-blur-md bg-white/80 border border-gray-200/50 shadow-md';
+const glassHover = 'hover:bg-white/90 hover:border-gray-300/50 hover:shadow-lg transition-all duration-300';
 
 // ============================================
-// CARD – Premium glass with seafoam accent
+// CARD – Light glass with good contrast
 // ============================================
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -27,7 +27,7 @@ export const Card: React.FC<CardProps> = ({ children, className, gradient = fals
           'rounded-2xl',
           glassBase,
           glassHover,
-          gradient && seafoamGradient + ' bg-opacity-20',
+          gradient && 'bg-white',
           className
         )
       )}
@@ -39,7 +39,7 @@ export const Card: React.FC<CardProps> = ({ children, className, gradient = fals
 };
 
 // ============================================
-// STAT CARD – Seafoam gradient icon background
+// STAT CARD – Light background, seafoam icon
 // ============================================
 interface StatCardProps {
   icon: React.ReactNode;
@@ -53,20 +53,18 @@ export const StatCard: React.FC<StatCardProps> = ({ icon, value, label, classNam
     <div
       className={twMerge(
         clsx(
-          'rounded-2xl p-6',
-          glassBase,
-          glassHover,
+          'rounded-2xl p-6 bg-white shadow-sm border border-gray-100',
           className
         )
       )}
     >
       <div className="flex items-center gap-4">
-        <div className="p-3 rounded-xl bg-gradient-to-br from-[#2E8B57] to-[#66CDAA] text-white shadow-lg">
+        <div className="p-3 rounded-xl bg-gradient-to-br from-[#2E8B57] to-[#66CDAA] text-white shadow-md">
           {icon}
         </div>
         <div>
-          <div className="text-2xl font-light text-white">{value}</div>
-          <div className="text-xs font-light text-white/70">{label}</div>
+          <div className="text-2xl font-semibold text-gray-800">{value}</div>
+          <div className="text-sm text-gray-600">{label}</div>
         </div>
       </div>
     </div>
@@ -74,7 +72,7 @@ export const StatCard: React.FC<StatCardProps> = ({ icon, value, label, classNam
 };
 
 // ============================================
-// SECTION TITLE – Seafoam icon
+// SECTION TITLE – Dark text for contrast
 // ============================================
 interface SectionTitleProps {
   children: React.ReactNode;
@@ -85,8 +83,8 @@ interface SectionTitleProps {
 export const SectionTitle: React.FC<SectionTitleProps> = ({ children, icon, className }) => {
   return (
     <div className="flex items-center gap-2 mb-6">
-      {icon && <span className="text-[#66CDAA]">{icon}</span>}
-      <h2 className={twMerge(clsx('text-lg font-light text-white', className))}>
+      {icon && <span className="text-[#2E8B57]">{icon}</span>}
+      <h2 className={twMerge(clsx('text-lg font-medium text-gray-700', className))}>
         {children}
       </h2>
     </div>
@@ -94,7 +92,7 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({ children, icon, clas
 };
 
 // ============================================
-// BADGE – Seafoam variants
+// BADGE – Good contrast variants
 // ============================================
 interface BadgeProps {
   children: React.ReactNode;
@@ -104,18 +102,18 @@ interface BadgeProps {
 
 export const Badge: React.FC<BadgeProps> = ({ children, variant = 'default', className }) => {
   const variants = {
-    default: 'bg-white/20 text-white backdrop-blur-sm',
+    default: 'bg-gray-100 text-gray-700 border border-gray-200',
     primary: 'bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] text-white',
-    success: 'bg-green-500/80 text-white backdrop-blur-sm',
-    warning: 'bg-yellow-500/80 text-white backdrop-blur-sm',
-    danger: 'bg-red-500/80 text-white backdrop-blur-sm',
+    success: 'bg-green-100 text-green-700 border border-green-200',
+    warning: 'bg-yellow-100 text-yellow-700 border border-yellow-200',
+    danger: 'bg-red-100 text-red-700 border border-red-200',
   };
 
   return (
     <span
       className={twMerge(
         clsx(
-          'px-3 py-1 rounded-full text-xs font-light',
+          'px-3 py-1 rounded-full text-xs font-medium',
           variants[variant],
           className
         )
@@ -127,7 +125,7 @@ export const Badge: React.FC<BadgeProps> = ({ children, variant = 'default', cla
 };
 
 // ============================================
-// PROGRESS BAR – Seafoam green fill
+// PROGRESS BAR – Seafoam fill
 // ============================================
 interface ProgressBarProps {
   value: number;
@@ -144,7 +142,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 }) => {
   const percentage = Math.min(100, Math.max(0, (value / max) * 100));
   return (
-    <div className={twMerge(clsx('w-full h-1.5 bg-white/20 backdrop-blur-sm rounded-full overflow-hidden', className))}>
+    <div className={twMerge(clsx('w-full h-2 bg-gray-200 rounded-full overflow-hidden', className))}>
       <div
         className={twMerge(clsx('h-full bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] rounded-full transition-all duration-300', barClassName))}
         style={{ width: `${percentage}%` }}
@@ -154,7 +152,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 };
 
 // ============================================
-// BUTTON – Seafoam gradient
+// BUTTON – Clear contrast
 // ============================================
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'danger';
@@ -171,9 +169,9 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const variants = {
-    primary: 'bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] text-white hover:from-[#3CB371] hover:to-[#7CFC00]',
-    secondary: 'backdrop-blur-xl bg-white/20 border border-white/30 text-white hover:bg-white/30',
-    outline: 'border border-[#66CDAA] text-[#66CDAA] hover:bg-[#66CDAA]/20',
+    primary: 'bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] text-white hover:from-[#3CB371] hover:to-[#7CFC00] shadow-md',
+    secondary: 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200',
+    outline: 'border border-[#2E8B57] text-[#2E8B57] hover:bg-[#2E8B57]/10',
     danger: 'bg-red-600 text-white hover:bg-red-700',
   };
 
@@ -187,7 +185,7 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       className={twMerge(
         clsx(
-          'rounded-xl font-light transition-all duration-300 disabled:opacity-50',
+          'rounded-xl font-medium transition-all duration-300 disabled:opacity-50',
           variants[variant],
           sizes[size],
           className
@@ -201,7 +199,7 @@ export const Button: React.FC<ButtonProps> = ({
 };
 
 // ============================================
-// AVATAR – For profile picture
+// AVATAR – Clean design
 // ============================================
 interface AvatarProps {
   src?: string;
@@ -217,7 +215,7 @@ export const Avatar: React.FC<AvatarProps> = ({ src, alt = '', size = 'md', clas
     lg: 'w-32 h-32',
   };
   return (
-    <div className={twMerge(clsx('rounded-full overflow-hidden border-4 border-[#66CDAA]/30 shadow-xl', sizeClasses[size], className))}>
+    <div className={twMerge(clsx('rounded-full overflow-hidden border-4 border-white shadow-xl', sizeClasses[size], className))}>
       {src ? (
         <img src={src} alt={alt} className="w-full h-full object-cover" />
       ) : (
@@ -230,12 +228,12 @@ export const Avatar: React.FC<AvatarProps> = ({ src, alt = '', size = 'md', clas
 };
 
 // ============================================
-// LOADING SPINNER – Seafoam green
+// LOADING SPINNER – Seafoam
 // ============================================
 export const LoadingSpinner: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={twMerge(clsx('flex justify-center items-center', className))}>
-      <div className="w-6 h-6 border-2 border-white/30 border-t-[#66CDAA] rounded-full animate-spin" />
+      <div className="w-6 h-6 border-2 border-gray-200 border-t-[#2E8B57] rounded-full animate-spin" />
     </div>
   );
 };

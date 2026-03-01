@@ -38,42 +38,42 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   ];
 
   return (
-    <div className="h-full w-64 backdrop-blur-xl bg-white/10 border-r border-white/20 flex flex-col shadow-2xl">
-      <div className="p-6 border-b border-white/20">
-        <h1 className="text-xl font-light text-white">AUY Portal</h1>
-        <p className="text-xs text-white/60 mt-1">American University of Yangon</p>
+    <div className="h-full w-64 bg-white shadow-lg border-r border-gray-200 flex flex-col">
+      <div className="p-6 border-b border-gray-100">
+        <h1 className="text-xl font-bold text-[#2E8B57]">AUY Portal</h1>
+        <p className="text-xs text-gray-500 mt-1">American University of Yangon</p>
       </div>
 
       <nav className="flex-1 p-4">
-        <ul className="space-y-2">
+        <ul className="space-y-1">
           {navItems.map((item) => (
             <li key={item.path}>
               <NavLink
                 to={item.path}
                 onClick={onClose}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  `flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                     isActive
-                      ? 'bg-white/20 text-white'
-                      : 'text-white/70 hover:bg-white/10 hover:text-white'
+                      ? 'bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] text-white shadow-md'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-[#2E8B57]'
                   }`
                 }
               >
                 <item.icon size={20} />
-                <span className="font-light">{item.label}</span>
+                <span className="font-medium">{item.label}</span>
               </NavLink>
             </li>
           ))}
         </ul>
       </nav>
 
-      <div className="p-4 border-t border-white/20">
+      <div className="p-4 border-t border-gray-100">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-white/70 hover:bg-white/10 hover:text-white transition-all"
+          className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all"
         >
           <LogOut size={20} />
-          <span className="font-light">Logout</span>
+          <span className="font-medium">Logout</span>
         </button>
       </div>
     </div>

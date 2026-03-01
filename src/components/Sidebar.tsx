@@ -40,8 +40,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   return (
     <div className="h-full w-64 bg-white shadow-lg border-r border-gray-200 flex flex-col">
       <div className="p-6 border-b border-gray-100">
-        <h1 className="text-xl font-bold text-[#2E8B57]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>AUY Portal</h1>
-        <p className="text-xs text-[#2a2a2a] mt-1">American University of Yangon</p>
+        <h1 className="text-xl font-bold text-[#2E8B57]">AUY Portal</h1>
+        <p className="text-xs text-gray-600 mt-1">American University of Yangon</p>
       </div>
 
       <nav className="flex-1 p-4">
@@ -54,8 +54,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] text-white shadow-md'
-                      : 'text-[#1a1a1a] hover:bg-gray-50 hover:text-[#2E8B57]'
+                      ? 'bg-[#2E8B57] text-white'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-[#2E8B57]'
                   }`
                 }
               >
@@ -70,7 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       <div className="p-4 border-t border-gray-100">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-[#1a1a1a] hover:bg-red-50 hover:text-red-600 transition-all"
+          className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-all"
         >
           <LogOut size={20} />
           <span className="font-medium">Logout</span>
@@ -79,4 +79,3 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
     </div>
   );
 };
-

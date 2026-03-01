@@ -6,37 +6,41 @@
   body {
     @apply bg-gray-50;
     font-family: 'Poppins', sans-serif;
-    color: #1a1a1a;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #1f2937; /* Dark gray for body text */
   }
   
   h1, h2, h3, h4, h5, h6 {
-    color: #0a0a0a;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-    font-weight: 500;
+    color: #111827; /* Almost black for headings */
+    font-weight: 600;
   }
   
   p, span, div, li, a {
-    color: #1a1a1a;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    color: #374151; /* Dark gray for content */
+  }
+  
+  /* Links and interactive elements */
+  a:hover {
+    color: #2E8B57;
   }
 }
 
-/* Jet black text utilities */
-.text-jet {
-  color: #1a1a1a !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
-}
-.text-jet-dark {
-  color: #0a0a0a !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
-}
-.text-jet-light {
-  color: #2a2a2a !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+/* Utility classes for text colors */
+.text-primary { color: #111827 !important; } /* Headings */
+.text-secondary { color: #374151 !important; } /* Body text */
+.text-muted { color: #6B7280 !important; } /* Secondary text */
+.text-accent { color: #2E8B57 !important; } /* Seafoam green accent */
+
+/* Card styles */
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-200;
 }
 
-/* Card styles remain light */
-.card {
-  @apply bg-white rounded-xl shadow-sm border border-gray-100;
+/* Fix for any white text on light backgrounds */
+.text-white, [class*="text-white"] {
+  color: #111827 !important;
+}
+
+/* Ensure all text is visible */
+.bg-white, .bg-gray-50, .bg-gray-100 {
+  color: #1f2937;
 }

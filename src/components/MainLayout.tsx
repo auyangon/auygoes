@@ -10,24 +10,18 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] via-[#f0f7fa] to-[#e8f3f0] relative">
-      {/* Very subtle animated orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-30">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#2E8B57]/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#66CDAA]/10 rounded-full blur-3xl"></div>
-      </div>
-
+    <div className="min-h-screen bg-gray-50">
       {/* Mobile menu button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-white/80 backdrop-blur-md rounded-xl shadow-md text-[#1a1a1a] border border-gray-200"
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-white rounded-xl shadow-md text-gray-700 border border-gray-200"
       >
         <Menu size={24} />
       </button>
 
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black/10 backdrop-blur-sm z-40 transition-opacity lg:hidden ${
+        className={`fixed inset-0 bg-black/20 z-40 transition-opacity lg:hidden ${
           sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setSidebarOpen(false)}
@@ -43,7 +37,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </div>
 
       {/* Main content */}
-      <main className="lg:pl-64 min-h-screen relative z-10">
+      <main className="lg:pl-64 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {children}
         </div>
@@ -51,4 +45,3 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     </div>
   );
 };
-

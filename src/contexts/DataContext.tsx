@@ -32,11 +32,9 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
-// CRITICAL: Encode email for Firebase (replace dots with commas)
-// Firebase paths CANNOT contain dots (.)
-const encodeEmailForFirebase = (email: string): string => {
+// SIMPLE EMAIL ENCODING - Replace dots with commas
+const encodeEmail = (email: string): string => {
   if (!email) return '';
-  // Replace all dots with commas
   return email.replace(/\./g, ',');
 };
 
@@ -61,23 +59,22 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const email = user.email;
     setStudentEmail(email);
     
-    // IMPORTANT: Encode the email for Firebase path
-    const encodedEmail = encodeEmailForFirebase(email);
+    // ENCODE THE EMAIL - THIS IS THE KEY FIX!
+    const encodedEmail = encodeEmail(email);
+    
+    // Show what's happening
+    console.log('🔍 ORIGINAL EMAIL:', email);
+    console.log('🔑 ENCODED EMAIL:', encodedEmail);
+    console.log('📁 FIREBASE PATH:', `students/${encodedEmail}`);
 
-    console.log('========================================');
-    console.log('🔍 Original email:', email);
-    console.log('🔑 Encoded for Firebase:', encodedEmail);
-    console.log('📁 Firebase path:', `students/${encodedEmail}`);
-    console.log('========================================');
-
-    // USE THE ENCODED EMAIL FOR THE FIREBASE PATH!
+    // USE ENCODED EMAIL FOR FIREBASE PATH
     const studentRef = ref(db, `students/${encodedEmail}`);
     
     const unsubscribeStudent = onValue(studentRef, (snapshot) => {
-      const data = snapshot.val();
-      console.log('📊 Student data from Firebase:', data);
-      
-      if (data) {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        console.log('✅ STUDENT FOUND:', data);
+        
         setStudentName(data.studentName || '');
         
         if (data.courses) {
@@ -113,17 +110,33 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           setGpa(totalCredits ? Number((totalPoints / totalCredits).toFixed(2)) : 0);
           setTotalCredits(totalCredits);
           setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
-          
-          console.log(`✅ Loaded ${courseList.length} courses`);
         }
         setError(null);
       } else {
-        console.log('❌ No data found for encoded path:', `students/${encodedEmail}`);
-        setError('Student data not found. Please check with administration.');
+        console.log('❌ NO DATA AT PATH:', `students/${encodedEmail}`);
+        
+        // Try to list all students to see what's available
+        const allStudentsRef = ref(db, 'students');
+        onValue(allStudentsRef, (allSnapshot) => {
+          if (allSnapshot.exists()) {
+            const keys = Object.keys(allSnapshot.val());
+            console.log('📋 AVAILABLE STUDENT KEYS:', keys);
+            
+            // Check if any key contains part of the email
+            const emailPart = email.split('@')[0].replace(/\./g, ',');
+            const possibleMatch = keys.find(key => key.includes(emailPart));
+            if (possibleMatch) {
+              console.log('💡 POSSIBLE MATCH:', possibleMatch);
+              console.log('💡 TRY LOGGING IN WITH THIS EMAIL INSTEAD');
+            }
+          }
+        }, { onlyOnce: true });
+        
+        setError('Student data not found');
       }
       setLoading(false);
     }, (error) => {
-      console.error('❌ Firebase error:', error);
+      console.error('❌ FIREBASE ERROR:', error);
       setError('Failed to load student data');
       setLoading(false);
     });
@@ -131,8 +144,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     // Get announcements (no encoding needed)
     const announcementsRef = ref(db, 'announcements');
     const unsubscribeAnnouncements = onValue(announcementsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
         const list = Object.entries(data).map(([id, item]: [string, any]) => ({
           id,
           ...item

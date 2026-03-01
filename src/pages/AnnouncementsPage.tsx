@@ -1,7 +1,7 @@
-﻿// src/pages/AnnouncementsPage.tsx
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { Card, SectionTitle, Badge } from '../components/Common';
+﻿import React, { useState, useEffect } from 'react';
+import { db } from '../firebase';
+import { ref, onValue } from 'firebase/database';
+import { Card, SectionTitle } from '../components/Common';
 import { Calendar, Bell, AlertCircle, Info } from 'lucide-react';
 
 interface Announcement {
@@ -15,69 +15,30 @@ interface Announcement {
 }
 
 export const AnnouncementsPage: React.FC = () => {
-  const { user } = useAuth();
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    loadAnnouncements();
-  }, []);
-
-  const loadAnnouncements = () => {
-    setLoading(true);
+    const announcementsRef = ref(db, 'announcements');
     
-    const sampleAnnouncements: Announcement[] = [
-      {
-        id: '1',
-        title: '🏫 Thingyan Holiday Announcement',
-        content: 'University will be closed from March 30 to April 4 for Thingyan celebrations.',
-        date: '2026-03-15',
-        author: 'Admin',
-        priority: 'high',
-        category: 'Holiday'
-      },
-      {
-        id: '2',
-        title: '📝 Final Exam Schedule Published',
-        content: 'The final examination schedule for May 2026 has been published.',
-        date: '2026-03-16',
-        author: 'Academic Office',
-        priority: 'high',
-        category: 'Academic'
-      },
-      {
-        id: '3',
-        title: '📚 Library Hours Extended',
-        content: 'The library will be open until 10 PM starting May 1st.',
-        date: '2026-03-17',
-        author: 'Library',
-        priority: 'medium',
-        category: 'Facility'
-      },
-      {
-        id: '4',
-        title: '📢 STAT100 Class Update',
-        content: 'STAT100 class on Monday 09:00-10:30 at LA campus.',
-        date: '2026-03-18',
-        author: 'Statistics Department',
-        priority: 'medium',
-        category: 'Class Update'
-      },
-      {
-        id: '5',
-        title: '🎓 MATH150 Midterm',
-        content: 'MATH150 midterm exam scheduled for next Tuesday.',
-        date: '2026-03-19',
-        author: 'Mathematics Department',
-        priority: 'high',
-        category: 'Exam'
+    const unsubscribe = onValue(announcementsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const announcementsArray = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
+        }));
+        announcementsArray.sort((a, b) => 
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setAnnouncements(announcementsArray);
       }
-    ];
-    
-    setAnnouncements(sampleAnnouncements);
-    setLoading(false);
-  };
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const getPriorityColor = (priority: string) => {
     switch(priority) {
@@ -101,11 +62,8 @@ export const AnnouncementsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[#0B4F3A] mb-2">
-          Announcements
-        </h1>
+        <h1 className="text-3xl font-bold text-[#0B4F3A] mb-2">Announcements</h1>
         <p className="text-gray-500">Stay updated with the latest news and events</p>
       </div>
 
@@ -116,7 +74,7 @@ export const AnnouncementsPage: React.FC = () => {
           className={`px-4 py-2 rounded-lg transition ${
             filter === 'all' 
               ? 'bg-[#0B4F3A] text-white' 
-              : 'bg-white text-gray-600 hover:bg-[#e0f2fe]'
+              : 'bg-white text-gray-600 hover:bg-gray-100'
           }`}
         >
           All
@@ -126,7 +84,7 @@ export const AnnouncementsPage: React.FC = () => {
           className={`px-4 py-2 rounded-lg transition ${
             filter === 'high' 
               ? 'bg-red-600 text-white' 
-              : 'bg-white text-gray-600 hover:bg-[#e0f2fe]'
+              : 'bg-white text-gray-600 hover:bg-gray-100'
           }`}
         >
           High Priority
@@ -136,48 +94,56 @@ export const AnnouncementsPage: React.FC = () => {
           className={`px-4 py-2 rounded-lg transition ${
             filter === 'medium' 
               ? 'bg-yellow-600 text-white' 
-              : 'bg-white text-gray-600 hover:bg-[#e0f2fe]'
+              : 'bg-white text-gray-600 hover:bg-gray-100'
           }`}
         >
           Medium
         </button>
       </div>
 
-      {/* Announcements List */}
       {loading ? (
         <div className="flex justify-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#0B4F3A] border-t-transparent"></div>
         </div>
       ) : (
         <div className="space-y-4">
-          {filteredAnnouncements.map((ann) => (
-            <Card key={ann.id} className={`p-6 ${getPriorityColor(ann.priority)}`}>
-              <div className="flex items-start gap-4">
-                <div className="mt-1">
-                  {getPriorityIcon(ann.priority)}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h2 className="text-xl font-semibold text-gray-700">{ann.title}</h2>
-                    <Badge variant="default">{ann.category}</Badge>
-                  </div>
-                  <p className="text-gray-600 mb-4">{ann.content}</p>
-                  <div className="flex items-center gap-4 text-sm text-gray-400">
-                    <span className="flex items-center gap-1">
-                      <Calendar size={14} />
-                      {new Date(ann.date).toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric',
-                        year: 'numeric'
-                      })}
-                    </span>
-                    <span>•</span>
-                    <span>By: {ann.author}</span>
-                  </div>
-                </div>
-              </div>
+          {filteredAnnouncements.length === 0 ? (
+            <Card className="p-12 text-center">
+              <Bell className="mx-auto text-gray-300 mb-4" size={48} />
+              <p className="text-gray-500">No announcements found</p>
             </Card>
-          ))}
+          ) : (
+            filteredAnnouncements.map((ann) => (
+              <Card key={ann.id} className={`p-6 ${getPriorityColor(ann.priority)}`}>
+                <div className="flex items-start gap-4">
+                  <div className="mt-1">
+                    {getPriorityIcon(ann.priority)}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h2 className="text-xl font-semibold text-gray-800">{ann.title}</h2>
+                      <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                        {ann.category}
+                      </span>
+                    </div>
+                    <p className="text-gray-600 mb-4">{ann.content}</p>
+                    <div className="flex items-center gap-4 text-sm text-gray-400">
+                      <span className="flex items-center gap-1">
+                        <Calendar size={14} />
+                        {new Date(ann.date).toLocaleDateString('en-US', { 
+                          month: 'short', 
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}
+                      </span>
+                      <span>•</span>
+                      <span>By: {ann.author}</span>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            ))
+          )}
         </div>
       )}
     </div>

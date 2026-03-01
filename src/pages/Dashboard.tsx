@@ -1,10 +1,17 @@
 ﻿import React, { useEffect } from 'react';
+import { Announcements } from '../components/Announcements';
 import { useAuth } from '../contexts/AuthContext';
+import { Announcements } from '../components/Announcements';
 import { useData } from '../contexts/DataContext';
+import { Announcements } from '../components/Announcements';
 import { useNavigate } from 'react-router-dom';
+import { Announcements } from '../components/Announcements';
 import { MainLayout } from '../components/MainLayout';
+import { Announcements } from '../components/Announcements';
 import { Card, StatCard, SectionTitle, Badge, ProgressBar } from '../components/Common';
+import { Announcements } from '../components/Announcements';
 import { CalendarWidget } from '../components/CalendarWidget';
+import { Announcements } from '../components/Announcements';
 import { 
   TrendingUp, 
   BookOpen, 
@@ -227,3 +234,4 @@ export default function Dashboard() {
     </MainLayout>
   );
 }
+

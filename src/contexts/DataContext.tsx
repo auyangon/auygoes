@@ -1,7 +1,7 @@
 ﻿import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { db } from '../firebase';
-import { ref, get } from 'firebase/database';
+import { ref, onValue } from 'firebase/database';
 
 export interface Course {
   id: string;
@@ -11,10 +11,27 @@ export interface Course {
   credits: number;
   grade?: string;
   attendancePercentage?: number;
+  attendanceSummary?: {
+    present: number;
+    late: number;
+    absent: number;
+    total: number;
+  };
+}
+
+export interface AttendanceRecord {
+  id: string;
+  studentEmail: string;
+  courseId: string;
+  date: string;
+  status: 'present' | 'late' | 'absent';
+  notes?: string;
 }
 
 interface DataContextType {
   courses: Course[];
+  announcements: any[];
+  attendanceRecords: AttendanceRecord[];
   loading: boolean;
   error: string | null;
   gpa: number;
@@ -23,6 +40,7 @@ interface DataContextType {
   studentName: string;
   studentEmail: string;
   major: string;
+  lastUpdated: Date | null;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -32,13 +50,16 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
-const encodeEmailForFirebase = (email: string): string => {
-  return email.replace(/\./g, ',');
+// Firebase doesn't allow dots in paths, so encode email
+const encodeEmail = (email: string): string => {
+  return email.replace(/\./g, ','); // Replace dots with commas
 };
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
+  const [announcements, setAnnouncements] = useState<any[]>([]);
+  const [attendanceRecords, setAttendanceRecords] = useState<AttendanceRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [gpa, setGpa] = useState(0);
@@ -47,6 +68,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [studentName, setStudentName] = useState('');
   const [studentEmail, setStudentEmail] = useState('');
   const [major, setMajor] = useState('');
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
     if (!user?.email) {
@@ -54,85 +76,159 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      
-      try {
-        const email = user.email;
-        setStudentEmail(email);
-        
-        const encodedEmail = encodeEmailForFirebase(email);
-        
-        console.log('========================================');
-        console.log('🔍 Fetching data for email:', email);
-        console.log('📁 Path:', `students/${encodedEmail}`);
-        console.log('========================================');
-        
-        const studentRef = ref(db, `students/${encodedEmail}`);
-        const studentSnap = await get(studentRef);
+    const email = user.email;
+    setStudentEmail(email);
+    
+    // Encode email for Firebase path (dots -> commas)
+    const encodedEmail = encodeEmail(email);
+    
+    console.log('========================================');
+    console.log('🔍 Fetching data for email:', email);
+    console.log('📁 Firebase path:', `students/${encodedEmail}`);
+    console.log('========================================`);
 
-        if (!studentSnap.exists()) {
-          console.error('❌ No student found for email:', email);
-          setError('Student record not found');
-          setLoading(false);
-          return;
-        }
-
-        const studentData = studentSnap.val();
-        console.log('✅ Student found:', studentData);
+    // REAL-TIME STUDENT DATA - Direct lookup by email!
+    const studentRef = ref(db, `students/${encodedEmail}`);
+    const unsubscribeStudent = onValue(studentRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setStudentName(data.studentName || '');
+        setMajor(data.major || 'ISP');
         
-        setStudentName(studentData.studentName || '');
-        setMajor(studentData.major || 'ISP');
-
-        const coursesData = studentData.courses || {};
-        const courseList: Course[] = [];
-
-        for (const [courseId, courseInfo] of Object.entries(coursesData)) {
-          const data = courseInfo as any;
-          courseList.push({
-            id: courseId,
-            courseId: courseId,
-            name: data.courseName || courseId,
-            teacher: data.teacherName || '',
-            credits: data.credits || 3,
-            grade: data.grade || '',
-            attendancePercentage: data.attendancePercentage || 0
+        // If student has courses directly under them
+        if (data.courses) {
+          const courseList: Course[] = [];
+          Object.entries(data.courses).forEach(([courseId, courseData]: [string, any]) => {
+            courseList.push({
+              id: courseId,
+              courseId: courseId,
+              name: courseData.courseName || courseId,
+              teacher: courseData.teacherName || 'Staff',
+              credits: courseData.credits || 3,
+              grade: courseData.grade || '',
+              attendancePercentage: courseData.attendancePercentage || 0
+            });
           });
+          setCourses(courseList);
         }
-
-        setCourses(courseList);
-
-        let totalPoints = 0;
-        let totalCreditsEarned = 0;
-        let totalAttendance = 0;
-
-        courseList.forEach((course) => {
-          if (course.grade && gradePoints[course.grade]) {
-            totalPoints += gradePoints[course.grade] * course.credits;
-            totalCreditsEarned += course.credits;
-          }
-          totalAttendance += course.attendancePercentage || 0;
-        });
-
-        setGpa(totalCreditsEarned ? Number((totalPoints / totalCreditsEarned).toFixed(2)) : 0);
-        setTotalCredits(totalCreditsEarned);
-        setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
-        
-      } catch (err) {
-        console.error('❌ Error:', err);
-        setError('Failed to load data');
-      } finally {
-        setLoading(false);
       }
-    };
+      setLastUpdated(new Date());
+    });
 
-    fetchData();
+    // REAL-TIME ATTENDANCE RECORDS - Filter by student email
+    const attendanceRef = ref(db, 'attendance');
+    const unsubscribeAttendance = onValue(attendanceRef, (snapshot) => {
+      const data = snapshot.val();
+      const records: AttendanceRecord[] = [];
+      const courseStats: Map<string, { present: number; late: number; absent: number; total: number }> = new Map();
+      
+      let totalPresent = 0;
+      let totalClasses = 0;
+      
+      if (data) {
+        Object.values(data).forEach((record: any) => {
+          // Match by email (your Firebase uses email as reference)
+          if (record.studentEmail === email) {
+            records.push({
+              id: record.id,
+              studentEmail: record.studentEmail,
+              courseId: record.courseId,
+              date: record.date,
+              status: record.status,
+              notes: record.notes
+            });
+            
+            // Update course stats
+            if (!courseStats.has(record.courseId)) {
+              courseStats.set(record.courseId, { present: 0, late: 0, absent: 0, total: 0 });
+            }
+            const stats = courseStats.get(record.courseId)!;
+            stats.total++;
+            if (record.status === 'present') stats.present++;
+            else if (record.status === 'late') stats.late++;
+            else if (record.status === 'absent') stats.absent++;
+            
+            // Update overall stats
+            if (record.status === 'present' || record.status === 'late') {
+              totalPresent++;
+            }
+            totalClasses++;
+          }
+        });
+      }
+      
+      setAttendanceRecords(records);
+      
+      // Update courses with attendance stats
+      setCourses(prevCourses => 
+        prevCourses.map(course => {
+          const stats = courseStats.get(course.courseId);
+          if (stats) {
+            const percentage = stats.total ? Math.round(((stats.present + stats.late) / stats.total) * 100) : 0;
+            return {
+              ...course,
+              attendancePercentage: percentage,
+              attendanceSummary: stats
+            };
+          }
+          return { ...course, attendancePercentage: 0 };
+        })
+      );
+      
+      setAttendance(totalClasses ? Math.round((totalPresent / totalClasses) * 100) : 0);
+      setLastUpdated(new Date());
+    });
+
+    // REAL-TIME ANNOUNCEMENTS
+    const announcementsRef = ref(db, 'announcements');
+    const unsubscribeAnnouncements = onValue(announcementsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const list = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+        list.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setAnnouncements(list);
+      }
+    });
+
+    setLoading(false);
+
+    return () => {
+      unsubscribeStudent();
+      unsubscribeAttendance();
+      unsubscribeAnnouncements();
+    };
   }, [user]);
+
+  // Calculate GPA
+  useEffect(() => {
+    let totalPoints = 0;
+    let totalCreditsEarned = 0;
+
+    courses.forEach((course) => {
+      if (course.grade && gradePoints[course.grade]) {
+        totalPoints += gradePoints[course.grade] * course.credits;
+        totalCreditsEarned += course.credits;
+      }
+    });
+
+    setGpa(totalCreditsEarned ? Number((totalPoints / totalCreditsEarned).toFixed(2)) : 0);
+    setTotalCredits(totalCreditsEarned);
+  }, [courses]);
 
   return (
     <DataContext.Provider value={{
-      courses, loading, error, gpa, totalCredits, attendance, attendanceRecords, studentName, studentEmail, major
+      courses,
+      announcements,
+      attendanceRecords,
+      loading,
+      error,
+      gpa,
+      totalCredits,
+      attendance,
+      studentName,
+      studentEmail,
+      major,
+      lastUpdated
     }}>
       {children}
     </DataContext.Provider>
@@ -144,4 +240,3 @@ export function useData() {
   if (!context) throw new Error('useData must be used within DataProvider');
   return context;
 }
-

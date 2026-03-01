@@ -1,0 +1,17 @@
+﻿id,enrollmentId,studentEmail,studentName,courseId,courseName,date,status,notes
+1,ENR001,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,BUS101,Introduction to Business,2026-03-01,present,
+2,ENR001,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,BUS101,Introduction to Business,2026-03-03,present,
+3,ENR001,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,BUS101,Introduction to Business,2026-03-05,late,Arrived 10 min late
+4,ENR001,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,BUS101,Introduction to Business,2026-03-08,present,
+5,ENR001,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,BUS101,Introduction to Business,2026-03-10,absent,Sick
+6,ENR002,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,ENG101,English Composition,2026-03-02,present,
+7,ENR002,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,ENG101,English Composition,2026-03-04,present,
+8,ENR002,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,ENG101,English Composition,2026-03-06,late,
+9,ENR003,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,HUM11,Humanities,2026-03-01,present,
+10,ENR003,aung.khant.phyo@student.au.edu.mm,Aung Khant Phyo,HUM11,Humanities,2026-03-03,present,
+11,ENR004,hsu.eain.htet@student.au.edu.mm,Hsu Eain Htet,IT101,Computer Fundamentals,2026-03-02,present,
+12,ENR004,hsu.eain.htet@student.au.edu.mm,Hsu Eain Htet,IT101,Computer Fundamentals,2026-03-04,absent,
+13,ENR005,htoo.yadanar.oo@student.au.edu.mm,Htoo Yadanar Oo,MATH101,College Mathematics,2026-03-01,present,
+14,ENR005,htoo.yadanar.oo@student.au.edu.mm,Htoo Yadanar Oo,MATH101,College Mathematics,2026-03-03,present,
+15,ENR006,chanmyae.au.edu.mm@gmail.com,Chan Myae,STAT100,Statistics,2026-03-02,present,
+16,ENR006,chanmyae.au.edu.mm@gmail.com,Chan Myae,STAT100,Statistics,2026-03-04,present,

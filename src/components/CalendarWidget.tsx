@@ -7,7 +7,7 @@ export const CalendarWidget: React.FC = () => {
   
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
   
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -48,21 +48,24 @@ export const CalendarWidget: React.FC = () => {
 
   return (
     <Card className="p-4">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <Calendar className="text-[#0B4F3A]" size={20} />
-          <h3 className="font-semibold text-gray-700">Myanmar Calendar 2026</h3>
-        </div>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-gray-700">Myanmar Calendar 2026</h3>
         <div className="flex gap-1">
-          <button onClick={prevMonth} className="p-1 hover:bg-gray-100 rounded">←</button>
-          <button onClick={nextMonth} className="p-1 hover:bg-gray-100 rounded">→</button>
+          <button onClick={prevMonth} className="p-1 hover:bg-gray-100 rounded text-gray-600">
+            <ChevronLeft size={16} />
+          </button>
+          <button onClick={nextMonth} className="p-1 hover:bg-gray-100 rounded text-gray-600">
+            <ChevronRight size={16} />
+          </button>
         </div>
       </div>
 
-      <div className="text-center mb-3 font-medium">{monthNames[month]} {year}</div>
+      <div className="text-center text-gray-600 mb-2">{monthNames[month]} {year}</div>
 
-      <div className="grid grid-cols-7 gap-1 mb-2">
-        {dayNames.map(d => <div key={d} className="text-center text-xs text-gray-500">{d}</div>)}
+      <div className="grid grid-cols-7 gap-1 mb-1">
+        {dayNames.map(d => (
+          <div key={d} className="text-center text-xs text-gray-400 py-1">{d}</div>
+        ))}
       </div>
 
       <div className="grid grid-cols-7 gap-1">
@@ -74,14 +77,17 @@ export const CalendarWidget: React.FC = () => {
           const today = isToday(day);
           
           return (
-            <div key={day} className={`relative group ${today ? 'ring-2 ring-[#0B4F3A] rounded' : ''}`}>
-              <div className={`p-1 text-center text-sm rounded cursor-pointer hover:bg-gray-100
-                ${holiday ? 'bg-amber-50 font-medium text-amber-700' : ''}`}>
+            <div key={day} className="relative group">
+              <div className={`
+                p-1 text-center text-sm rounded cursor-default
+                ${holiday ? 'text-amber-600' : 'text-gray-700'}
+                ${today ? 'bg-gray-100' : ''}
+              `}>
                 {day}
               </div>
               {holiday && (
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 hidden group-hover:block z-10">
-                  <div className="bg-white text-xs p-1 rounded shadow-lg border whitespace-nowrap">
+                  <div className="bg-gray-800 text-white text-xs py-1 px-2 rounded shadow-lg whitespace-nowrap">
                     {holiday.title}
                   </div>
                 </div>
@@ -91,9 +97,13 @@ export const CalendarWidget: React.FC = () => {
         })}
       </div>
 
-      <div className="mt-3 pt-2 text-xs text-gray-500 flex gap-3">
-        <span className="flex items-center gap-1"><span className="w-2 h-2 bg-amber-500 rounded"></span> Holiday</span>
-        <span className="flex items-center gap-1"><span className="w-2 h-2 border-2 border-[#0B4F3A] rounded"></span> Today</span>
+      <div className="mt-3 pt-2 border-t border-gray-100 text-xs text-gray-400 flex gap-3">
+        <span className="flex items-center gap-1">
+          <span className="w-2 h-2 bg-amber-500 rounded-full"></span> Holiday
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="w-2 h-2 bg-gray-100 border border-gray-300 rounded-full"></span> Today
+        </span>
       </div>
     </Card>
   );

@@ -13,16 +13,26 @@ import {
   Sparkles,
   ChevronRight,
   Calendar,
-  Clock
+  User
 } from 'lucide-react';
 
-// Time-based greeting
+// Get time-based greeting
 const getGreeting = () => {
   const hour = new Date().getHours();
   if (hour < 12) return 'Good morning';
   if (hour < 17) return 'Good afternoon';
   if (hour < 20) return 'Good evening';
   return 'Good night';
+};
+
+// Format date nicely
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric',
+    year: 'numeric'
+  });
 };
 
 export default function Dashboard() {
@@ -65,9 +75,12 @@ export default function Dashboard() {
     );
   }
 
+  // Get display name - use studentName if available, otherwise fallback to email username
+  const displayName = studentName || (user?.email ? user.email.split('@')[0].replace(/\./g, ' ') : 'Student');
+
   return (
     <MainLayout>
-      {/* Welcome Section */}
+      {/* Welcome Section with proper name */}
       <div className="mb-8">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-[#2E8B57] bg-opacity-10 rounded-xl">
@@ -75,7 +88,7 @@ export default function Dashboard() {
           </div>
           <div>
             <h1 className="text-3xl font-bold text-gray-900">
-              {greeting}, {studentName || user?.email?.split('@')[0]}!
+              {greeting}, {displayName}!
             </h1>
             <p className="text-gray-600 text-sm mt-1">Here's your academic overview</p>
           </div>
@@ -145,7 +158,7 @@ export default function Dashboard() {
               <div key={ann.id} className="border-b border-gray-100 last:border-0 py-3 first:pt-0 last:pb-0">
                 <h3 className="font-semibold text-gray-900 mb-1">{ann.title}</h3>
                 <p className="text-gray-600 text-sm mb-2">{ann.content}</p>
-                <p className="text-gray-400 text-xs">{ann.date} · {ann.author}</p>
+                <p className="text-gray-400 text-xs">{formatDate(ann.date)} · {ann.author}</p>
               </div>
             ))}
             {announcements.length > 3 && (
@@ -194,14 +207,14 @@ export default function Dashboard() {
               <Badge variant="primary" className="bg-[#2E8B57] text-white">{course.courseId}</Badge>
             </div>
             <p className="text-gray-600 text-sm mb-3">{course.teacher}</p>
-            <div className="flex justify-between text-sm text-gray-500 mb-3">
+            <div className="flex justify-between items-center text-sm text-gray-500 mb-3">
               <span>Credits: {course.credits}</span>
-              <span>Grade: {course.grade || '—'}</span>
+              <span className="font-medium text-[#2E8B57]">Grade: {course.grade || '—'}</span>
             </div>
-            <div>
-              <div className="flex justify-between text-xs text-gray-500 mb-1">
-                <span>Attendance</span>
-                <span>{course.attendancePercentage}%</span>
+            <div className="pt-3 border-t border-gray-100">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-xs text-gray-500">Attendance</span>
+                <span className="text-xs font-medium text-[#2E8B57]">{course.attendancePercentage}%</span>
               </div>
               <ProgressBar value={course.attendancePercentage || 0} />
             </div>

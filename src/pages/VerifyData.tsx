@@ -33,7 +33,7 @@ export const VerifyData: React.FC = () => {
 
   return (
     <MainLayout>
-      <h1 className="text-2xl font-bold text-[#0B4F3A] mb-4">Data Verification</h1>
+      <h1 className="text-2xl font-bold text-[#0B4F3A] mb-4" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Data Verification</h1>
       
       <Card className="p-4 mb-4">
         <h2 className="font-semibold mb-2">Current User</h2>
@@ -56,3 +56,4 @@ export const VerifyData: React.FC = () => {
     </MainLayout>
   );
 };
+

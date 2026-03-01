@@ -25,7 +25,7 @@ export const DataVerify: React.FC = () => {
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-medium text-gray-800">Data Verification</h1>
+        <h1 className="text-2xl font-medium text-[#0a0a0a]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Data Verification</h1>
         <button
           onClick={handleRefresh}
           className="flex items-center gap-2 px-4 py-2 bg-[#0B4F3A] text-white rounded-lg text-sm hover:bg-[#0d5f45]"
@@ -37,14 +37,14 @@ export const DataVerify: React.FC = () => {
 
       {/* Student Info */}
       <Card className="p-5">
-        <h2 className="text-lg font-medium text-gray-800 mb-3">Student Information</h2>
+        <h2 className="text-lg font-medium text-[#0a0a0a] mb-3" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Student Information</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-500">Name</p>
+            <p className="text-sm text-[#2a2a2a]">Name</p>
             <p className="font-medium">{studentName || 'Not loaded'}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Email</p>
+            <p className="text-sm text-[#2a2a2a]">Email</p>
             <p className="font-medium">{studentEmail || 'Not loaded'}</p>
           </div>
         </div>
@@ -55,8 +55,8 @@ export const DataVerify: React.FC = () => {
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Courses</p>
-              <p className="text-2xl font-medium">{courses.length}</p>
+              <p className="text-sm text-[#2a2a2a]">Courses</p>
+              <p className="text-2xl font-medium" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{courses.length}</p>
             </div>
             {courses.length > 0 ? 
               <CheckCircle className="text-green-500" size={24} /> : 
@@ -64,15 +64,15 @@ export const DataVerify: React.FC = () => {
             }
           </div>
           {courses.length > 0 && (
-            <p className="text-xs text-gray-400 mt-2">{courses.map(c => c.courseId).join(', ')}</p>
+            <p className="text-xs text-[#2a2a2a] mt-2">{courses.map(c => c.courseId).join(', ')}</p>
           )}
         </Card>
 
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Attendance Records</p>
-              <p className="text-2xl font-medium">{attendanceRecords.length}</p>
+              <p className="text-sm text-[#2a2a2a]">Attendance Records</p>
+              <p className="text-2xl font-medium" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{attendanceRecords.length}</p>
             </div>
             {attendanceRecords.length > 0 ? 
               <CheckCircle className="text-green-500" size={24} /> : 
@@ -84,8 +84,8 @@ export const DataVerify: React.FC = () => {
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Announcements</p>
-              <p className="text-2xl font-medium">{announcements.length}</p>
+              <p className="text-sm text-[#2a2a2a]">Announcements</p>
+              <p className="text-2xl font-medium" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{announcements.length}</p>
             </div>
             {announcements.length > 0 ? 
               <CheckCircle className="text-green-500" size={24} /> : 
@@ -97,7 +97,7 @@ export const DataVerify: React.FC = () => {
 
       {/* Raw Data */}
       <Card className="p-5">
-        <h2 className="text-lg font-medium text-gray-800 mb-3 flex items-center gap-2">
+        <h2 className="text-lg font-medium text-[#0a0a0a] mb-3 flex items-center gap-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
           <Database size={20} />
           Raw Firebase Data
         </h2>
@@ -120,3 +120,4 @@ export const DataVerify: React.FC = () => {
     </div>
   );
 };
+

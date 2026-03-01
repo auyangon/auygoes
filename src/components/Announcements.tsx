@@ -53,7 +53,7 @@ export const Announcements: React.FC = () => {
   if (loading) {
     return (
       <Card className="p-4">
-        <h3 className="text-gray-700 mb-3">Latest Announcements</h3>
+        <h3 className="text-[#1a1a1a] mb-3">Latest Announcements</h3>
         <div className="space-y-3">
           {[1,2,3].map(i => (
             <div key={i} className="animate-pulse">
@@ -68,10 +68,10 @@ export const Announcements: React.FC = () => {
 
   return (
     <Card className="p-4">
-      <h3 className="text-gray-700 mb-3">Latest Announcements</h3>
+      <h3 className="text-[#1a1a1a] mb-3">Latest Announcements</h3>
 
       {announcements.length === 0 ? (
-        <div className="text-center py-6 text-gray-500">
+        <div className="text-center py-6 text-[#2a2a2a]">
           <Bell className="mx-auto mb-2 text-gray-300" size={32} />
           <p className="text-sm">No announcements</p>
         </div>
@@ -79,9 +79,9 @@ export const Announcements: React.FC = () => {
         <div className="space-y-3">
           {announcements.slice(0, 3).map(ann => (
             <div key={ann.id} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
-              <h4 className="text-gray-800 text-base">{ann.title}</h4>
-              <p className="text-gray-600 text-sm mt-1">{ann.content}</p>
-              <div className="flex items-center gap-2 mt-2 text-xs text-gray-400">
+              <h4 className="text-[#0a0a0a] text-base">{ann.title}</h4>
+              <p className="text-[#1a1a1a] text-sm mt-1">{ann.content}</p>
+              <div className="flex items-center gap-2 mt-2 text-xs text-[#2a2a2a]">
                 <Calendar size={12} />
                 <span>{formatDate(ann.date)}</span>
                 <span>•</span>
@@ -94,3 +94,4 @@ export const Announcements: React.FC = () => {
     </Card>
   );
 };
+

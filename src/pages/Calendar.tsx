@@ -13,8 +13,9 @@ export const Calendar: React.FC = () => {
 
       <Card className="p-12 text-center">
         <CalendarIcon className="mx-auto text-gray-300 mb-4" size={48} />
-        <p className="text-gray-500">Calendar will appear here</p>
+        <p className="text-[#2a2a2a]">Calendar will appear here</p>
       </Card>
     </MainLayout>
   );
 };
+

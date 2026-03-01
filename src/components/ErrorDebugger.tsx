@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useData } from '../contexts/DataContext';
 import { useAuth } from '../contexts/AuthContext';
 import { Card } from './Common';
@@ -11,7 +11,7 @@ export const ErrorDebugger: React.FC = () => {
 
   return (
     <Card className="p-6 m-4 bg-red-50 border-red-200">
-      <h2 className="text-xl font-bold text-red-700 mb-4">🔍 Error Debug Info</h2>
+      <h2 className="text-xl font-bold text-red-700 mb-4" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>ðŸ” Error Debug Info</h2>
       
       <div className="space-y-4">
         <div>
@@ -37,7 +37,7 @@ export const ErrorDebugger: React.FC = () => {
           <p className="font-semibold mb-2">Quick Check:</p>
           <ol className="list-decimal list-inside text-sm space-y-1">
             <li>Open browser console (F12)</li>
-            <li>Look for 🔍 DEBUG messages</li>
+            <li>Look for ðŸ” DEBUG messages</li>
             <li>Check which paths were tried</li>
             <li>See if any path succeeded</li>
             <li>Share the console output with support</li>

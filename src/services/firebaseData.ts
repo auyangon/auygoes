@@ -10,3 +10,4 @@ export const fetchCourses = async () => {
   // Implementation
   return [];
 };
+

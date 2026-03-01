@@ -206,3 +206,4 @@ export const publicqService = new PublicQService({
   baseUrl: process.env.REACT_APP_PUBLICQ_URL || 'https://publicq.app',
   apiKey: process.env.REACT_APP_PUBLICQ_API_KEY
 });
+

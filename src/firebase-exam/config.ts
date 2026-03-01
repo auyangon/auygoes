@@ -14,3 +14,4 @@ const examFirebaseConfig = {
 
 export const examApp = initializeApp(examFirebaseConfig, 'exam');
 export const examDatabase = getDatabase(examApp);
+

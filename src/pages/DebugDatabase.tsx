@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebase';
 import { ref, get } from 'firebase/database';
@@ -104,11 +104,11 @@ export const DebugDatabase: React.FC = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold text-[#0B4F3A]">Database Debugger</h1>
+      <h1 className="text-2xl font-bold text-[#0B4F3A]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Database Debugger</h1>
       
       {/* Current User Info */}
       <Card className="p-4">
-        <h2 className="text-lg font-semibold mb-2">Current User</h2>
+        <h2 className="text-lg font-semibold mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Current User</h2>
         <p><strong>Email:</strong> {user?.email || 'Not logged in'}</p>
         {currentUserData ? (
           <pre className="mt-2 p-2 bg-gray-100 rounded overflow-auto">
@@ -121,7 +121,7 @@ export const DebugDatabase: React.FC = () => {
 
       {/* Search */}
       <Card className="p-4">
-        <h2 className="text-lg font-semibold mb-2">Search Student</h2>
+        <h2 className="text-lg font-semibold mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Search Student</h2>
         <div className="flex gap-2">
           <input
             type="email"
@@ -152,7 +152,7 @@ export const DebugDatabase: React.FC = () => {
 
       {/* All Students */}
       <Card className="p-4">
-        <h2 className="text-lg font-semibold mb-2">All Students ({students ? Object.keys(students).length : 0})</h2>
+        <h2 className="text-lg font-semibold mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>All Students ({students ? Object.keys(students).length : 0})</h2>
         {students && (
           <div className="max-h-96 overflow-auto">
             <table className="w-full text-sm">

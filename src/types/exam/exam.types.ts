@@ -73,3 +73,4 @@ export interface ExamResult {
   passed: boolean;
   submittedAt: string;
 }
+

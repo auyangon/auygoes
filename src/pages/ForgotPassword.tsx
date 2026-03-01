@@ -34,7 +34,7 @@ export const ForgotPassword: React.FC = () => {
           <div className="flex justify-center mb-3">
             <Sparkles className="text-seafoam-dark" size={40} />
           </div>
-          <h1 className="text-3xl font-normal text-jet mb-2">Aiyo, forget password?</h1>
+          <h1 className="text-3xl font-normal text-jet mb-2" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.12)' }}>Aiyo, forget password?</h1>
           <p className="text-jet/70">Don't worry, we all have those moments! 😊</p>
           <p className="text-sm text-jet/50 mt-1">Enter your email and we'll send you a reset link.</p>
         </div>
@@ -89,4 +89,5 @@ export const ForgotPassword: React.FC = () => {
     </div>
   );
 };
+
 

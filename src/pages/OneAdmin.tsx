@@ -1,4 +1,4 @@
-// src/pages/OneAdmin.tsx
+﻿// src/pages/OneAdmin.tsx
 import React, { useState, useEffect } from 'react';
 import { 
   Plus, Edit, Trash, Download, Upload, 
@@ -287,8 +287,8 @@ function OneAdmin() {
             <div className="inline-block p-4 bg-indigo-100 rounded-full mb-4">
               <GraduationCap className="w-12 h-12 text-indigo-600" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900">Admin Portal</h1>
-            <p className="text-gray-600 mt-2">Enter the password to rule them all</p>
+            <h1 className="text-3xl font-bold text-[#0a0a0a]" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.12)' }}>Admin Portal</h1>
+            <p className="text-[#1a1a1a] mt-2">Enter the password to rule them all</p>
           </div>
           
           <form onSubmit={handleAdminLogin}>
@@ -308,7 +308,7 @@ function OneAdmin() {
             </button>
           </form>
           
-          <p className="text-xs text-gray-400 text-center mt-4">
+          <p className="text-xs text-[#2a2a2a] text-center mt-4">
             Hint: Try "admin123"
           </p>
         </div>
@@ -325,13 +325,13 @@ function OneAdmin() {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
               <GraduationCap className="w-8 h-8 text-indigo-600" />
-              <h1 className="text-2xl font-bold text-gray-900">One Admin to Rule Them All</h1>
+              <h1 className="text-2xl font-bold text-[#0a0a0a]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>One Admin to Rule Them All</h1>
             </div>
             
             <div className="flex items-center space-x-4">
               <button
                 onClick={loadAllData}
-                className="p-2 text-gray-500 hover:text-indigo-600 transition"
+                className="p-2 text-[#2a2a2a] hover:text-indigo-600 transition"
                 title="Refresh"
               >
                 <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
@@ -361,7 +361,7 @@ function OneAdmin() {
                   flex items-center px-6 py-3 font-medium text-sm rounded-t-lg transition
                   ${activeTab === tab.id
                     ? 'bg-indigo-600 text-white'
-                    : 'text-gray-600 hover:text-indigo-600 hover:bg-indigo-50'
+                    : 'text-[#1a1a1a] hover:text-indigo-600 hover:bg-indigo-50'
                   }
                 `}
               >
@@ -380,7 +380,7 @@ function OneAdmin() {
           <div className="flex flex-wrap gap-4 items-center justify-between">
             <div className="flex-1 min-w-[300px]">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#2a2a2a]" />
                 <input
                   type="text"
                   placeholder={`Search ${activeTab}...`}
@@ -429,7 +429,7 @@ function OneAdmin() {
         {loading && (
           <div className="text-center py-12">
             <RefreshCw className="w-8 h-8 animate-spin text-indigo-600 mx-auto mb-4" />
-            <p className="text-gray-600">Loading data from the cloud...</p>
+            <p className="text-[#1a1a1a]">Loading data from the cloud...</p>
           </div>
         )}
 
@@ -439,31 +439,31 @@ function OneAdmin() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Major</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mode</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">Major</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">Mode</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">Status</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-[#2a2a2a] uppercase">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredStudents.map((student) => (
                   <tr key={student.studentId} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#0a0a0a]">
                       {student.studentId}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#0a0a0a]">
                       {student.name}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2a2a2a]">
                       {student.email}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2a2a2a]">
                       {student.major}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2a2a2a]">
                       <span className={`px-2 py-1 rounded-full text-xs ${
                         student.studyMode === 'OnCampus' 
                           ? 'bg-green-100 text-green-800' 
@@ -502,7 +502,7 @@ function OneAdmin() {
             </table>
             
             {filteredStudents.length === 0 && (
-              <div className="text-center py-12 text-gray-500">
+              <div className="text-center py-12 text-[#2a2a2a]">
                 No students found
               </div>
             )}
@@ -515,26 +515,26 @@ function OneAdmin() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Code</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Course Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Credits</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Teacher</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">Code</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">Course Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">Credits</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[#2a2a2a] uppercase">Teacher</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-[#2a2a2a] uppercase">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredCourses.map((course) => (
                   <tr key={course.courseCode} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#0a0a0a]">
                       {course.courseCode}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#0a0a0a]">
                       {course.courseName}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2a2a2a]">
                       {course.credits}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2a2a2a]">
                       {course.teacher}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -568,7 +568,7 @@ function OneAdmin() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Grade Update Form */}
             <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold mb-4 flex items-center">
+              <h2 className="text-lg font-semibold mb-4 flex items-center" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
                 <GraduationCap className="w-5 h-5 mr-2 text-indigo-600" />
                 Quick Grade Update
               </h2>
@@ -631,16 +631,16 @@ function OneAdmin() {
 
             {/* Grade Overview */}
             <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold mb-4">Recent Grades</h2>
+              <h2 className="text-lg font-semibold mb-4" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Recent Grades</h2>
               <div className="space-y-3">
                 {students.slice(0, 5).map(student => (
                   <div key={student.studentId} className="border-b pb-2">
                     <div className="flex justify-between items-center">
                       <span className="font-medium">{student.name}</span>
-                      <span className="text-sm text-gray-500">{student.studentId}</span>
+                      <span className="text-sm text-[#2a2a2a]">{student.studentId}</span>
                     </div>
-                    <div className="text-sm text-gray-600 mt-1">
-                      BUS101: B (86%) • ENG101: B- (95%)
+                    <div className="text-sm text-[#1a1a1a] mt-1">
+                      BUS101: B (86%) â€¢ ENG101: B- (95%)
                     </div>
                   </div>
                 ))}
@@ -655,7 +655,7 @@ function OneAdmin() {
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
           <div className="relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
             <div className="flex justify-between items-center p-6 border-b">
-              <h3 className="text-lg font-semibold">
+              <h3 className="text-lg font-semibold" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
                 {modalType === 'student' 
                   ? (selectedItem ? 'Edit Student' : 'Add Student')
                   : (selectedItem ? 'Edit Course' : 'Add Course')
@@ -666,7 +666,7 @@ function OneAdmin() {
                   setShowModal(false);
                   resetForm();
                 }}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-[#2a2a2a] hover:text-[#1a1a1a]"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -754,7 +754,7 @@ function OneAdmin() {
                   setShowModal(false);
                   resetForm();
                 }}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
+                className="px-4 py-2 bg-gray-300 text-[#1a1a1a] rounded-lg hover:bg-gray-400 transition"
               >
                 Cancel
               </button>

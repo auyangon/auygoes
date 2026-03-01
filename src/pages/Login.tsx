@@ -37,8 +37,8 @@ export default function Login() {
           <div className="inline-block p-3 bg-gradient-to-br from-[#2E8B57] to-[#66CDAA] rounded-2xl mb-4 shadow-md">
             <GraduationCap size={32} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-800">AUY Student Portal</h1>
-          <p className="text-gray-500 text-sm mt-1">American University of Yangon</p>
+          <h1 className="text-2xl font-bold text-[#0a0a0a]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>AUY Student Portal</h1>
+          <p className="text-[#2a2a2a] text-sm mt-1">American University of Yangon</p>
         </div>
 
         {error && (
@@ -49,11 +49,11 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[#1a1a1a] mb-1">
               Email Address
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#2a2a2a]" size={18} />
               <input
                 type="email"
                 value={email}
@@ -66,11 +66,11 @@ export default function Login() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[#1a1a1a] mb-1">
               Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#2a2a2a]" size={18} />
               <input
                 type="password"
                 value={password}
@@ -101,3 +101,5 @@ export default function Login() {
     </div>
   );
 }
+
+

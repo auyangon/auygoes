@@ -13,9 +13,10 @@ export const AUYExams: React.FC = () => {
 
       <Card className="p-12 text-center">
         <GraduationCap className="mx-auto text-gray-300 mb-4" size={48} />
-        <p className="text-gray-500">Exam schedules will appear here</p>
-        <p className="text-sm text-gray-400 mt-2">Check back later for updates</p>
+        <p className="text-[#2a2a2a]">Exam schedules will appear here</p>
+        <p className="text-sm text-[#2a2a2a] mt-2">Check back later for updates</p>
       </Card>
     </MainLayout>
   );
 };
+

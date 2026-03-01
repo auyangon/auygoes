@@ -18,16 +18,16 @@ export const Progress: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <Card className="p-4">
-          <div className="text-sm text-gray-500 mb-1">GPA</div>
-          <div className="text-2xl font-semibold">{gpa.toFixed(2)}</div>
+          <div className="text-sm text-[#2a2a2a] mb-1">GPA</div>
+          <div className="text-2xl font-semibold" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{gpa.toFixed(2)}</div>
         </Card>
         <Card className="p-4">
-          <div className="text-sm text-gray-500 mb-1">Credits</div>
-          <div className="text-2xl font-semibold">{totalCredits}</div>
+          <div className="text-sm text-[#2a2a2a] mb-1">Credits</div>
+          <div className="text-2xl font-semibold" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{totalCredits}</div>
         </Card>
         <Card className="p-4">
-          <div className="text-sm text-gray-500 mb-1">Attendance</div>
-          <div className="text-2xl font-semibold">{attendance}%</div>
+          <div className="text-sm text-[#2a2a2a] mb-1">Attendance</div>
+          <div className="text-2xl font-semibold" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{attendance}%</div>
         </Card>
       </div>
 
@@ -57,3 +57,4 @@ export const Progress: React.FC = () => {
     </MainLayout>
   );
 };
+

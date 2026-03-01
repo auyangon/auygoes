@@ -172,3 +172,4 @@ export function useData() {
   if (!context) throw new Error('useData must be used within DataProvider');
   return context;
 }
+

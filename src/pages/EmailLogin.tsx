@@ -31,7 +31,7 @@ export const EmailLogin: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-emerald-900 to-emerald-950 flex items-center justify-center p-4">
       <Card className="p-8 max-w-md w-full">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-normal text-jet mb-2">AUY Portal</h1>
+          <h1 className="text-3xl font-normal text-jet mb-2" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.12)' }}>AUY Portal</h1>
           <p className="text-jet/70">American University of Yangon</p>
         </div>
 
@@ -95,4 +95,5 @@ export const EmailLogin: React.FC = () => {
     </div>
   );
 };
+
 

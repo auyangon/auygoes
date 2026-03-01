@@ -8,3 +8,4 @@ export const sanitizeEmail = (email: string): string => {
   // But from your screenshot, just return the email as-is
   return email;
 };
+

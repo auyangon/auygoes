@@ -17,9 +17,9 @@ export const AnnouncementsPage: React.FC = () => {
       <div className="space-y-4">
         {announcements.map((ann) => (
           <Card key={ann.id} className="p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">{ann.title}</h2>
-            <p className="text-gray-600 mb-4">{ann.content}</p>
-            <div className="flex items-center gap-2 text-sm text-gray-400">
+            <h2 className="text-xl font-semibold text-[#0a0a0a] mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{ann.title}</h2>
+            <p className="text-[#1a1a1a] mb-4">{ann.content}</p>
+            <div className="flex items-center gap-2 text-sm text-[#2a2a2a]">
               <Calendar size={14} />
               <span>{ann.date}</span>
               <span>•</span>
@@ -30,10 +30,11 @@ export const AnnouncementsPage: React.FC = () => {
         {announcements.length === 0 && (
           <Card className="p-12 text-center">
             <Bell className="mx-auto text-gray-300 mb-4" size={48} />
-            <p className="text-gray-500">No announcements yet</p>
+            <p className="text-[#2a2a2a]">No announcements yet</p>
           </Card>
         )}
       </div>
     </MainLayout>
   );
 };
+

@@ -4,42 +4,39 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-800;
+    @apply bg-gray-50;
     font-family: 'Poppins', sans-serif;
+    color: #1a1a1a;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #0a0a0a;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    font-weight: 500;
+  }
+  
+  p, span, div, li, a {
+    color: #1a1a1a;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   }
 }
 
-/* Ensure all text has good contrast */
-.text-white {
-  color: #ffffff !important;
+/* Jet black text utilities */
+.text-jet {
+  color: #1a1a1a !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
 }
-.text-gray-800 {
-  color: #1f2937 !important;
+.text-jet-dark {
+  color: #0a0a0a !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
 }
-.text-gray-700 {
-  color: #374151 !important;
-}
-.text-gray-600 {
-  color: #4b5563 !important;
-}
-.text-gray-500 {
-  color: #6b7280 !important;
+.text-jet-light {
+  color: #2a2a2a !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
 }
 
-/* Card styles */
+/* Card styles remain light */
 .card {
   @apply bg-white rounded-xl shadow-sm border border-gray-100;
-}
-
-/* Glass effect for special elements (subtle) */
-.glass {
-  @apply backdrop-blur-sm bg-white/70 border border-white/20;
-}
-
-/* Seafoam gradient utilities */
-.bg-seafoam {
-  @apply bg-gradient-to-r from-[#2E8B57] to-[#66CDAA];
-}
-.text-seafoam {
-  color: #2E8B57;
 }

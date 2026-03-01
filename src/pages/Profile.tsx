@@ -47,7 +47,7 @@ export const Profile: React.FC = () => {
       {/* Fun welcome banner */}
       <div className="mb-8 flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
         <Sparkles className="text-yellow-300" size={28} />
-        <h1 className="text-3xl font-light text-white">{greeting} {studentName || 'Student'}!</h1>
+        <h1 className="text-3xl font-light text-white" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.12)' }}>{greeting} {studentName || 'Student'}!</h1>
       </div>
 
       {/* Cover & Avatar */}
@@ -100,19 +100,19 @@ export const Profile: React.FC = () => {
           <SectionTitle icon={<Award size={18} />}>Academic Stats</SectionTitle>
           <div className="grid grid-cols-2 gap-3">
             <div className="p-4 rounded-xl bg-white/10 backdrop-blur-sm text-center">
-              <div className="text-2xl font-light text-white">{gpa.toFixed(2)}</div>
+              <div className="text-2xl font-light text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{gpa.toFixed(2)}</div>
               <div className="text-xs text-white/60">GPA</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 backdrop-blur-sm text-center">
-              <div className="text-2xl font-light text-white">{totalCredits}</div>
+              <div className="text-2xl font-light text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{totalCredits}</div>
               <div className="text-xs text-white/60">Credits</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 backdrop-blur-sm text-center">
-              <div className="text-2xl font-light text-white">{courses.length}</div>
+              <div className="text-2xl font-light text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{courses.length}</div>
               <div className="text-xs text-white/60">Courses</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 backdrop-blur-sm text-center">
-              <div className="text-2xl font-light text-white">{attendance}%</div>
+              <div className="text-2xl font-light text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{attendance}%</div>
               <div className="text-xs text-white/60">Attendance</div>
             </div>
           </div>
@@ -179,3 +179,4 @@ export const Profile: React.FC = () => {
     </MainLayout>
   );
 };
+

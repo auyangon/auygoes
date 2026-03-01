@@ -29,7 +29,7 @@ export const Grades: React.FC = () => {
           <Card key={course.id} className="p-4 flex justify-between items-center">
             <div>
               <h3 className="font-medium">{course.name}</h3>
-              <p className="text-sm text-gray-500">{course.courseId}</p>
+              <p className="text-sm text-[#2a2a2a]">{course.courseId}</p>
             </div>
             <Badge variant="primary" className="text-base px-3 py-1">
               {course.grade || '-'}
@@ -40,3 +40,4 @@ export const Grades: React.FC = () => {
     </MainLayout>
   );
 };
+

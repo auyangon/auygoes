@@ -63,7 +63,7 @@ export default function Dashboard() {
       <div className="mb-8 flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20">
         <Sparkles className="text-yellow-300" size={32} />
         <div>
-          <h1 className="text-3xl font-light text-white">{funGreeting}</h1>
+          <h1 className="text-3xl font-light text-white" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.12)' }}>{funGreeting}</h1>
           <p className="text-white/70 text-sm mt-1">{studentName || user?.email?.split('@')[0]}</p>
         </div>
       </div>
@@ -174,3 +174,4 @@ const ErrorFallback = ({ error }: { error: string }) => (
     </Card>
   </div>
 );
+

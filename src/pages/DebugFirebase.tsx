@@ -57,7 +57,7 @@ export const DebugFirebase: React.FC = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold text-[#0B4F3A]">Firebase Debug</h1>
+      <h1 className="text-2xl font-bold text-[#0B4F3A]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Firebase Debug</h1>
       
       <Card className="p-4">
         <h2 className="font-semibold mb-2">Current User</h2>
@@ -98,3 +98,4 @@ export const DebugFirebase: React.FC = () => {
     </div>
   );
 };
+

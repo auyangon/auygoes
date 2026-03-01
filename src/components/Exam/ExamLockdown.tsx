@@ -68,7 +68,7 @@ export const ExamLockdown: React.FC<ExamLockdownProps> = ({
     return (
       <div className="min-h-screen bg-red-50 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-2">Exam Terminated</h1>
+          <h1 className="text-2xl font-bold text-red-600 mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Exam Terminated</h1>
           <p>Too many violations detected.</p>
         </div>
       </div>
@@ -85,7 +85,7 @@ export const ExamLockdown: React.FC<ExamLockdownProps> = ({
       {!isFullscreen && (
         <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg">
-            <h2 className="text-xl mb-4">Fullscreen Required</h2>
+            <h2 className="text-xl mb-4" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>Fullscreen Required</h2>
             <button 
               onClick={() => document.documentElement.requestFullscreen()}
               className="bg-green-600 text-white px-4 py-2 rounded"
@@ -101,3 +101,4 @@ export const ExamLockdown: React.FC<ExamLockdownProps> = ({
     </div>
   );
 };
+

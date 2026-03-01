@@ -24,17 +24,17 @@ export const Courses: React.FC = () => {
             onClick={() => navigate(`/course/${course.courseId}`)}
           >
             <div className="flex justify-between items-start mb-3">
-              <h3 className="font-semibold text-gray-800">{course.name}</h3>
+              <h3 className="font-semibold text-[#0a0a0a]">{course.name}</h3>
               <Badge variant="primary">{course.courseId}</Badge>
             </div>
-            <p className="text-sm text-gray-600 mb-3">{course.teacher}</p>
+            <p className="text-sm text-[#1a1a1a] mb-3">{course.teacher}</p>
             <div className="flex justify-between items-center text-sm mb-3">
-              <span className="text-gray-500">Credits: {course.credits}</span>
+              <span className="text-[#2a2a2a]">Credits: {course.credits}</span>
               <span className="font-medium text-[#0B4F3A]">Grade: {course.grade || '-'}</span>
             </div>
             <div className="pt-3 border-t border-gray-100">
               <div className="flex justify-between items-center mb-1">
-                <span className="text-xs text-gray-500">Attendance</span>
+                <span className="text-xs text-[#2a2a2a]">Attendance</span>
                 <span className="text-xs font-medium text-[#0B4F3A]">{course.attendancePercentage}%</span>
               </div>
               <ProgressBar value={course.attendancePercentage || 0} />
@@ -44,10 +44,11 @@ export const Courses: React.FC = () => {
         {courses.length === 0 && (
           <Card className="p-12 text-center col-span-2">
             <BookOpen className="mx-auto text-gray-300 mb-4" size={48} />
-            <p className="text-gray-500">No courses found</p>
+            <p className="text-[#2a2a2a]">No courses found</p>
           </Card>
         )}
       </div>
     </MainLayout>
   );
 };
+

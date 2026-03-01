@@ -49,22 +49,22 @@ export const CalendarWidget: React.FC = () => {
   return (
     <Card className="p-4">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-gray-700">Myanmar Calendar 2026</h3>
+        <h3 className="text-[#1a1a1a]">Myanmar Calendar 2026</h3>
         <div className="flex gap-1">
-          <button onClick={prevMonth} className="p-1 hover:bg-gray-100 rounded text-gray-600">
+          <button onClick={prevMonth} className="p-1 hover:bg-gray-100 rounded text-[#1a1a1a]">
             <ChevronLeft size={16} />
           </button>
-          <button onClick={nextMonth} className="p-1 hover:bg-gray-100 rounded text-gray-600">
+          <button onClick={nextMonth} className="p-1 hover:bg-gray-100 rounded text-[#1a1a1a]">
             <ChevronRight size={16} />
           </button>
         </div>
       </div>
 
-      <div className="text-center text-gray-600 mb-2">{monthNames[month]} {year}</div>
+      <div className="text-center text-[#1a1a1a] mb-2">{monthNames[month]} {year}</div>
 
       <div className="grid grid-cols-7 gap-1 mb-1">
         {dayNames.map(d => (
-          <div key={d} className="text-center text-xs text-gray-400 py-1">{d}</div>
+          <div key={d} className="text-center text-xs text-[#2a2a2a] py-1">{d}</div>
         ))}
       </div>
 
@@ -80,7 +80,7 @@ export const CalendarWidget: React.FC = () => {
             <div key={day} className="relative group">
               <div className={`
                 p-1 text-center text-sm rounded cursor-default
-                ${holiday ? 'text-amber-600' : 'text-gray-700'}
+                ${holiday ? 'text-amber-600' : 'text-[#1a1a1a]'}
                 ${today ? 'bg-gray-100' : ''}
               `}>
                 {day}
@@ -97,7 +97,7 @@ export const CalendarWidget: React.FC = () => {
         })}
       </div>
 
-      <div className="mt-3 pt-2 border-t border-gray-100 text-xs text-gray-400 flex gap-3">
+      <div className="mt-3 pt-2 border-t border-gray-100 text-xs text-[#2a2a2a] flex gap-3">
         <span className="flex items-center gap-1">
           <span className="w-2 h-2 bg-amber-500 rounded-full"></span> Holiday
         </span>
@@ -108,3 +108,4 @@ export const CalendarWidget: React.FC = () => {
     </Card>
   );
 };
+

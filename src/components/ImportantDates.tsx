@@ -71,7 +71,7 @@ export const ImportantDates: React.FC = () => {
     <Card className="p-4">
       <div className="flex items-center gap-3 mb-4">
         <Calendar className="text-purple-600" size={20} />
-        <h3 className="font-semibold text-gray-800">Important Dates</h3>
+        <h3 className="font-semibold text-[#0a0a0a]">Important Dates</h3>
       </div>
 
       <div className="space-y-3">
@@ -81,16 +81,16 @@ export const ImportantDates: React.FC = () => {
             className="flex items-start gap-3 p-2 hover:bg-gray-50 rounded-lg transition"
           >
             <div className="min-w-[50px] text-center">
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-[#2a2a2a]">
                 {new Date(date.date).toLocaleDateString('en-US', { month: 'short' })}
               </div>
-              <div className="text-lg font-bold text-gray-800">
+              <div className="text-lg font-bold text-[#0a0a0a]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
                 {new Date(date.date).getDate()}
               </div>
             </div>
             <div className="flex-1">
-              <div className="font-medium text-gray-800">{date.title}</div>
-              <div className="text-xs text-gray-500">{date.description}</div>
+              <div className="font-medium text-[#0a0a0a]">{date.title}</div>
+              <div className="text-xs text-[#2a2a2a]">{date.description}</div>
             </div>
             <span className={`text-xs px-2 py-1 rounded-full border ${getTypeColor(date.type)}`}>
               {date.type}
@@ -101,3 +101,4 @@ export const ImportantDates: React.FC = () => {
     </Card>
   );
 };
+

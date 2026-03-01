@@ -1,4 +1,4 @@
-// src/pages/CourseAttendance.tsx
+﻿// src/pages/CourseAttendance.tsx
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
@@ -60,7 +60,7 @@ export const CourseAttendance: React.FC = () => {
   if (!course) {
     return (
       <div className="p-6 text-center">
-        <p className="text-gray-500">Course not found</p>
+        <p className="text-[#2a2a2a]">Course not found</p>
       </div>
     );
   }
@@ -76,8 +76,8 @@ export const CourseAttendance: React.FC = () => {
           <ChevronLeft size={20} />
         </button>
         <div>
-          <h1 className="text-2xl font-medium text-gray-800">{course.name}</h1>
-          <p className="text-sm text-gray-500">{course.courseId} • {course.teacher}</p>
+          <h1 className="text-2xl font-medium text-[#0a0a0a]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{course.name}</h1>
+          <p className="text-sm text-[#2a2a2a]">{course.courseId} â€¢ {course.teacher}</p>
         </div>
       </div>
 
@@ -85,57 +85,57 @@ export const CourseAttendance: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-500">Total Classes</span>
-            <Calendar size={16} className="text-gray-400" />
+            <span className="text-sm text-[#2a2a2a]">Total Classes</span>
+            <Calendar size={16} className="text-[#2a2a2a]" />
           </div>
-          <div className="text-2xl font-medium text-gray-800">{totalClasses}</div>
+          <div className="text-2xl font-medium text-[#0a0a0a]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{totalClasses}</div>
         </Card>
 
         <Card className="p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-500">Present</span>
+            <span className="text-sm text-[#2a2a2a]">Present</span>
             <CheckCircle size={16} className="text-green-500" />
           </div>
-          <div className="text-2xl font-medium text-green-600">{present}</div>
+          <div className="text-2xl font-medium text-green-600" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{present}</div>
         </Card>
 
         <Card className="p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-500">Late</span>
+            <span className="text-sm text-[#2a2a2a]">Late</span>
             <Clock size={16} className="text-yellow-500" />
           </div>
-          <div className="text-2xl font-medium text-yellow-600">{late}</div>
+          <div className="text-2xl font-medium text-yellow-600" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{late}</div>
         </Card>
 
         <Card className="p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-500">Absent</span>
+            <span className="text-sm text-[#2a2a2a]">Absent</span>
             <XCircle size={16} className="text-red-500" />
           </div>
-          <div className="text-2xl font-medium text-red-600">{absent}</div>
+          <div className="text-2xl font-medium text-red-600" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>{absent}</div>
         </Card>
       </div>
 
       {/* Attendance Progress */}
       <Card className="p-5">
         <div className="flex justify-between items-center mb-3">
-          <h3 className="font-medium text-gray-800">Attendance Overview</h3>
+          <h3 className="font-medium text-[#0a0a0a]">Attendance Overview</h3>
           <Badge variant={percentage >= 75 ? 'success' : 'warning'}>
             {percentage}% Overall
           </Badge>
         </div>
         <ProgressBar value={percentage} className="h-2" />
         <div className="flex justify-between mt-2 text-xs">
-          <span className="text-gray-500">Required: 75%</span>
+          <span className="text-[#2a2a2a]">Required: 75%</span>
           <span className={percentage >= 75 ? 'text-green-600' : 'text-red-600'}>
-            {percentage >= 75 ? '✅ Meeting requirement' : '⚠️ Below requirement'}
+            {percentage >= 75 ? 'âœ… Meeting requirement' : 'âš ï¸ Below requirement'}
           </span>
         </div>
       </Card>
 
       {/* Month Selector */}
       <div className="flex items-center justify-between">
-        <h3 className="font-medium text-gray-800">Attendance History</h3>
+        <h3 className="font-medium text-[#0a0a0a]">Attendance History</h3>
         <div className="flex items-center gap-2">
           <button
             onClick={() => {
@@ -174,9 +174,9 @@ export const CourseAttendance: React.FC = () => {
         <table className="w-full">
           <thead className="bg-gray-50 border-b">
             <tr>
-              <th className="text-left p-4 text-sm font-medium text-gray-600">Date</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-600">Day</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-600">Status</th>
+              <th className="text-left p-4 text-sm font-medium text-[#1a1a1a]">Date</th>
+              <th className="text-left p-4 text-sm font-medium text-[#1a1a1a]">Day</th>
+              <th className="text-left p-4 text-sm font-medium text-[#1a1a1a]">Status</th>
             </tr>
           </thead>
           <tbody className="divide-y">
@@ -197,7 +197,7 @@ export const CourseAttendance: React.FC = () => {
                         day: 'numeric' 
                       })}
                     </td>
-                    <td className="p-4 text-sm text-gray-600">
+                    <td className="p-4 text-sm text-[#1a1a1a]">
                       {date.toLocaleDateString('en-US', { weekday: 'long' })}
                     </td>
                     <td className="p-4">
@@ -216,7 +216,7 @@ export const CourseAttendance: React.FC = () => {
           const date = new Date(record.date);
           return date.getMonth() === selectedMonth && date.getFullYear() === selectedYear;
         }).length === 0 && (
-          <div className="p-8 text-center text-gray-500">
+          <div className="p-8 text-center text-[#2a2a2a]">
             No attendance records for this month
           </div>
         )}

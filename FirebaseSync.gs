@@ -1,4 +1,8 @@
-﻿function onEdit(e) {
+﻿function encodeEmail(email) {
+  return email.replace(/\./g, ',');
+}
+
+function onEdit(e) {
   Utilities.sleep(500);
   
   const range = e.range;
@@ -27,6 +31,8 @@ function syncStudent(sheet, row) {
   const email = rowData[2];
   if (!email) return;
   
+  const encodedEmail = encodeEmail(email);
+  
   const student = {
     studentName: rowData[1],
     email: email,
@@ -35,7 +41,7 @@ function syncStudent(sheet, row) {
     status: rowData[5] || 'Active'
   };
   
-  const url = `https://auy-portal-v2-default-rtdb.asia-southeast1.firebasedatabase.app/students/${email}.json?auth=MDqKGOlO8yYHiq1DVEnpee8GaIBSAQgR7FIXP1Va`;
+  const url = `https://auy-portal-v2-default-rtdb.asia-southeast1.firebasedatabase.app/students/${encodedEmail}.json?auth=MDqKGOlO8yYHiq1DVEnpee8GaIBSAQgR7FIXP1Va`;
   UrlFetchApp.fetch(url, {
     method: 'put',
     contentType: 'application/json',
@@ -49,6 +55,8 @@ function syncEnrollment(sheet, row) {
   const courseId = rowData[6];
   if (!email || !courseId) return;
   
+  const encodedEmail = encodeEmail(email);
+  
   const enrollment = {
     courseId: courseId,
     courseName: rowData[7],
@@ -58,7 +66,7 @@ function syncEnrollment(sheet, row) {
     attendancePercentage: rowData[12] || 0
   };
   
-  const url = `https://auy-portal-v2-default-rtdb.asia-southeast1.firebasedatabase.app/students/${email}/courses/${courseId}.json?auth=MDqKGOlO8yYHiq1DVEnpee8GaIBSAQgR7FIXP1Va`;
+  const url = `https://auy-portal-v2-default-rtdb.asia-southeast1.firebasedatabase.app/students/${encodedEmail}/courses/${courseId}.json?auth=MDqKGOlO8yYHiq1DVEnpee8GaIBSAQgR7FIXP1Va`;
   UrlFetchApp.fetch(url, {
     method: 'put',
     contentType: 'application/json',

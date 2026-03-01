@@ -32,6 +32,11 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
+// Encode email for Firebase (replace dots with commas)
+const encodeEmail = (email: string): string => {
+  return email.replace(/\./g, ',');
+};
+
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
@@ -52,13 +57,18 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
     const email = user.email;
     setStudentEmail(email);
+    
+    // Encode the email for Firebase lookup
+    const encodedEmail = encodeEmail(email);
 
     console.log('========================================');
-    console.log('🔍 Fetching data for:', email);
+    console.log('🔍 Fetching data for email:', email);
+    console.log('🔑 Encoded key:', encodedEmail);
+    console.log('📁 Path:', `students/${encodedEmail}`);
     console.log('========================================');
 
-    // DIRECT LOOKUP - using email as key
-    const studentRef = ref(db, `students/${email}`);
+    // DIRECT LOOKUP - using encoded email as key
+    const studentRef = ref(db, `students/${encodedEmail}`);
     const unsubscribeStudent = onValue(studentRef, (snapshot) => {
       const data = snapshot.val();
       console.log('📊 Student data:', data);
@@ -106,7 +116,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         }
         setError(null);
       } else {
-        console.log('❌ No student data found for:', email);
+        console.log('❌ No student data found for encoded key:', encodedEmail);
         setError('Student data not found');
       }
       setLoading(false);

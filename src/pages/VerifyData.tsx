@@ -9,11 +9,16 @@ export const VerifyData: React.FC = () => {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  const encodeEmail = (email: string) => {
+    return email.replace(/\./g, ',');
+  };
+
   useEffect(() => {
     if (!user?.email) return;
 
     const fetchData = async () => {
-      const studentRef = ref(db, `students/${user.email}`);
+      const encodedEmail = encodeEmail(user.email);
+      const studentRef = ref(db, `students/${encodedEmail}`);
       const snapshot = await get(studentRef);
       setData(snapshot.val());
       setLoading(false);
@@ -31,6 +36,7 @@ export const VerifyData: React.FC = () => {
       <Card className="p-4 mb-4">
         <h2 className="font-semibold mb-2">Current User</h2>
         <p><strong>Email:</strong> {user.email}</p>
+        <p><strong>Encoded:</strong> {encodeEmail(user.email)}</p>
       </Card>
 
       <Card className="p-4">

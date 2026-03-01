@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { db } from '../firebase';
 import { ref, onValue } from 'firebase/database';
@@ -83,9 +83,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const encodedEmail = encodeEmail(email);
     
     console.log('========================================');
-    console.log('🔍 Fetching data for email:', email);
-    console.log('📁 Firebase path:', `students/${encodedEmail}`);
-    console.log('========================================`);
+    console.log('?? Fetching data for email:', email);
+    console.log('?? Firebase path:', `students/${encodedEmail}`);
+    console.log('========================================`)');
 
     // REAL-TIME STUDENT DATA - Direct lookup by email!
     const studentRef = ref(db, `students/${encodedEmail}`);

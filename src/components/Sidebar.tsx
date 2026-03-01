@@ -1,14 +1,13 @@
-﻿// src/components/Sidebar.tsx
-import React from 'react';
+﻿import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  User, 
-  GraduationCap, 
-  Bell, 
-  BookOpen, 
-  FileText, 
-  Award, 
+import {
+  LayoutDashboard,
+  User,
+  GraduationCap,
+  Bell,
+  BookOpen,
+  FileText,
+  Award,
   LogOut,
   Calendar
 } from 'lucide-react';
@@ -39,10 +38,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   ];
 
   return (
-    <div className="h-full w-64 bg-white shadow-lg border-r border-gray-100 flex flex-col">
-      <div className="p-6 border-b border-gray-100">
-        <h1 className="text-xl font-bold text-[#0B4F3A]">AUY Portal</h1>
-        <p className="text-xs text-gray-500 mt-1">American University of Yangon</p>
+    <div className="h-full w-64 backdrop-blur-xl bg-white/10 border-r border-white/20 flex flex-col shadow-2xl">
+      <div className="p-6 border-b border-white/20">
+        <h1 className="text-xl font-light text-white">AUY Portal</h1>
+        <p className="text-xs text-white/60 mt-1">American University of Yangon</p>
       </div>
 
       <nav className="flex-1 p-4">
@@ -53,28 +52,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
                 to={item.path}
                 onClick={onClose}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
-                    isActive 
-                      ? 'bg-[#0B4F3A] text-white' 
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-[#0B4F3A]'
+                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    isActive
+                      ? 'bg-white/20 text-white'
+                      : 'text-white/70 hover:bg-white/10 hover:text-white'
                   }`
                 }
               >
                 <item.icon size={20} />
-                <span className="font-medium">{item.label}</span>
+                <span className="font-light">{item.label}</span>
               </NavLink>
             </li>
           ))}
         </ul>
       </nav>
 
-      <div className="p-4 border-t border-gray-100">
+      <div className="p-4 border-t border-white/20">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all"
+          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-white/70 hover:bg-white/10 hover:text-white transition-all"
         >
           <LogOut size={20} />
-          <span className="font-medium">Logout</span>
+          <span className="font-light">Logout</span>
         </button>
       </div>
     </div>

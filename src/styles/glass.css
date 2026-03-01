@@ -1,0 +1,10 @@
+﻿/* Glass morphism helpers */
+.glass {
+  @apply backdrop-blur-md bg-white/20 border border-white/30 shadow-lg;
+}
+.glass-card {
+  @apply rounded-xl glass;
+}
+.glass-panel {
+  @apply rounded-2xl glass;
+}

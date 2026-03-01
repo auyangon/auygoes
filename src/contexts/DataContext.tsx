@@ -32,11 +32,12 @@ const gradePoints: Record<string, number> = {
   'C+': 2.3, 'C': 2.0, 'D': 1.0, 'F': 0.0
 };
 
+// Email to student ID mapping
 const EMAIL_TO_ID: Record<string, string> = {
-  'chanmyae.au.edu.mm@gmail.com': 'S001',
-  'aung.khant.phyo@student.au.edu.mm': 'S002',
-  'hsu.eain.htet@student.au.edu.mm': 'S003',
-  'htoo.yadanar.oo@student.au.edu.mm': 'S004',
+  'aung.khant.phyo@student.au.edu.mm': 'S001',
+  'hsu.eain.htet@student.au.edu.mm': 'S002',
+  'htoo.yadanar.oo@student.au.edu.mm': 'S003',
+  'chanmyae.au.edu.mm@gmail.com': 'S004',
 };
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
@@ -62,67 +63,75 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       setError(null);
       
       try {
+        console.log('========================================');
+        console.log('🔍 Fetching data for:', user.email);
+        
+        // Get student ID from email
         const studentIdFromEmail = EMAIL_TO_ID[user.email];
         
         if (!studentIdFromEmail) {
-          setError(`No student ID found for email: ${user.email}`);
+          setError('Student record not found');
           setLoading(false);
           return;
         }
 
-        const studentRef = ref(db, `students/${studentIdFromEmail}`);
-        const snapshot = await get(studentRef);
-
-        if (!snapshot.exists()) {
-          setError(`Student data not found for ID: ${studentIdFromEmail}`);
-          setLoading(false);
-          return;
-        }
-
-        const studentData = snapshot.val();
-        
-        setStudentName(studentData.studentName || studentData.name || '');
         setStudentId(studentIdFromEmail);
-        setMajor(studentData.major || studentData.program || '');
+        
+        // Get student data
+        const studentRef = ref(db, `students/${studentIdFromEmail}`);
+        const studentSnap = await get(studentRef);
+        
+        if (studentSnap.exists()) {
+          const studentData = studentSnap.val();
+          setStudentName(studentData.studentName || '');
+          setMajor(studentData.major || 'ISP');
+        }
 
-        const coursesData = studentData.courses || {};
+        // Get enrollments for this student
+        const enrollmentsRef = ref(db, 'enrollments');
+        const enrollmentsSnap = await get(enrollmentsRef);
+        
         const courseList: Course[] = [];
-
-        for (const [courseId, courseInfo] of Object.entries(coursesData)) {
-          const data = courseInfo as any;
-          courseList.push({
-            id: courseId,
-            courseId: courseId,
-            name: data.courseName || data.name || courseId,
-            teacher: data.teacherName || data.teacher || '',
-            credits: data.credits || 3,
-            grade: data.grade || '',
-            attendancePercentage: data.attendancePercentage || 0
+        
+        if (enrollmentsSnap.exists()) {
+          const allEnrollments = enrollmentsSnap.val();
+          
+          Object.values(allEnrollments).forEach((enroll: any) => {
+            if (enroll.studentId === studentIdFromEmail) {
+              courseList.push({
+                id: enroll.courseId,
+                courseId: enroll.courseId,
+                name: enroll.courseName || enroll.courseId,
+                teacher: enroll.teacherName || '',
+                credits: enroll.credits || 3,
+                grade: enroll.grade || '',
+                attendancePercentage: enroll.attendancePercentage || 0
+              });
+            }
           });
         }
 
         setCourses(courseList);
 
+        // Calculate GPA
         let totalPoints = 0;
-        let totalCreditsEarned = 0;
+        let totalCredits = 0;
         let totalAttendance = 0;
 
         courseList.forEach((course) => {
-          if (course.grade && gradePoints[course.grade] !== undefined) {
+          if (course.grade && gradePoints[course.grade]) {
             totalPoints += gradePoints[course.grade] * course.credits;
-            totalCreditsEarned += course.credits;
+            totalCredits += course.credits;
           }
-          if (course.attendancePercentage) {
-            totalAttendance += course.attendancePercentage;
-          }
+          totalAttendance += course.attendancePercentage || 0;
         });
 
-        setGpa(totalCreditsEarned > 0 ? Number((totalPoints / totalCreditsEarned).toFixed(2)) : 0);
-        setTotalCredits(totalCreditsEarned);
+        setGpa(totalCredits ? Number((totalPoints / totalCredits).toFixed(2)) : 0);
+        setTotalCredits(totalCredits);
         setAttendance(courseList.length ? Math.round(totalAttendance / courseList.length) : 0);
         
       } catch (err) {
-        setError('Failed to load data. Please try again.');
+        setError('Failed to load data');
       } finally {
         setLoading(false);
       }

@@ -1,0 +1,51 @@
+﻿// Paste this in browser console (F12) after logging in
+
+console.log('🔍 VERIFYING FIREBASE DATA');
+console.log('==========================');
+
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, get } from 'firebase/database';
+
+const auth = getAuth();
+const user = auth.currentUser;
+
+if (!user) {
+  console.log('❌ No user logged in');
+} else {
+  console.log('✅ User:', user.email);
+  
+  const db = getDatabase();
+  
+  // Check students
+  get(ref(db, 'students')).then(snap => {
+    if (snap.exists()) {
+      const students = snap.val();
+      console.log('📊 Students in DB:', Object.keys(students).length);
+      
+      // Find this user
+      let found = false;
+      Object.entries(students).forEach(([id, data]) => {
+        if (data.email === user.email) {
+          console.log('✅ Found student:', id, data);
+          found = true;
+        }
+      });
+      if (!found) console.log('❌ Student not found in DB');
+    }
+  });
+  
+  // Check enrollments
+  get(ref(db, 'enrollments')).then(snap => {
+    if (snap.exists()) {
+      const enrollments = snap.val();
+      console.log('📊 Enrollments in DB:', Object.keys(enrollments).length);
+      
+      // Count for this user
+      let count = 0;
+      Object.values(enrollments).forEach((e: any) => {
+        if (e.studentEmail === user.email) count++;
+      });
+      console.log(`📚 You have ${count} enrollments`);
+    }
+  });
+}

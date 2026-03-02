@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 // ============================================
-// CARD – White with 90% opacity
+// CARD  White with 90% opacity
 // ============================================
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -27,7 +27,7 @@ export const Card: React.FC<CardProps> = ({ children, className, ...props }) => 
 };
 
 // ============================================
-// STAT CARD – Tiffany icon
+// STAT CARD  Tiffany icon
 // ============================================
 interface StatCardProps {
   icon: React.ReactNode;

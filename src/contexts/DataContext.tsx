@@ -45,7 +45,7 @@ interface DataContextType {
   major: string;
   lastUpdated: Date | null;
   refreshData: () => Promise<void>;
-}`n  lastUpdated: Date | null;
+}
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
@@ -77,19 +77,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     setError(null);
     
     try {
-      console.log('📡 Fetching data via REST API for:', user.email);')
+      console.log('Fetching data for:', user.email);
       
-      // Get all data in parallel
-      const [studentData, attendanceData, announcementsData, coursesData] = await Promise.all([
+      const [studentData, attendanceData, announcementsData] = await Promise.all([
         firebaseRest.getStudent(user.email),
         firebaseRest.getStudentAttendance(user.email),
-        firebaseRest.getAnnouncements(),
-        firebaseRest.getCourses()
+        firebaseRest.getAnnouncements()
       ]);
 
-      console.log('✅ Student data:', studentData);')
-      
-      // Process student data
       if (studentData) {
         setStudentName(studentData.studentName || '');
         setStudentId(studentData.studentId || '');
@@ -97,7 +92,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setGpa(studentData.gpa || 0);
         setTotalCredits(studentData.totalCredits || 0);
         
-        // Process courses
         if (studentData.courses) {
           const courseList: Course[] = [];
           let totalAttendanceSum = 0;
@@ -119,11 +113,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           setCourses(courseList);
           setAttendance(courseList.length ? Math.round(totalAttendanceSum / courseList.length) : 0);
         }
-      } else {
-        console.log('⚠️ No student data found');
       }
       
-      // Process attendance records
       if (attendanceData) {
         const records: AttendanceRecord[] = [];
         Object.entries(attendanceData).forEach(([id, record]: [string, any]) => {
@@ -143,7 +134,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setAttendanceRecords(records);
       }
       
-      // Process announcements
       if (announcementsData) {
         const list = Object.entries(announcementsData).map(([id, item]: [string, any]) => ({
           id,
@@ -159,21 +149,17 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       setLastUpdated(new Date());
       
     } catch (err) {
-      console.error('❌ Error fetching data:', err);
+      console.error('Error fetching data:', err);
       setError('Failed to load data. Please check your connection.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Initial fetch and set up polling
   useEffect(() => {
     if (user?.email) {
       fetchData();
-      
-      // Poll every 30 seconds instead of real-time connection
       const interval = setInterval(fetchData, 30000);
-      
       return () => clearInterval(interval);
     } else {
       setLoading(false);
@@ -193,7 +179,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       studentName,
       studentEmail,
       studentId,
-      major, lastUpdated,
+      major,
       lastUpdated,
       refreshData: fetchData
     }}>
@@ -207,4 +193,3 @@ export function useData() {
   if (!context) throw new Error('useData must be used within DataProvider');
   return context;
 }
-

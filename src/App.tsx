@@ -38,7 +38,7 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => (
   <MainLayout>{children}</MainLayout>
 );
 
-function App() {
+function App() {`n  const { lastUpdated, refreshData } = useData();
   return (
     <AuthProvider>
       <DataProvider>
@@ -69,6 +69,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

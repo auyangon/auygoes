@@ -1,6 +1,6 @@
 ﻿import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-import { DataProvider } from './contexts/DataContext';
+import { DataProvider, useData } from './contexts/DataContext';  // Make sure useData is imported!
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import { Profile } from './pages/Profile';
@@ -22,9 +22,9 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => (
   <MainLayout>{children}</MainLayout>
 );
 
-// Inner component that uses useData hook
+// Inner component that uses hooks
 const AppContent = () => {
-  // This runs INSIDE DataProvider, so it's safe to use useData
+  // Now useData is defined because we imported it
   const { lastUpdated, refreshData } = useData();
   
   return (
@@ -33,7 +33,6 @@ const AppContent = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/dashboard" />} />
         
-        {/* Protected routes with layout */}
         <Route path="/dashboard" element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
         <Route path="/profile" element={<ProtectedLayout><Profile /></ProtectedLayout>} />
         <Route path="/exams" element={<ProtectedLayout><AUYExams /></ProtectedLayout>} />

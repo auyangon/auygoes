@@ -71,19 +71,27 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   const fetchData = async () => {
-    if (!user?.email) return;
+    if (!user?.email) {
+      setLoading(false);
+      return;
+    }
     
     setLoading(true);
     setError(null);
     
     try {
-      console.log('Fetching data for:', user.email);
+      console.log('📡 Fetching data for:', user.email);
+      
+      // Set student email immediately from user
+      setStudentEmail(user.email);
       
       const [studentData, attendanceData, announcementsData] = await Promise.all([
         firebaseRest.getStudent(user.email),
         firebaseRest.getStudentAttendance(user.email),
         firebaseRest.getAnnouncements()
       ]);
+
+      console.log('✅ Student data received:', studentData);
 
       if (studentData) {
         setStudentName(studentData.studentName || '');
@@ -149,7 +157,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       setLastUpdated(new Date());
       
     } catch (err) {
-      console.error('Error fetching data:', err);
+      console.error('❌ Error fetching data:', err);
       setError('Failed to load data. Please check your connection.');
     } finally {
       setLoading(false);
@@ -157,14 +165,22 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    if (user?.email) {
-      fetchData();
-      const interval = setInterval(fetchData, 30000);
-      return () => clearInterval(interval);
-    } else {
-      setLoading(false);
-    }
+    fetchData();
+    const interval = setInterval(fetchData, 30000);
+    return () => clearInterval(interval);
   }, [user]);
+
+  // Log context values for debugging
+  useEffect(() => {
+    console.log('📊 DataContext State:', {
+      studentName,
+      studentEmail,
+      studentId,
+      major,
+      courses: courses.length,
+      announcements: announcements.length
+    });
+  }, [studentName, studentEmail, studentId, major, courses, announcements]);
 
   return (
     <DataContext.Provider value={{
@@ -190,6 +206,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
 export function useData() {
   const context = useContext(DataContext);
-  if (!context) throw new Error('useData must be used within DataProvider');
+  if (!context) {
+    throw new Error('useData must be used within DataProvider');
+  }
   return context;
 }

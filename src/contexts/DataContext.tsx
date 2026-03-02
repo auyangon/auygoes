@@ -87,12 +87,20 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         console.log('📛 Student name from Firebase:', data.studentName);
         
         // CRITICAL: Set the student name
-        if (data.studentName) {
-          setStudentName(data.studentName);
-          console.log('✅ Student name set to:', data.studentName);
-        } else {
-          console.log('⚠️ No studentName field in data');
-        }
+                if (data.studentName) {
+                    setStudentName(data.studentName);
+                    console.log('✅ Student name set to:', data.studentName);
+                  } else {
+                    // Try to extract name from email or use a default
+                    console.log('⚠️ No studentName field in data, trying to extract from email');
+                    // If email looks like "chanmyae.au.edu.mm@gmail.com", extract the first part
+                    const emailParts = email.split('@')[0];
+                    const nameFromEmail = emailParts.split('.').map(part => 
+                      part.charAt(0).toUpperCase() + part.slice(1)
+                    ).join(' ');
+                    setStudentName(nameFromEmail || 'Student');
+                    console.log('✅ Generated name from email:', nameFromEmail);
+                  }
         
         setStudentId(data.studentId || '');
         setMajor(data.major || 'ISP');
@@ -179,3 +187,4 @@ export function useData() {
   if (!context) throw new Error('useData must be used within DataProvider');
   return context;
 }
+

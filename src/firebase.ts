@@ -1,4 +1,4 @@
-﻿// src/firebase.ts - Simplified for REST API
+﻿// src/firebase.ts - Safe version with backward compatibility
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
@@ -14,4 +14,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-// Note: We're not initializing Realtime Database here - using REST API instead
+
+// For backward compatibility - export a dummy db that will throw clear errors
+export const db = {
+  _warning: 'Direct database access is deprecated. Use firebaseRest service instead.'
+};
+
+console.log('⚠️  Note: Direct Firebase database access is deprecated. Use firebaseRest service.');

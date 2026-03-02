@@ -77,7 +77,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     setError(null);
     
     try {
-      console.log('📡 Fetching data via REST API for:', user.email);
+      console.log('📡 Fetching data via REST API for:', user.email);')
       
       // Get all data in parallel
       const [studentData, attendanceData, announcementsData, coursesData] = await Promise.all([
@@ -87,7 +87,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         firebaseRest.getCourses()
       ]);
 
-      console.log('✅ Student data:', studentData);
+      console.log('✅ Student data:', studentData);')
       
       // Process student data
       if (studentData) {

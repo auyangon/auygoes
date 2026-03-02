@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { GraduationCap, Mail, Lock, LogIn } from 'lucide-react';
 
 export default function Login() {
@@ -101,5 +101,6 @@ export default function Login() {
     </div>
   );
 }
+
 
 

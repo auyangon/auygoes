@@ -14,6 +14,7 @@ import { AUYExams } from './pages/AUYExams';
 import { Calendar } from './pages/Calendar';
 import { FirebaseTest } from './pages/FirebaseTest';
 import { VerifyData } from './pages/VerifyData';
+import { ForgotPassword } from './pages/ForgotPassword';
 import { MainLayout } from './components/MainLayout';
 import { ConnectionStatus } from './components/ConnectionStatus';
 
@@ -64,3 +65,4 @@ function App() {
 }
 
 export default App;
+

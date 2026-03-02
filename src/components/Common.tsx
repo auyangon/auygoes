@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 // ============================================
-// CARD
+// CARD – White with 90% opacity
 // ============================================
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ export const Card: React.FC<CardProps> = ({ children, className, ...props }) => 
     <div
       className={twMerge(
         clsx(
-          'rounded-2xl bg-white shadow-sm border border-gray-100 p-6',
+          'rounded-xl bg-white bg-opacity-90 border border-gray-200 shadow-sm p-6',
           className
         )
       )}
@@ -27,7 +27,7 @@ export const Card: React.FC<CardProps> = ({ children, className, ...props }) => 
 };
 
 // ============================================
-// STAT CARD
+// STAT CARD – Tiffany icon
 // ============================================
 interface StatCardProps {
   icon: React.ReactNode;
@@ -41,22 +41,18 @@ export const StatCard: React.FC<StatCardProps> = ({ icon, value, label, classNam
     <div
       className={twMerge(
         clsx(
-          'rounded-2xl p-6 bg-white shadow-sm border border-gray-100',
+          'rounded-xl p-6 bg-white bg-opacity-90 border border-gray-200 shadow-sm',
           className
         )
       )}
     >
       <div className="flex items-center gap-4">
-        <div className="p-3 rounded-xl bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] text-white shadow-md">
+        <div className="p-3 rounded-xl bg-[#2E8B57] bg-opacity-90 text-white shadow-sm">
           {icon}
         </div>
         <div>
-          <div className="text-2xl font-medium text-[#0a0a0a]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
-            {value}
-          </div>
-          <div className="text-sm text-[#2a2a2a]" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
-            {label}
-          </div>
+          <div className="text-2xl font-semibold text-gray-800">{value}</div>
+          <div className="text-sm text-gray-600">{label}</div>
         </div>
       </div>
     </div>
@@ -74,9 +70,9 @@ interface SectionTitleProps {
 
 export const SectionTitle: React.FC<SectionTitleProps> = ({ children, icon, className }) => {
   return (
-    <div className="flex items-center gap-2 mb-6">
-      {icon && <span className="text-[#2E8B57]" style={{ textShadow: '0 1px 2px rgba(46,139,86,0.2)' }}>{icon}</span>}
-      <h2 className={twMerge(clsx('text-lg font-medium', className))} style={{ color: '#0a0a0a', textShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
+    <div className="flex items-center gap-2 mb-4">
+      {icon && <span className="text-[#2E8B57]">{icon}</span>}
+      <h2 className={twMerge(clsx('text-lg font-medium text-gray-800', className))}>
         {children}
       </h2>
     </div>
@@ -94,31 +90,22 @@ interface BadgeProps {
 
 export const Badge: React.FC<BadgeProps> = ({ children, variant = 'default', className }) => {
   const variants = {
-    default: 'bg-gray-100 border border-gray-200',
-    primary: 'bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] text-white',
-    success: 'bg-green-100 border border-green-200',
-    warning: 'bg-yellow-100 border border-yellow-200',
-    danger: 'bg-red-100 border border-red-200',
-  };
-
-  const textColors = {
-    default: { color: '#1a1a1a', textShadow: '0 1px 2px rgba(0,0,0,0.03)' },
-    primary: { color: '#ffffff', textShadow: '0 1px 2px rgba(0,0,0,0.1)' },
-    success: { color: '#1a1a1a', textShadow: '0 1px 2px rgba(0,0,0,0.03)' },
-    warning: { color: '#1a1a1a', textShadow: '0 1px 2px rgba(0,0,0,0.03)' },
-    danger: { color: '#1a1a1a', textShadow: '0 1px 2px rgba(0,0,0,0.03)' },
+    default: 'bg-gray-100 bg-opacity-90 text-gray-700',
+    primary: 'bg-[#2E8B57] bg-opacity-90 text-white',
+    success: 'bg-green-100 bg-opacity-90 text-green-700',
+    warning: 'bg-yellow-100 bg-opacity-90 text-yellow-700',
+    danger: 'bg-red-100 bg-opacity-90 text-red-700',
   };
 
   return (
     <span
       className={twMerge(
         clsx(
-          'px-3 py-1 rounded-full text-xs font-medium',
+          'px-2 py-1 rounded text-xs font-medium',
           variants[variant],
           className
         )
       )}
-      style={textColors[variant]}
     >
       {children}
     </span>
@@ -143,9 +130,9 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 }) => {
   const percentage = Math.min(100, Math.max(0, (value / max) * 100));
   return (
-    <div className={twMerge(clsx('w-full h-2 bg-gray-200 rounded-full overflow-hidden', className))}>
+    <div className={twMerge(clsx('w-full h-2 bg-gray-200 bg-opacity-90 rounded-full overflow-hidden', className))}>
       <div
-        className={twMerge(clsx('h-full bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] rounded-full transition-all duration-300', barClassName))}
+        className={twMerge(clsx('h-full bg-[#2E8B57] bg-opacity-90 rounded-full transition-all duration-300', barClassName))}
         style={{ width: `${percentage}%` }}
       />
     </div>
@@ -170,17 +157,10 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const variants = {
-    primary: 'bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] hover:from-[#3CB371] hover:to-[#7CFC00] shadow-md',
-    secondary: 'bg-gray-100 border border-gray-200 hover:bg-gray-200',
-    outline: 'border border-[#2E8B57] hover:bg-[#2E8B57]/10',
-    danger: 'bg-red-600 hover:bg-red-700 shadow-md',
-  };
-
-  const textStyles = {
-    primary: { color: '#ffffff', textShadow: '0 1px 2px rgba(0,0,0,0.1)' },
-    secondary: { color: '#1a1a1a', textShadow: '0 1px 2px rgba(0,0,0,0.03)' },
-    outline: { color: '#1a1a1a', textShadow: '0 1px 2px rgba(0,0,0,0.03)' },
-    danger: { color: '#ffffff', textShadow: '0 1px 2px rgba(0,0,0,0.1)' },
+    primary: 'bg-[#2E8B57] bg-opacity-90 text-white hover:bg-opacity-100',
+    secondary: 'bg-gray-100 bg-opacity-90 text-gray-700 hover:bg-opacity-100',
+    outline: 'border border-[#2E8B57] text-[#2E8B57] hover:bg-[#2E8B57] hover:bg-opacity-10',
+    danger: 'bg-red-600 bg-opacity-90 text-white hover:bg-opacity-100',
   };
 
   const sizes = {
@@ -193,13 +173,12 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       className={twMerge(
         clsx(
-          'rounded-xl font-medium transition-all duration-300 disabled:opacity-50 border-0',
+          'rounded-lg font-medium transition-all duration-300 disabled:opacity-50',
           variants[variant],
           sizes[size],
           className
         )
       )}
-      style={textStyles[variant]}
       {...props}
     >
       {children}
@@ -228,8 +207,8 @@ export const Avatar: React.FC<AvatarProps> = ({ src, alt = '', size = 'md', clas
       {src ? (
         <img src={src} alt={alt} className="w-full h-full object-cover" />
       ) : (
-        <div className="w-full h-full bg-gradient-to-r from-[#2E8B57] to-[#66CDAA] flex items-center justify-center text-white text-2xl" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
-          {alt?.charAt(0) || '?'}
+        <div className="w-full h-full bg-[#2E8B57] bg-opacity-90 flex items-center justify-center text-white text-2xl">
+          {alt?.charAt(0)?.toUpperCase() || '?'}
         </div>
       )}
     </div>

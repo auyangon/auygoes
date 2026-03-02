@@ -45,7 +45,7 @@ interface DataContextType {
   major: string;
   lastUpdated: Date | null;
   refreshData: () => Promise<void>;
-}
+}`n  lastUpdated: Date | null;
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
@@ -193,7 +193,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       studentName,
       studentEmail,
       studentId,
-      major,
+      major, lastUpdated,
       lastUpdated,
       refreshData: fetchData
     }}>
@@ -207,3 +207,4 @@ export function useData() {
   if (!context) throw new Error('useData must be used within DataProvider');
   return context;
 }
+

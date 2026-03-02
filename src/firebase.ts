@@ -1,6 +1,6 @@
-﻿// src/firebase.ts
+﻿// src/firebase.ts - Simplified for REST API
 import { initializeApp } from 'firebase/app';
-import { getDatabase } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMaoB6mOKYJOkDGwCmliz0azqtJifbwpY",
@@ -13,5 +13,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getDatabase(app);
-
+export const auth = getAuth(app);
+// Note: We're not initializing Realtime Database here - using REST API instead

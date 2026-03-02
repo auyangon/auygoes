@@ -1,7 +1,6 @@
 ﻿import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataContext';
-import { useData } from './contexts/DataContext';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import { Profile } from './pages/Profile';
@@ -23,32 +22,42 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => (
   <MainLayout>{children}</MainLayout>
 );
 
-function App() {
+// Inner component that uses useData hook
+const AppContent = () => {
+  // This runs INSIDE DataProvider, so it's safe to use useData
   const { lastUpdated, refreshData } = useData();
   
+  return (
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+        
+        {/* Protected routes with layout */}
+        <Route path="/dashboard" element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
+        <Route path="/profile" element={<ProtectedLayout><Profile /></ProtectedLayout>} />
+        <Route path="/exams" element={<ProtectedLayout><AUYExams /></ProtectedLayout>} />
+        <Route path="/announcements" element={<ProtectedLayout><AnnouncementsPage /></ProtectedLayout>} />
+        <Route path="/courses" element={<ProtectedLayout><Courses /></ProtectedLayout>} />
+        <Route path="/course/:courseId" element={<ProtectedLayout><CourseAttendance /></ProtectedLayout>} />
+        <Route path="/materials" element={<ProtectedLayout><Materials /></ProtectedLayout>} />
+        <Route path="/progress" element={<ProtectedLayout><Progress /></ProtectedLayout>} />
+        <Route path="/grades" element={<ProtectedLayout><Grades /></ProtectedLayout>} />
+        <Route path="/calendar" element={<ProtectedLayout><Calendar /></ProtectedLayout>} />
+        <Route path="/firebase-test" element={<ProtectedLayout><FirebaseTest /></ProtectedLayout>} />
+        <Route path="/verify" element={<ProtectedLayout><VerifyData /></ProtectedLayout>} />
+      </Routes>
+      <ConnectionStatus lastUpdated={lastUpdated} onRefresh={refreshData} />
+    </>
+  );
+};
+
+function App() {
   return (
     <AuthProvider>
       <DataProvider>
         <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Navigate to="/dashboard" />} />
-            
-            {/* Protected routes with layout */}
-            <Route path="/dashboard" element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
-            <Route path="/profile" element={<ProtectedLayout><Profile /></ProtectedLayout>} />
-            <Route path="/exams" element={<ProtectedLayout><AUYExams /></ProtectedLayout>} />
-            <Route path="/announcements" element={<ProtectedLayout><AnnouncementsPage /></ProtectedLayout>} />
-            <Route path="/courses" element={<ProtectedLayout><Courses /></ProtectedLayout>} />
-            <Route path="/course/:courseId" element={<ProtectedLayout><CourseAttendance /></ProtectedLayout>} />
-            <Route path="/materials" element={<ProtectedLayout><Materials /></ProtectedLayout>} />
-            <Route path="/progress" element={<ProtectedLayout><Progress /></ProtectedLayout>} />
-            <Route path="/grades" element={<ProtectedLayout><Grades /></ProtectedLayout>} />
-            <Route path="/calendar" element={<ProtectedLayout><Calendar /></ProtectedLayout>} />
-            <Route path="/firebase-test" element={<ProtectedLayout><FirebaseTest /></ProtectedLayout>} />
-            <Route path="/verify" element={<ProtectedLayout><VerifyData /></ProtectedLayout>} />
-          </Routes>
-          <ConnectionStatus lastUpdated={lastUpdated} onRefresh={refreshData} />
+          <AppContent />
         </BrowserRouter>
       </DataProvider>
     </AuthProvider>

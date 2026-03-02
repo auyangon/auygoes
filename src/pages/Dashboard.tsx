@@ -26,7 +26,7 @@ const getGreeting = () => {
 };
 
 // Format date nicely
-const formatDate = (dateString) => {
+const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date.toLocaleDateString('en-US', { 
     month: 'short', 
@@ -37,13 +37,17 @@ const formatDate = (dateString) => {
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const { courses, announcements, loading, error, gpa, totalCredits, attendance, studentName } = useData();
+  const { courses, announcements, loading, error, gpa, totalCredits, attendance, studentName, studentEmail } = useData();
   const navigate = useNavigate();
   const greeting = getGreeting();
 
   useEffect(() => {
     if (!user) navigate('/login');
   }, [user, navigate]);
+
+  // Debug log to see what's coming from context
+  console.log('📊 Dashboard received studentName:', studentName);
+  console.log('📊 Dashboard received studentEmail:', studentEmail);
 
   if (loading) {
     return (
@@ -75,8 +79,10 @@ export default function Dashboard() {
     );
   }
 
-  // Get display name - use studentName if available, otherwise fallback to email username
+  // Get display name - use studentName from Firebase, then fallback
   const displayName = studentName || (user?.email ? user.email.split('@')[0].replace(/\./g, ' ') : 'Student');
+  
+  console.log('📊 Final display name:', displayName);
 
   return (
     <MainLayout>

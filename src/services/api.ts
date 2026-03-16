@@ -1,12 +1,13 @@
 ﻿const API_URL = import.meta.env.VITE_API_URL;
 
 async function fetchSheet(sheetName) {
-  const res = await fetch(`${API_URL}?sheet=${sheetName}`);
-  const result = await res.json();
-  return result.success ? result.data : [];
+  const res = await fetch(`${API_URL}/${sheetName}`);
+  // OpenSheet returns array directly, no wrapper
+  return await res.json();
 }
 
 export const api = {
+  // GET methods
   getUsers: () => fetchSheet('Users'),
   getStudents: () => fetchSheet('Students'),
   getCourses: () => fetchSheet('Courses'),
@@ -18,7 +19,7 @@ export const api = {
   getAnnouncements: () => fetchSheet('Announcements'),
   getStudentNotifications: () => fetchSheet('StudentNotifications'),
 
-  // Auth
+  // Auth helper
   authenticateUser: async (email, password) => {
     const users = await api.getUsers();
     return users.find(u => u.email === email && u.password === password) || null;

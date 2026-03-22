@@ -8,12 +8,15 @@ import { decodeGoogleCredential } from '../services/googleAuth';
 const QUOTES = [
   { text: "Education is the most powerful weapon which you can use to change the world.", author: "Nelson Mandela" },
   { text: "The beautiful thing about learning is that no one can take it away from you.", author: "B.B. King" },
-  { text: "Education is not preparation for life; education is life itself.", author: "John Dewey" }
+  { text: "Education is not preparation for life; education is life itself.", author: "John Dewey" },
+  { text: "Live as if you were to die tomorrow. Learn as if you were to live forever.", author: "Mahatma Gandhi" },
+  { text: "The expert in anything was once a beginner.", author: "Helen Hayes" },
+  { text: "The roots of education are bitter, but the fruit is sweet.", author: "Aristotle" }
 ];
 
 const getQuoteOfTheDay = () => {
-  const day = Math.floor(Date.now() / 86400000);
-  return QUOTES[day % QUOTES.length];
+  const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+  return QUOTES[dayOfYear % QUOTES.length];
 };
 
 export function Login() {
@@ -38,10 +41,10 @@ export function Login() {
         const user = decodeGoogleCredential(credentialResponse.credential);
         if (user?.email) {
           const success = await loginWithGoogle(user.email);
-          if (!success) setError('Email not found in AUY system');
+          if (!success) setError('Email not found. Please use your AUY email.');
         }
-      } catch {
-        setError('Google login failed');
+      } catch (err) {
+        setError('Google login failed. Please try again.');
       } finally {
         setIsLoading(false);
       }
@@ -61,10 +64,14 @@ export function Login() {
               <p className="text-white/90 text-xl italic">"{quote.text}"</p>
               <p className="text-white/60 mt-2">— {quote.author}</p>
             </div>
+            <div className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: 'rgba(255,255,255,0.1)' }}>
+              <HiOutlineSparkles className="text-yellow-300" />
+              <span className="text-white/90 text-sm">Quote of the Day</span>
+            </div>
           </div>
 
           {/* Right - Google Login */}
-          <div className="bg-white rounded-2xl p-8">
+          <div className="bg-white rounded-2xl p-8 shadow-xl">
             <div className="text-center">
               <div className="inline-flex p-3 rounded-2xl mb-4" style={{ background: '#1b5f56' }}>
                 <HiOutlineAcademicCap size={40} className="text-white" />

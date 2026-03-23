@@ -1,1 +1,23 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
+
+/* Global font reset */
+html {
+  font-size: 14px; /* smaller base size */
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400; /* normal weight, no bold */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Remove bold from headings and other elements */
+h1, h2, h3, h4, h5, h6, strong, b, .font-bold, .font-semibold {
+  font-weight: 500 !important; /* or 400 if you want completely no bold */
+}
+
+/* Optional: reduce default bold on buttons, labels, etc. */
+button, .btn, label, .font-medium {
+  font-weight: 500 !important;
+}
